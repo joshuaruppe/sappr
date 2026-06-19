@@ -8,14 +8,14 @@ import {
 } from "react";
 
 /** Which offline cracker the user works with — drives the commands/flags shown. */
-export type Cracker = "hashcat" | "john" | "both";
+export type Cracker = "hashcat" | "john";
 
 /** App-wide preferences (theme lives in its own provider). Extend freely. */
 export interface Settings {
   cracker: Cracker;
 }
 
-const DEFAULTS: Settings = { cracker: "both" };
+const DEFAULTS: Settings = { cracker: "hashcat" };
 const STORAGE_KEY = "sappr.settings";
 
 interface SettingsContextValue extends Settings {
@@ -33,9 +33,7 @@ function load(): Settings {
     // Validate the union rather than trusting stored JSON — a corrupt or
     // hand-edited value would otherwise disable every cracker command.
     const cracker =
-      parsed?.cracker === "hashcat" ||
-      parsed?.cracker === "john" ||
-      parsed?.cracker === "both"
+      parsed?.cracker === "hashcat" || parsed?.cracker === "john"
         ? parsed.cracker
         : DEFAULTS.cracker;
     return { cracker };
@@ -79,7 +77,7 @@ export function useSettings(): SettingsContextValue {
 export function useCrackers() {
   const { cracker } = useSettings();
   return {
-    hashcat: cracker === "hashcat" || cracker === "both",
-    john: cracker === "john" || cracker === "both",
+    hashcat: cracker === "hashcat",
+    john: cracker === "john",
   };
 }

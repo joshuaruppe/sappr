@@ -38,6 +38,10 @@ export interface CommandOptions {
   optimized?: boolean;
   /** John CPU process count (--fork). */
   johnFork?: number;
+  /** hashcat: hashfile is user:hash; strip the username column (--username). */
+  username?: boolean;
+  /** John: apply wordlist-mangling rules (--rules). */
+  johnRules?: boolean;
 }
 
 export function buildHashcatCommand(mode: number, opts: CommandOptions = {}): string {
@@ -45,6 +49,7 @@ export function buildHashcatCommand(mode: number, opts: CommandOptions = {}): st
   if (opts.workload) parts.push("-w", String(opts.workload));
   if (opts.device) parts.push("-d", opts.device);
   if (opts.optimized) parts.push("-O");
+  if (opts.username) parts.push("--username");
   if (opts.rules) parts.push("-r", opts.rules);
   parts.push("hash.txt");
   if (opts.wordlist) parts.push(opts.wordlist);
@@ -54,6 +59,7 @@ export function buildHashcatCommand(mode: number, opts: CommandOptions = {}): st
 export function buildJohnCommand(format: string, opts: CommandOptions = {}): string {
   const parts = ["john", `--format=${format}`];
   if (opts.johnFork && opts.johnFork > 1) parts.push(`--fork=${opts.johnFork}`);
+  if (opts.johnRules) parts.push("--rules");
   if (opts.wordlist) parts.push(`--wordlist=${opts.wordlist}`);
   parts.push("hash.txt");
   return parts.join(" ");

@@ -62,6 +62,13 @@ function CommandFlags({
   crackers: Crackers;
 }) {
   const [open, setOpen] = useState(false);
+  const toolNames = [
+    crackers.hashcat && "hashcat",
+    crackers.john && "John the Ripper",
+  ].filter(Boolean) as string[];
+  const flagsTitle = toolNames.length
+    ? `${toolNames.join(" & ")} flags`
+    : "Cracking tool flags";
   return (
     <div className="rounded-lg border border-border bg-card/40">
       <button
@@ -70,7 +77,7 @@ function CommandFlags({
         className="flex w-full items-center gap-2 px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
         <Settings2 className="size-3.5" />
-        Cracking Tool Flags
+        {flagsTitle}
         <ChevronDown
           className={cn("ml-auto size-3.5 transition-transform", open && "rotate-180")}
         />
@@ -126,6 +133,22 @@ function CommandFlags({
                 checked={!!opts.optimized}
                 onChange={(v) => set({ optimized: v })}
                 label="Optimized kernels (-O)"
+              />
+            )}
+
+            {crackers.hashcat && (
+              <Switch
+                checked={!!opts.username}
+                onChange={(v) => set({ username: v })}
+                label="Ignore usernames (--username)"
+              />
+            )}
+
+            {crackers.john && (
+              <Switch
+                checked={!!opts.johnRules}
+                onChange={(v) => set({ johnRules: v })}
+                label="Mangling rules (--rules)"
               />
             )}
           </div>
@@ -201,7 +224,7 @@ export default function HashIdTool() {
 
       {showResults &&
         (candidates.length > 0 ? (
-          <Field label={`Possible types (${candidates.length})`}>
+          <Field>
             <CommandFlags opts={opts} set={set} crackers={crackers} />
 
             <p className="mt-3 text-xs text-muted-foreground">

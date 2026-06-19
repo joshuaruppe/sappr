@@ -5,6 +5,37 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-06-19
+
+### Security
+
+- Updated dev/build tooling to clear five Dependabot advisories. All five are
+  development dependencies scoped to the dev server and test runner, so the
+  shipped client app and self-hosters were never affected:
+  - `vite` to 6.4.3 (CVE-2026-53571, CVE-2026-53632, CVE-2026-39365)
+  - `esbuild` to 0.25.12 (GHSA-67mh-4wv8-2f99)
+  - `vitest` to 3.2.6 (CVE-2026-47429)
+
+### Added
+
+- Hash Identifier: hashcat `--username` flag, to strip the username column from
+  `user:hash` inputs such as `/etc/shadow`, NetNTLM and Kerberoast dumps.
+- Hash Identifier: John `--rules` flag for wordlist mangling, matching the
+  existing hashcat rules option.
+
+### Changed
+
+- Hash Identifier: the flags-panel title now names your selected cracker
+  ("hashcat flags" or "John the Ripper flags") instead of a generic label.
+- Settings: the cracking tool is now a single choice, hashcat or John. The
+  "Both" option was removed; any previously saved "both" preference falls back
+  to hashcat.
+
+### Removed
+
+- Hash Identifier: the "Possible types (N)" heading above the results. The
+  per-result type and confidence badges already make the count obvious.
+
 ## [1.0.0] - 2026-06-19
 
 The first public release: the complete client-side toolset. Every tool runs
@@ -122,4 +153,5 @@ registration.
 - Bundles hashcat's MIT-licensed mode table; its notice is reproduced in
   [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md).
 
+[1.0.1]: https://github.com/joshuaruppe/sappr/releases/tag/v1.0.1
 [1.0.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.0.0

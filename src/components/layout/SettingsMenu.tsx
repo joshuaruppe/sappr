@@ -66,7 +66,6 @@ export function SettingsMenu() {
                 options={[
                   { value: "hashcat", label: "hashcat" },
                   { value: "john", label: "John" },
-                  { value: "both", label: "Both" },
                 ]}
               />
             </Section>

@@ -104,17 +104,22 @@ describe("hash identifier", () => {
       workload: 3,
       device: "1,2",
       optimized: true,
+      username: true,
       wordlist: "/wl.txt",
     });
     expect(hc).toContain("-w 3");
     expect(hc).toContain("-d 1,2");
     expect(hc).toContain(" -O ");
+    expect(hc).toContain("--username");
     expect(hc).toContain("/wl.txt");
 
-    expect(hc).toContain("/wl.txt");
-
-    const jn = buildJohnCommand("krb5tgs", { johnFork: 8, wordlist: "/wl.txt" });
+    const jn = buildJohnCommand("krb5tgs", {
+      johnFork: 8,
+      johnRules: true,
+      wordlist: "/wl.txt",
+    });
     expect(jn).toContain("--fork=8");
+    expect(jn).toContain("--rules");
     expect(jn).toContain("--wordlist=/wl.txt");
   });
 
