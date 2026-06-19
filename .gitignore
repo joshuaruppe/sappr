@@ -1,0 +1,45 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build output
+dist/
+dist-ssr/
+*.local
+
+# typescript build cache + test / coverage artifacts
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
+
+# packaged release bundles (built in CI, or by hand for a manual release)
+/sappr-*.zip
+/sappr-*.zip.sha256
+
+# local dev screenshots (Playwright helper)
+.shots/
+
+# editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# env
+.env
+.env.*
+!.env.example
+
+# go backend build artifacts (added in a later phase)
+/server/bin/
+*.exe

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 214 64" width="214" height="64" role="img" aria-label="sappr">
+  <title>sappr</title>
+  <!-- glyph block: the transform mark, matching public/favicon.svg and the in-app Logo -->
+  <rect width="64" height="64" rx="14" fill="#6d4aff"/>
+  <g fill="none" stroke="#ffffff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 28H26"/>
+    <path d="M38 28H51"/>
+    <path d="M32 17V45"/>
+    <path d="M24 37l8 9 8-9"/>
+  </g>
+  <!-- wordmark: lowercase monospace, brand purple (readable on light + dark GitHub themes) -->
+  <text x="80" y="44" fill="#6d4aff"
+        font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace"
+        font-size="40" font-weight="700" letter-spacing="-1.5">sappr</text>
+</svg>

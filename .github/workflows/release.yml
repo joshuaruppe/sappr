@@ -1,0 +1,62 @@
+name: Release
+
+# Builds the static app and attaches it to a GitHub Release whenever a version
+# tag is pushed. Your whole release process becomes:
+#
+#   git tag v1.0.0
+#   git push --tags
+#
+# The bundle is always built fresh from the tagged commit, so it's reproducible
+# (never "whatever was on my machine").
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write # required to create the release and upload assets
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Derive version from tag
+        id: meta
+        # v1.0.0 -> 1.0.0
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+        env:
+          # Stamp the in-app footer with the tagged version (see vite.config.ts).
+          SAPPR_VERSION: ${{ steps.meta.outputs.version }}
+
+      - name: Package the built site
+        run: |
+          name="sappr-${{ steps.meta.outputs.version }}"
+          mkdir "$name"
+          cp -r dist/. "$name/"
+          zip -r "$name.zip" "$name"
+          sha256sum "$name.zip" > "$name.zip.sha256"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            sappr-*.zip
+            sappr-*.zip.sha256
+          generate_release_notes: true
