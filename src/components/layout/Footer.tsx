@@ -4,6 +4,8 @@ import {
   APP_VERSION,
   AUTHOR_NAME,
   AUTHOR_URL,
+  LICENSE_NAME,
+  LICENSE_URL,
   REPO_URL,
 } from "@/lib/version";
 
@@ -34,6 +36,18 @@ export function Footer() {
             className="transition-colors hover:text-foreground"
           >
             <Github className="size-4" />
+          </a>
+          <span aria-hidden className="text-border">
+            •
+          </span>
+          <a
+            href={LICENSE_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            title={`Licensed under ${LICENSE_NAME} — source available`}
+            className="transition-colors hover:text-foreground"
+          >
+            {LICENSE_NAME}
           </a>
           <span aria-hidden className="text-border">
             •

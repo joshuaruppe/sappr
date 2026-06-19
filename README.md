@@ -2,7 +2,7 @@
 
 <img src="docs/sappr-logo.svg" alt="sappr" width="208" />
 
-**The pentester's web toolkit.** A fast, modern, self-hostable collection of the
+**The pentester's toolkit.** A fast, modern, self-hostable collection of the
 tools you actually reach for: encoding/decoding, hashing, hash identification,
 crypto, formatting, regex, conversions, generators and binary forensics.
 Everything runs in your browser. No backend, nothing uploaded.

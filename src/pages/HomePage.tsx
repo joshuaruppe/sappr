@@ -1,6 +1,7 @@
 import { toolsByCategory, toolCount } from "@/registry/registry";
 import { LEGEND_EXECUTIONS } from "@/registry/execution";
 import { APP_TAGLINE } from "@/lib/version";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export function HomePage() {
@@ -21,7 +22,8 @@ export function HomePage() {
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-sm text-muted-foreground sm:text-base">
           A fast, modern, self-hostable toolkit for encoding, hashing, QR, regex,
-          code formatting and more. {toolCount} tools and counting.
+          code formatting and more.{" "}
+          <Badge variant="success">{toolCount}</Badge> tools and counting.
         </p>
         <p className="mt-6 text-sm text-muted-foreground">
           Search with{" "}
