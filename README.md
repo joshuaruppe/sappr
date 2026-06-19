@@ -7,14 +7,14 @@ tools you actually reach for: encoding/decoding, hashing, hash identification,
 crypto, formatting, regex, conversions, generators and binary forensics.
 Everything runs in your browser. No backend, nothing uploaded.
 
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-![Tests](https://img.shields.io/badge/tests-303_passing-3fb950?style=flat-square&logo=vitest&logoColor=white)
-![Runs](https://img.shields.io/badge/runs-in_your_browser-6d4aff?style=flat-square)
-![License](https://img.shields.io/badge/license-AGPL_v3-3fb950?style=flat-square)
-![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49?style=flat-square)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+![Tests](https://img.shields.io/badge/tests-303_passing-3fb950?logo=vitest&logoColor=white)
+![Runs](https://img.shields.io/badge/runs-in_your_browser-6d4aff)
+![License](https://img.shields.io/badge/license-AGPL_v3-3fb950)
+![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49)
 
 </div>
 
