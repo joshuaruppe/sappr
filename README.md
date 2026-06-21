@@ -148,6 +148,10 @@ tooling and analysis, not a substitute for audited production key handling.
 - [ ] Optional Go backend (WHOIS/RDAP, passive DNS/geo) + server-backed auth/SSO + `/api/update-check`
 - [ ] One multi-arch Docker image (GHCR, cosign-signed) + in-app "update available" banner
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the full release history.
+
 ## License
 
 [GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0). sappr is free and
