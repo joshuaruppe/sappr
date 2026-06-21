@@ -16,6 +16,8 @@ Everything runs in your browser. No backend, nothing uploaded.
 ![License](https://img.shields.io/badge/license-AGPL_v3-3fb950)
 ![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49)
 
+<img src="docs/screenshot.png" alt="sappr — the pentester's toolkit, running entirely in the browser" width="840" />
+
 </div>
 
 > Status: the complete **client-side** toolset (the 1.0 line). An optional backend
