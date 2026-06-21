@@ -7,6 +7,8 @@ tools you actually reach for: encoding/decoding, hashing, hash identification,
 crypto, formatting, regex, conversions, generators and binary forensics.
 Everything runs in your browser. No backend, nothing uploaded.
 
+<img src="docs/screenshot.png" alt="sappr — the pentester's toolkit, running entirely in the browser" width="840" />
+
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -15,8 +17,6 @@ Everything runs in your browser. No backend, nothing uploaded.
 ![Runs](https://img.shields.io/badge/runs-in_your_browser-6d4aff)
 ![License](https://img.shields.io/badge/license-AGPL_v3-3fb950)
 ![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49)
-
-<img src="docs/screenshot.png" alt="sappr — the pentester's toolkit, running entirely in the browser" width="840" />
 
 </div>
 
