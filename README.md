@@ -42,7 +42,7 @@ a new one in registers it automatically across the nav, palette and launcher.
 A settings menu (top-right) persists your choices locally:
 
 - **Theme**: light / dark / automatic.
-- **Cracking tool**: hashcat, John, or both. The Hash Identifier tailors the
+- **Cracking tool**: You can set your desired cracking tool and the Hash Identifier tailors the
   commands and flags it generates to your choice.
 - **Password gate** *(optional)*: lock the instance behind a password. The
   password is stored **only as an Argon2id hash** (random salt) in `localStorage`,
