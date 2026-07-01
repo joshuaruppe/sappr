@@ -71,3 +71,8 @@ export function decodeBase64(
   const bytes = base64ToBytes(input);
   return new TextDecoder("utf-8", { fatal: opts.strict ?? false }).decode(bytes);
 }
+
+/** Decode Base64 to its raw bytes (for binary-format detection, not text). */
+export function decodeBase64Bytes(input: string): Uint8Array {
+  return base64ToBytes(input);
+}

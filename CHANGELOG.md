@@ -5,6 +5,34 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-06-30
+
+### Added
+
+- **Windows** tool category, with a **Security Descriptor** decoder: paste a
+  self-relative `SECURITY_DESCRIPTOR` as Base64 or hex and get readable owner and
+  group SIDs, DACL/SACL entries (ACE type, inheritance flags, decoded access
+  rights and trustee), well-known SID resolution, friendly names for well-known
+  AD object-ACE GUIDs (extended rights such as DCSync, property sets, object
+  classes), and the equivalent SDDL string. Everything is parsed in the browser;
+  nothing leaves the machine.
+- **Kerberos Ticket** decoder (Windows): paste a `.kirbi` / KRB-CRED (Rubeus,
+  Mimikatz) and read its service, client, encryption types, ticket flags,
+  validity window, and session key. It decodes only — the ticket itself stays
+  encrypted (sealed with the service/krbtgt key) — and runs entirely client-side.
+- More Windows tools: a **GPP cpassword** decrypter (uses Microsoft's published
+  key, entirely in-browser), a **userAccountControl** flag decoder (flags
+  delegation, AS-REP roastable, disabled and more), and a **Windows FILETIME**
+  converter.
+- The Base64 decoder now auto-detects a security descriptor in the decoded bytes
+  and renders the same decoded panel inline.
+
+### Changed
+
+- Consolidated the menu bar: general categories are now grouped under **Data**
+  and **Security** menus, while domain categories (Windows, and future ones such
+  as Web or Linux) stay as their own top-level menus.
+
 ## [1.0.1] - 2026-06-19
 
 ### Security
@@ -153,5 +181,6 @@ registration.
 - Bundles hashcat's MIT-licensed mode table; its notice is reproduced in
   [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md).
 
+[1.1.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.1.0
 [1.0.1]: https://github.com/joshuaruppe/sappr/releases/tag/v1.0.1
 [1.0.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.0.0

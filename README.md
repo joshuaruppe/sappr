@@ -13,7 +13,7 @@ Everything runs in your browser. No backend, nothing uploaded.
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-![Tests](https://img.shields.io/badge/tests-303_passing-3fb950?logo=vitest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-332_passing-3fb950?logo=vitest&logoColor=white)
 ![Runs](https://img.shields.io/badge/runs-in_your_browser-6d4aff)
 ![License](https://img.shields.io/badge/license-AGPL_v3-3fb950)
 ![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49)
@@ -33,6 +33,7 @@ Everything runs in your browser. No backend, nothing uploaded.
 - **Convert**: Unix timestamps · number-base converter · text diff · Unicode inspector
 - **Generate**: UUID / ULID · secure passwords · random tokens · QR codes
 - **Forensics**: `strings`-style printable extraction from any file · QR decode from an image
+- **Windows / AD**: security-descriptor (SDDL, ACLs, AD GUID names) and Kerberos `.kirbi` decoders · GPP `cpassword` decrypt · `userAccountControl` and FILETIME decoders
 
 Every tool is a self-contained folder under [`src/tools/`](src/tools/); dropping
 a new one in registers it automatically across the nav, palette and launcher.
@@ -140,14 +141,31 @@ tooling and analysis, not a substitute for audited production key handling.
 
 ## Roadmap
 
-- [x] Foundation: auto-discovering registry, theming, command palette, shareable hash-routing
+**Shipped**
+
+- [x] Auto-discovering tool registry, theming, command palette, shareable hash-routing
 - [x] Client-side toolset: encode · crypto · format · regex · convert · generate · forensics
 - [x] Settings (theme, cracker choice) + optional Argon2id password gate
-- [ ] Network tools (IP/CIDR/MAC/UA parsing, DoH); category is currently a placeholder
-- [ ] Steganography (EXIF / LSB / magic-byte carving)
+- [x] Windows / AD: security-descriptor & Kerberos ticket decoders, GPP cpassword, userAccountControl and FILETIME
+
+**More tools**
+
+- [ ] Network: IP/CIDR/MAC/UA parsing, DoH lookups (category is a placeholder for now)
+- [ ] Steganography: EXIF / LSB / magic-byte carving
+- [ ] AI text transform pack: Unicode tricks, emoji steganography, classical ciphers
+
+**Windows / Active Directory**
+
+- [ ] Kerberos ticket decryption: supply the krbtgt/service key to unseal the ticket and parse its PAC
+- [ ] Security-descriptor GUID resolution from an imported (or backend-queried) forest schema, including forest-specific rights like LAPS
+
+**Platform**
+
 - [ ] Shareable tool-state permalinks + PWA update prompts
-- [ ] AI text transform pack (Unicode tricks, emoji steganography, classical ciphers)
-- [ ] Optional Go backend (WHOIS/RDAP, passive DNS/geo) + server-backed auth/SSO + `/api/update-check`
+
+**2.0 — backend & deployment**
+
+- [ ] Optional Go backend (WHOIS/RDAP, passive DNS/geo, server-backed auth/SSO, `/api/update-check`)
 - [ ] One multi-arch Docker image (GHCR, cosign-signed) + in-app "update available" banner
 
 ## Changelog

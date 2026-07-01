@@ -1,6 +1,12 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { ToolMeta } from "./types";
-import { CATEGORIES, CATEGORY_LIST, type CategoryInfo } from "./categories";
+import {
+  CATEGORIES,
+  CATEGORY_LIST,
+  MENU_GROUPS,
+  type CategoryInfo,
+  type MenuGroupInfo,
+} from "./categories";
 
 /**
  * Auto-discovering tool registry.
@@ -97,3 +103,37 @@ export function getToolsByCategory(): CategoryGroup[] {
 export const toolsByCategory: CategoryGroup[] = getToolsByCategory();
 
 export const toolCount = tools.length;
+
+export type NavEntry =
+  | { kind: "group"; group: MenuGroupInfo; order: number; categories: CategoryGroup[] }
+  | { kind: "category"; category: CategoryInfo; order: number; tools: ToolEntry[] };
+
+/**
+ * Top-level menubar structure: general categories bundled under their menu group
+ * (Data, Security), and ungrouped domain categories (Windows, ...) each as their
+ * own top-level menu. Empty categories are already excluded by `toolsByCategory`.
+ */
+export function getNavStructure(): NavEntry[] {
+  const grouped = toolsByCategory;
+  const entries: NavEntry[] = [];
+
+  for (const group of MENU_GROUPS) {
+    const categories = grouped.filter((g) => g.category.group === group.id);
+    if (categories.length) {
+      entries.push({ kind: "group", group, order: group.order, categories });
+    }
+  }
+  for (const g of grouped) {
+    if (!g.category.group) {
+      entries.push({
+        kind: "category",
+        category: g.category,
+        order: g.category.order,
+        tools: g.tools,
+      });
+    }
+  }
+  return entries.sort((a, b) => a.order - b.order);
+}
+
+export const navStructure: NavEntry[] = getNavStructure();

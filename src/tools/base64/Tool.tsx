@@ -5,7 +5,12 @@ import { Segmented } from "@/components/ui/segmented";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Field, OutputArea, ErrorNote } from "@/components/tool/parts";
-import { encodeBase64, decodeBase64 } from "./logic";
+import { SecurityDescriptorView } from "@/components/tool/security-descriptor-view";
+import {
+  parseSecurityDescriptor,
+  type SecurityDescriptor,
+} from "@/lib/security-descriptor";
+import { encodeBase64, decodeBase64, decodeBase64Bytes } from "./logic";
 
 type Mode = "encode" | "decode";
 
@@ -16,16 +21,19 @@ export default function Base64Tool() {
   const [padding, setPadding] = useState(true);
   const [strict, setStrict] = useState(false);
 
-  const { output, error } = useMemo(() => {
-    if (!input) return { output: "", error: "" };
+  const { output, error, sd } = useMemo(() => {
+    const empty = { output: "", error: "", sd: null as SecurityDescriptor | null };
+    if (!input) return empty;
     try {
-      const out =
-        mode === "encode"
-          ? encodeBase64(input, { urlSafe, padding })
-          : decodeBase64(input, { strict });
-      return { output: out, error: "" };
+      if (mode === "encode") {
+        return { output: encodeBase64(input, { urlSafe, padding }), error: "", sd: null };
+      }
+      const out = decodeBase64(input, { strict });
+      // Recognize a Windows security descriptor in the decoded bytes.
+      const sd = parseSecurityDescriptor(decodeBase64Bytes(input));
+      return { output: out, error: "", sd };
     } catch (e) {
-      return { output: "", error: e instanceof Error ? e.message : String(e) };
+      return { ...empty, error: e instanceof Error ? e.message : String(e) };
     }
   }, [input, mode, urlSafe, padding, strict]);
 
@@ -97,6 +105,8 @@ export default function Base64Tool() {
         filename={mode === "encode" ? "encoded.txt" : "decoded.txt"}
         mono={mode === "encode"}
       />
+
+      {sd ? <SecurityDescriptorView sd={sd} /> : null}
     </>
   );
 }
