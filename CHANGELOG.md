@@ -5,6 +5,32 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-07-03
+
+### Added
+
+- **Linux** tool category for post-exploitation triage, with four tools that
+  each surface privilege-escalation red flags:
+  - **passwd / shadow** parser — structures /etc/passwd and /etc/shadow and
+    flags UID 0 accounts, empty or unshadowed passwords, weak hash schemes and
+    duplicate UIDs.
+  - **sudoers** analyzer — flags passwordless `ALL` rules, command wildcards,
+    `env_keep`/`!authenticate` tricks and GTFOBins-runnable commands; also reads
+    `sudo -l` output.
+  - **File Permissions** — triages a pasted `ls -l` / `ls -la` listing,
+    flagging world-writable and setuid entries (concerning-only or explain-all
+    view), with per-class r/w/x tags and a hover-card breakdown of any octal.
+  - **Crontab** analyzer — explains cron schedules in plain English and flags
+    `@reboot` persistence, world-writable script paths and PATH hijacks.
+
+### Changed
+
+- Tool pages now open with a breadcrumb (**All tools › category**) and show a
+  compact execution status dot beside the title, replacing the old
+  "category · In your browser" meta line.
+- Removed the redundant "in your browser" note from tool input hints — the
+  status dot in the header already conveys it.
+
 ## [1.1.1] - 2026-07-02
 
 ### Changed
@@ -195,6 +221,7 @@ registration.
 - Bundles hashcat's MIT-licensed mode table; its notice is reproduced in
   [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md).
 
+[1.2.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.2.0
 [1.1.1]: https://github.com/joshuaruppe/sappr/releases/tag/v1.1.1
 [1.1.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.1.0
 [1.0.1]: https://github.com/joshuaruppe/sappr/releases/tag/v1.0.1

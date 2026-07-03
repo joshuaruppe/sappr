@@ -201,3 +201,17 @@
 .animate-in-fade {
   animation: sappr-fade-in 0.18s ease-out both;
 }
+
+/* Opacity-only fade — safe to combine with a positioning transform. */
+@keyframes sappr-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade {
+  animation: sappr-fade 0.15s ease-out both;
+}

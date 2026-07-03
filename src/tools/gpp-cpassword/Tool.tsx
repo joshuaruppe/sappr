@@ -37,7 +37,7 @@ export default function GppCpasswordTool() {
     <>
       <Field
         label="GPP cpassword"
-        hint="Paste the cpassword from a Groups.xml / Services.xml / ScheduledTasks.xml on SYSVOL. Decrypted in your browser with Microsoft's published key — nothing leaves the machine."
+        hint="Paste the cpassword from a Groups.xml / Services.xml / ScheduledTasks.xml on SYSVOL. Decrypted with Microsoft's published key (MS14-025)."
       >
         <Textarea
           autoFocus

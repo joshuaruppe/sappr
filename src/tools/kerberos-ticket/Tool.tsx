@@ -13,7 +13,7 @@ export default function KerberosTicketTool() {
     <>
       <Field
         label="Kerberos ticket (.kirbi / KRB-CRED, Base64 or hex)"
-        hint="Paste a base64 .kirbi — e.g. Rubeus asktgt/dump or Mimikatz output. Decoded entirely in your browser. The ticket itself stays encrypted (sealed with the service/krbtgt key); this reads the unencrypted envelope: session key, flags, validity and target."
+        hint="Paste a base64 .kirbi — e.g. Rubeus asktgt/dump or Mimikatz output. The ticket itself stays encrypted (sealed with the service/krbtgt key); this reads the unencrypted envelope: session key, flags, validity and target."
       >
         <Textarea
           autoFocus

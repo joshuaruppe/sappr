@@ -22,7 +22,8 @@ export type CategoryId =
   | "generate"
   | "network"
   | "forensics"
-  | "windows";
+  | "windows"
+  | "linux";
 
 /**
  * Metadata for a single tool. Lives in each tool's `meta.ts` and is loaded

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import type { ToolMeta } from "@/registry/types";
-import { CATEGORIES } from "@/registry/categories";
 import { executionOf } from "@/registry/execution";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -20,7 +19,6 @@ export function ToolShell({
   /** Optional header-right actions (e.g. a "Share" button). */
   actions?: ReactNode;
 }) {
-  const category = CATEGORIES[meta.category];
   const Icon = meta.icon;
   const exec = executionOf(meta.execution);
   const status = meta.status ?? "stable";
@@ -40,26 +38,20 @@ export function ToolShell({
                   {status}
                 </Badge>
               )}
+              <span
+                role="img"
+                aria-label={exec.label}
+                title={`${exec.label} — ${exec.description}`}
+                className={cn(
+                  "size-2 shrink-0 rounded-full ring-4 ring-current/15",
+                  exec.dotClass,
+                  exec.textClass,
+                )}
+              />
             </div>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
               {meta.description}
             </p>
-            <div className="mt-2.5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5">
-                <category.icon className="size-3.5" />
-                {category.label}
-              </span>
-              <span aria-hidden className="text-border">
-                •
-              </span>
-              <span
-                className={cn("inline-flex items-center gap-1.5", exec.textClass)}
-                title={exec.description}
-              >
-                <span className={cn("size-1.5 rounded-full", exec.dotClass)} />
-                {exec.label}
-              </span>
-            </div>
           </div>
         </div>
         {actions ? <div className="flex shrink-0 items-center gap-2">{actions}</div> : null}

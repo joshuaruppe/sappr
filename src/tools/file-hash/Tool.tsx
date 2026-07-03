@@ -56,7 +56,7 @@ export default function FileHashTool() {
       <Field label="File">
         <FileDrop
           onFile={setFile}
-          hint="Drop a file here, or click to browse. Hashed locally, never uploaded."
+          hint="Drop a file here, or click to browse."
         />
       </Field>
 

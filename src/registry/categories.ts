@@ -8,6 +8,7 @@ import {
   Network,
   Microscope,
   AppWindow,
+  Terminal,
   Blocks,
   ShieldHalf,
   type LucideIcon,
@@ -131,6 +132,15 @@ export const CATEGORIES: Record<CategoryId, CategoryInfo> = {
       "Decode Windows-specific structures like security descriptors, SDDL and SIDs.",
     icon: AppWindow,
     order: 90,
+  },
+  linux: {
+    id: "linux",
+    label: "Linux",
+    short: "Linux",
+    description:
+      "Triage Linux/Unix loot: parse passwd/shadow, sudoers, file permissions and crontabs, and surface privilege-escalation red flags.",
+    icon: Terminal,
+    order: 100,
   },
 };
 

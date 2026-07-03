@@ -16,7 +16,7 @@ export default function SecurityDescriptorTool() {
     <>
       <Field
         label="Security descriptor (Base64 or hex)"
-        hint="Paste a self-relative SECURITY_DESCRIPTOR — e.g. an AD nTSecurityDescriptor blob or the output of a Get-Acl .GetSecurityDescriptorBinaryForm(). It's parsed entirely in your browser; nothing leaves this machine."
+        hint="Paste a self-relative SECURITY_DESCRIPTOR — e.g. an AD nTSecurityDescriptor blob or the output of a Get-Acl .GetSecurityDescriptorBinaryForm()."
       >
         <Textarea
           autoFocus

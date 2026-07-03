@@ -46,7 +46,7 @@ export default function JwtDecodeTool() {
     <>
       <Field
         label="JSON Web Token"
-        hint="Paste a compact JWT. Decoding happens entirely in your browser."
+        hint="Paste a compact JWT (header.payload.signature)."
       >
         <Textarea
           autoFocus

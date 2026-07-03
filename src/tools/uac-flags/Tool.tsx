@@ -13,7 +13,7 @@ export default function UacTool() {
     <>
       <Field
         label="userAccountControl value"
-        hint="Decimal (e.g. 66048) or hex (e.g. 0x10200). Decoded entirely in your browser."
+        hint="Decimal (e.g. 66048) or hex (e.g. 0x10200)."
       >
         <Input
           autoFocus
