@@ -5,6 +5,20 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-07-02
+
+### Changed
+
+- Merged the separate Base64, Base32, Base58 and Hex tools into one **Base &
+  Hex** encoder/decoder with a format selector. Each format's options (Base64
+  URL-safe/padding/strict, Base32 padding/lowercase, hex delimiter/case) show
+  contextually for the selected format and mode.
+- The Base64 decoder no longer renders a security descriptor inline. When the
+  decoded bytes look like a Windows security descriptor, it now shows a
+  "security descriptor detected" prompt that opens the dedicated **Security
+  Descriptor** tool with the pasted blob handed along (via the URL fragment, so
+  it never leaves the machine).
+
 ## [1.1.0] - 2026-06-30
 
 ### Added
@@ -181,6 +195,7 @@ registration.
 - Bundles hashcat's MIT-licensed mode table; its notice is reproduced in
   [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md).
 
+[1.1.1]: https://github.com/joshuaruppe/sappr/releases/tag/v1.1.1
 [1.1.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.1.0
 [1.0.1]: https://github.com/joshuaruppe/sappr/releases/tag/v1.0.1
 [1.0.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.0.0

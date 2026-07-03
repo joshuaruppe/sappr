@@ -2,10 +2,13 @@ import { useMemo, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, ErrorNote } from "@/components/tool/parts";
 import { SecurityDescriptorView } from "@/components/tool/security-descriptor-view";
+import { useRouter } from "@/lib/router";
 import { parseSdInput } from "./logic";
 
 export default function SecurityDescriptorTool() {
-  const [input, setInput] = useState("");
+  const { query } = useRouter();
+  // Seed from a `?in=` handoff (e.g. "detected in Base64" from the Base tool).
+  const [input, setInput] = useState(() => query.get("in") ?? "");
   const { sd, format, error } = useMemo(() => parseSdInput(input), [input]);
   const hasInput = input.trim() !== "";
 
