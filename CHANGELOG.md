@@ -5,6 +5,43 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-04
+
+### Added
+
+- Two Windows tools:
+  - **PowerShell EncodedCommand** decoder — decodes `-EncodedCommand`
+    (Base64 → UTF-16LE) and auto-unwraps the common inner Base64 +
+    DeflateStream/GzipStream obfuscation layer used by fileless malware.
+  - **SID Decoder** — converts a Windows SID between string and binary form,
+    resolves well-known SIDs and RIDs (Administrator, Domain Admins, krbtgt…),
+    and breaks out the identifier authority and sub-authorities.
+- Four Linux tools:
+  - **/etc/group** parser — flags membership in privilege-escalation groups
+    (docker, lxd, disk, shadow ≈ instant root; sudo/wheel/adm).
+  - **SSH authorized_keys** analyzer — SHA-256 fingerprints each key, shows its
+    options, and flags weak algorithms and unrestricted (backdoor-shaped) keys.
+  - **Linux Capabilities** decoder — turns getcap output into plain meaning and
+    flags privesc capabilities (cap_setuid, cap_dac_read_search, cap_sys_admin…).
+  - **systemd Unit** analyzer — flags a root service with a writable/relative
+    ExecStart, a `User=` bypass, secrets in `Environment=`, and missing sandboxing.
+
+### Changed
+
+- The **FILETIME** tool now also interprets AD **Integer8** (LargeInteger)
+  values — negative durations (maxPwdAge, lockoutDuration) alongside absolute
+  timestamps — and is renamed **FILETIME / Integer8**.
+- Every **Findings** panel is now a collapsible card (collapsed by default) with
+  color-coded per-severity counts next to the title and a copy button that
+  exports the findings as plain text (one per line, severity-tagged).
+- The **userAccountControl** and **JWT** decoders gained a Findings panel — UAC
+  surfaces delegation / AS-REP-roastable / reversible-encryption flags; JWT
+  flags `alg: none`, expired, symmetric-algorithm and no-expiry tokens.
+- The **Security Descriptor** decoder now flags dangerous ACL grants — DCSync,
+  GenericAll, WriteDacl/WriteOwner, Shadow Credentials, RBCD, targeted
+  Kerberoast and group-membership writes — downgrading grants to well-known
+  privileged principals (Domain Admins, SYSTEM…) to informational.
+
 ## [1.2.0] - 2026-07-03
 
 ### Added
@@ -221,6 +258,7 @@ registration.
 - Bundles hashcat's MIT-licensed mode table; its notice is reproduced in
   [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md).
 
+[1.3.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.3.0
 [1.2.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.2.0
 [1.1.1]: https://github.com/joshuaruppe/sappr/releases/tag/v1.1.1
 [1.1.0]: https://github.com/joshuaruppe/sappr/releases/tag/v1.1.0

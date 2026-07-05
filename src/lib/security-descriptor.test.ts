@@ -7,6 +7,9 @@ import {
   sddlSid,
   wellKnownSidName,
   guidName,
+  analyzeDescriptor,
+  type ParsedAce,
+  type SecurityDescriptor,
 } from "./security-descriptor";
 
 // A known self-relative SECURITY_DESCRIPTOR, byte-for-byte:
@@ -88,5 +91,94 @@ describe("security descriptor parser", () => {
       "msDS-KeyCredentialLink (attribute)",
     );
     expect(guidName("00000000-0000-0000-0000-000000000000")).toBeUndefined();
+  });
+});
+
+function ace(
+  rights: string[],
+  sid: string,
+  opts: { name?: string; objectType?: string; objectTypeName?: string; type?: string } = {},
+): ParsedAce {
+  return {
+    type: opts.type ?? "ACCESS_ALLOWED",
+    typeByte: 0,
+    flags: [],
+    flagsByte: 0,
+    accessMask: 0,
+    rights,
+    trustee: { sid, name: opts.name },
+    objectType: opts.objectType,
+    objectTypeName: opts.objectTypeName,
+    sddl: "",
+  };
+}
+
+function sdOf(aces: ParsedAce[]): SecurityDescriptor {
+  return {
+    revision: 1,
+    control: 0x8004,
+    controlFlags: [],
+    daclPresent: true,
+    saclPresent: false,
+    dacl: { revision: 2, aces },
+  };
+}
+
+describe("analyzeDescriptor", () => {
+  it("flags GenericAll to Everyone in the parsed sample as high", () => {
+    const f = analyzeDescriptor(parseSecurityDescriptor(SD)!);
+    expect(
+      f.some((x) => x.severity === "high" && /Everyone/.test(x.message) && /GenericAll/.test(x.message)),
+    ).toBe(true);
+  });
+
+  it("flags DCSync (replication) extended rights as high", () => {
+    const f = analyzeDescriptor(
+      sdOf([
+        ace(["DS_CONTROL_ACCESS"], "S-1-5-11", {
+          name: "NT AUTHORITY\\Authenticated Users",
+          objectType: "1131f6ad-9c07-11d1-f79f-00c04fc2dcd2",
+          objectTypeName: "DS-Replication-Get-Changes-All",
+        }),
+      ]),
+    );
+    expect(f[0].severity).toBe("high");
+    expect(f[0].message).toMatch(/DCSync/);
+  });
+
+  it("flags WriteDacl to a normal user", () => {
+    const f = analyzeDescriptor(sdOf([ace(["WRITE_DAC"], "S-1-5-21-1-2-3-1107")]));
+    expect(f[0].severity).toBe("high");
+    expect(f[0].message).toMatch(/WriteDacl/);
+  });
+
+  it("flags Shadow Credentials (msDS-KeyCredentialLink write)", () => {
+    const f = analyzeDescriptor(
+      sdOf([
+        ace(["DS_WRITE_PROP"], "S-1-5-11", {
+          objectType: "5b47d60f-6090-40b2-9f37-2a4de88f3063",
+          objectTypeName: "msDS-KeyCredentialLink (attribute)",
+        }),
+      ]),
+    );
+    expect(f.some((x) => /Shadow Credentials/.test(x.message))).toBe(true);
+  });
+
+  it("downgrades powerful rights granted to a privileged principal to info", () => {
+    const f = analyzeDescriptor(
+      sdOf([ace(["GENERIC_ALL"], "S-1-5-21-1-2-3-512", { name: "Domain Admins" })]),
+    );
+    expect(f[0].severity).toBe("info");
+    expect(f[0].message).toMatch(/expected/);
+  });
+
+  it("ignores deny ACEs and benign rights", () => {
+    const f = analyzeDescriptor(
+      sdOf([
+        ace(["GENERIC_ALL"], "S-1-1-0", { type: "ACCESS_DENIED" }),
+        ace(["DS_READ_PROP", "READ_CONTROL"], "S-1-1-0"),
+      ]),
+    );
+    expect(f).toHaveLength(0);
   });
 });

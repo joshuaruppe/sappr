@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Segmented } from "@/components/ui/segmented";
 import { Field, ErrorNote } from "@/components/tool/parts";
-import { FindingList } from "@/components/tool/findings";
+import { FindingsSection } from "@/components/tool/findings";
 import { parseCrontab } from "./logic";
 
 type Kind = "user" | "system";
@@ -63,12 +63,7 @@ export default function CrontabTool() {
 
       {!r.error && (r.jobs.length > 0 || r.env.length > 0) ? (
         <div className="flex flex-col gap-4">
-          <section className="flex flex-col gap-2 rounded-lg border border-border bg-card/40 p-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Findings
-            </h3>
-            <FindingList findings={r.findings} />
-          </section>
+          <FindingsSection findings={r.findings} />
 
           {r.jobs.length > 0 ? (
             <section className="flex flex-col gap-2">

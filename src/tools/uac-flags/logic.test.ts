@@ -17,6 +17,16 @@ describe("userAccountControl decoder", () => {
     expect(names).toContain("NORMAL_ACCOUNT");
   });
 
+  it("surfaces security-relevant flags as prioritized findings", () => {
+    const f = parseUac("0x480200").findings;
+    expect(f.some((x) => x.severity === "high" && /DONT_REQ_PREAUTH/.test(x.message))).toBe(true);
+    expect(f.some((x) => x.severity === "high" && /TRUSTED_FOR_DELEGATION/.test(x.message))).toBe(true);
+  });
+
+  it("produces no findings for a value with no noted flags", () => {
+    expect(parseUac("0x200").findings).toHaveLength(0); // NORMAL_ACCOUNT only
+  });
+
   it("errors on non-numeric input", () => {
     expect(parseUac("abc").error).not.toBe("");
   });

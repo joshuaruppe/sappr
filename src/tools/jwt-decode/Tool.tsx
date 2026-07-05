@@ -3,7 +3,8 @@ import { ShieldOff } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Field, OutputArea, ErrorNote } from "@/components/tool/parts";
-import { decodeJwt, type ExpiryStatus } from "./logic";
+import { FindingsSection } from "@/components/tool/findings";
+import { decodeJwt, jwtFindings, type ExpiryStatus } from "./logic";
 
 const SAMPLE =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
@@ -70,6 +71,10 @@ export default function JwtDecodeTool() {
 
       {decoded ? (
         <>
+          <FindingsSection
+            findings={jwtFindings(decoded)}
+            emptyLabel="No header or claim issues detected."
+          />
           <Field label="Summary">
             <div className="flex flex-wrap items-center gap-2">
               {decoded.alg ? (

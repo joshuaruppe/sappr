@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, ErrorNote } from "@/components/tool/parts";
+import { FindingsSection } from "@/components/tool/findings";
 import { SecurityDescriptorView } from "@/components/tool/security-descriptor-view";
 import { useRouter } from "@/lib/router";
+import { analyzeDescriptor } from "@/lib/security-descriptor";
 import { parseSdInput } from "./logic";
 
 export default function SecurityDescriptorTool() {
@@ -37,6 +39,10 @@ export default function SecurityDescriptorTool() {
               Parsed as <span className="font-medium text-foreground">{format}</span>.
             </p>
           ) : null}
+          <FindingsSection
+            findings={analyzeDescriptor(sd)}
+            emptyLabel="No dangerous ACL grants detected."
+          />
           <SecurityDescriptorView sd={sd} />
         </>
       ) : null}

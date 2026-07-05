@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Segmented } from "@/components/ui/segmented";
 import { Badge } from "@/components/ui/badge";
 import { Field, ErrorNote } from "@/components/tool/parts";
-import { FindingList } from "@/components/tool/findings";
+import { FindingsSection } from "@/components/tool/findings";
 import { cn } from "@/lib/utils";
 import { parseListing, type ParsedMode, type PermClass, type Severity, type Finding } from "./logic";
 
@@ -251,12 +251,10 @@ export default function FilePermsTool() {
           </div>
 
           {view === "concerning" ? (
-            <section className="flex flex-col gap-2 rounded-lg border border-border bg-card/40 p-3">
-              <FindingList
-                findings={listing.findings}
-                emptyLabel={`Nothing concerning across ${listing.entries.length} entries.`}
-              />
-            </section>
+            <FindingsSection
+              findings={listing.findings}
+              emptyLabel={`Nothing concerning across ${listing.entries.length} entries.`}
+            />
           ) : (
             <div className="overflow-x-auto rounded-lg border border-border">
               <table className="w-full text-left text-xs">

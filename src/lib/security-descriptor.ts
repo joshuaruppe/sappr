@@ -472,3 +472,88 @@ export function toSddl(sd: SecurityDescriptor): string {
   }
   return out;
 }
+
+// --- attack-surface analysis --------------------------------------------------
+
+export interface AceFinding {
+  severity: "high" | "medium" | "info";
+  message: string;
+}
+
+// Trustees for whom powerful rights are expected (so they get downgraded).
+const PRIVILEGED_SIDS = new Set([
+  "S-1-5-18", // SYSTEM
+  "S-1-5-32-544", // BUILTIN\Administrators
+  "S-1-5-9", // Enterprise Domain Controllers
+  "S-1-3-0", // CREATOR OWNER
+]);
+const PRIVILEGED_RIDS = new Set([500, 512, 516, 518, 519, 521]); // Administrator, Domain Admins, DCs, Schema/Enterprise Admins, RODCs
+
+function isPrivilegedTrustee(sid: string): boolean {
+  if (PRIVILEGED_SIDS.has(sid)) return true;
+  const m = /^S-1-5-21-\d+-\d+-\d+-(\d+)$/.exec(sid);
+  return m ? PRIVILEGED_RIDS.has(Number(m[1])) : false;
+}
+
+const SEV_ORDER = { high: 0, medium: 1, info: 2 } as const;
+
+/**
+ * Flag DACL ACEs that grant AD attack-primitive rights — DCSync, GenericAll,
+ * WriteDacl/WriteOwner, Shadow Credentials, RBCD, targeted Kerberoast, group
+ * membership. Grants to well-known privileged principals (Domain Admins,
+ * SYSTEM, …) are downgraded to info, since those are expected. Allow ACEs only.
+ */
+export function analyzeDescriptor(sd: SecurityDescriptor): AceFinding[] {
+  const findings: AceFinding[] = [];
+
+  for (const ace of sd.dacl?.aces ?? []) {
+    if (!ace.type.startsWith("ACCESS_ALLOWED")) continue;
+    const has = (n: string) => ace.rights.includes(n);
+    const otn = (ace.objectTypeName ?? "").toLowerCase();
+    const grants: { sev: AceFinding["severity"]; label: string }[] = [];
+
+    if (has("DS_CONTROL_ACCESS")) {
+      if (!ace.objectType) {
+        grants.push({ sev: "high", label: "all extended rights (includes password reset and DCSync)" });
+      } else if (/replication-get-changes/.test(otn)) {
+        grants.push({ sev: "high", label: `${ace.objectTypeName} — DCSync (replicate directory secrets)` });
+      } else if (/force-change-password/.test(otn)) {
+        grants.push({ sev: "high", label: `${ace.objectTypeName} — force password reset` });
+      } else {
+        grants.push({ sev: "medium", label: `extended right: ${ace.objectTypeName ?? ace.objectType}` });
+      }
+    }
+    if (has("GENERIC_ALL")) grants.push({ sev: "high", label: "GenericAll (full control)" });
+    if (has("WRITE_DAC")) {
+      grants.push({ sev: "high", label: "WriteDacl (can rewrite the DACL to grant itself any right)" });
+    }
+    if (has("WRITE_OWNER")) grants.push({ sev: "high", label: "WriteOwner (can take ownership)" });
+    if (has("GENERIC_WRITE")) grants.push({ sev: "medium", label: "GenericWrite (write all properties)" });
+    if (has("DS_WRITE_PROP")) {
+      if (/keycredentiallink/.test(otn)) {
+        grants.push({ sev: "high", label: "write msDS-KeyCredentialLink (Shadow Credentials)" });
+      } else if (/allowedtoactonbehalf/.test(otn)) {
+        grants.push({ sev: "high", label: "write msDS-AllowedToActOnBehalfOfOtherIdentity (RBCD takeover)" });
+      } else if (/\bmember\b/.test(otn)) {
+        grants.push({ sev: "high", label: "write member (add members to the group)" });
+      } else if (/service-principal-name|serviceprincipalname/.test(otn)) {
+        grants.push({ sev: "medium", label: "write servicePrincipalName (targeted Kerberoasting)" });
+      } else if (!ace.objectType) {
+        grants.push({ sev: "medium", label: "write all properties" });
+      }
+    }
+
+    if (grants.length === 0) continue;
+    const who = ace.trustee.name ?? ace.trustee.sid;
+    const privileged = isPrivilegedTrustee(ace.trustee.sid);
+    for (const g of grants) {
+      findings.push({
+        severity: privileged ? "info" : g.sev,
+        message: `${who} — ${g.label}${privileged ? " (expected for a privileged principal)" : ""}`,
+      });
+    }
+  }
+
+  findings.sort((a, b) => SEV_ORDER[a.severity] - SEV_ORDER[b.severity]);
+  return findings;
+}

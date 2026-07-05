@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Field, ErrorNote } from "@/components/tool/parts";
 import { Badge } from "@/components/ui/badge";
+import { FindingsSection } from "@/components/tool/findings";
 import { parseUac } from "./logic";
 
 export default function UacTool() {
@@ -26,7 +27,9 @@ export default function UacTool() {
       {hasInput && r.error ? <ErrorNote>{r.error}</ErrorNote> : null}
 
       {r.value !== null && !r.error ? (
-        <div className="flex flex-col gap-3 rounded-lg border border-border bg-card/40 p-3">
+        <>
+          <FindingsSection findings={r.findings} emptyLabel="No security-relevant flags set." />
+          <div className="flex flex-col gap-3 rounded-lg border border-border bg-card/40 p-3">
           <div className="text-xs text-muted-foreground">
             <span className="text-muted-foreground/70">Value:</span>{" "}
             <span className="font-mono text-foreground">{r.value}</span> ·{" "}
@@ -50,7 +53,8 @@ export default function UacTool() {
               Unrecognized bits: 0x{r.leftover.toString(16)}
             </p>
           ) : null}
-        </div>
+          </div>
+        </>
       ) : null}
     </>
   );

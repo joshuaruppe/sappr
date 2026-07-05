@@ -141,3 +141,45 @@ export function decodeJwt(token: string, now: number = Date.now()): DecodedJwt {
     expiry,
   };
 }
+
+export type Severity = "high" | "medium" | "info";
+
+export interface Finding {
+  severity: Severity;
+  message: string;
+}
+
+const SEV_RANK: Record<Severity, number> = { high: 0, medium: 1, info: 2 };
+
+/** Security-relevant observations about a decoded token's header and claims.
+ * Decode-only: this never checks the signature. */
+export function jwtFindings(decoded: DecodedJwt): Finding[] {
+  const out: Finding[] = [];
+  const alg = (decoded.alg ?? "").toLowerCase();
+
+  if (alg === "none") {
+    out.push({
+      severity: "high",
+      message:
+        "alg: none — the token is unsigned. A verifier that accepts it can be forged trivially (authentication bypass).",
+    });
+  } else if (alg.startsWith("hs")) {
+    out.push({
+      severity: "info",
+      message: `${decoded.alg} is symmetric (HMAC) — anyone holding the shared secret can forge tokens; brute-forceable if the secret is weak.`,
+    });
+  }
+
+  if (decoded.expiry === "expired") {
+    out.push({ severity: "medium", message: "Token is expired (exp is in the past)." });
+  } else if (decoded.expiry === "not-yet-valid") {
+    out.push({ severity: "info", message: "Token is not yet valid (nbf is in the future)." });
+  }
+
+  if (typeof decoded.payload.exp !== "number") {
+    out.push({ severity: "info", message: "No exp claim — this token does not expire." });
+  }
+
+  out.sort((a, b) => SEV_RANK[a.severity] - SEV_RANK[b.severity]);
+  return out;
+}

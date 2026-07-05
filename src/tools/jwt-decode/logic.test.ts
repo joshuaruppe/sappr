@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { decodeJwt, formatUtc } from "./logic";
+import { decodeJwt, formatUtc, jwtFindings } from "./logic";
 
 // Standard RFC 7519 example token (HS256), payload has sub/name/iat.
 const HS256 =
@@ -85,5 +85,30 @@ describe("decodeJwt", () => {
   it("throws on an empty token", () => {
     expect(() => decodeJwt("")).toThrow();
     expect(() => decodeJwt("   ")).toThrow();
+  });
+});
+
+describe("jwtFindings", () => {
+  it("flags alg:none as high", () => {
+    const token = `${btoa('{"alg":"none"}')}.${btoa('{"exp":5000}')}.sig`;
+    const f = jwtFindings(decodeJwt(token, 1000 * 1000));
+    expect(f.some((x) => x.severity === "high" && /alg: none/.test(x.message))).toBe(true);
+  });
+
+  it("flags an expired token as medium", () => {
+    const token = `${btoa('{"alg":"HS256"}')}.${btoa('{"exp":1000}')}.sig`;
+    const f = jwtFindings(decodeJwt(token, 2000 * 1000));
+    expect(f.some((x) => x.severity === "medium" && /expired/.test(x.message))).toBe(true);
+  });
+
+  it("notes a symmetric HS* algorithm and a missing exp", () => {
+    const f = jwtFindings(decodeJwt(HS256));
+    expect(f.some((x) => /symmetric/.test(x.message))).toBe(true);
+    expect(f.some((x) => /does not expire/.test(x.message))).toBe(true);
+  });
+
+  it("returns nothing for a signed token with a future exp", () => {
+    const token = `${btoa('{"alg":"RS256"}')}.${btoa('{"exp":9999999999}')}.sig`;
+    expect(jwtFindings(decodeJwt(token, 1000 * 1000))).toHaveLength(0);
   });
 });
