@@ -242,8 +242,11 @@ function parseListingLine(line: string): ListingEntry | null {
   if (!parsed) return null;
 
   // Columns after the mode: links owner group size [maj min] date(3) name.
-  // Block/char devices carry an extra size token (major, minor).
-  const deviceExtra = type === "b" || type === "c" ? 1 : 0;
+  // Block/char devices carry a "major, minor" size, which some `ls` builds
+  // print split ("1," "3") and others combined ("1,3"). Only the split form
+  // consumes an extra token.
+  const isDevice = type === "b" || type === "c";
+  const deviceExtra = isDevice && /,$/.test(tokens[mi + 4] ?? "") ? 1 : 0;
   const owner = tokens[mi + 2] ?? "";
   const group = tokens[mi + 3] ?? "";
   const size = tokens.slice(mi + 4, mi + 5 + deviceExtra).join(" ");

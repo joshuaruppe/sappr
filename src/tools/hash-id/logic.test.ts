@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { identifyHash, buildHashcatCommand, buildJohnCommand } from "./logic";
 
+describe("cisco type-7", () => {
+  it("identifies secrets with salts other than 07", () => {
+    for (const s of ["094F471A1A0A", "060506324F41", "1511021F0725"]) {
+      expect(identifyHash(s).some((h) => h.id === "cisco-type7")).toBe(true);
+    }
+  });
+});
+
 describe("hash identifier", () => {
   it("identifies a Kerberoasting TGS-REP (etype 23) with hashcat + john", () => {
     const hash =

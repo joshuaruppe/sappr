@@ -50,7 +50,14 @@ export function parseWindowsTime(input: string): WindowsTimeResult {
   let v: bigint;
   try {
     if (/^-?0x[0-9a-fA-F]+$/.test(s)) {
-      v = s.startsWith("-") ? -BigInt(s.slice(1)) : BigInt(s);
+      const neg = s.startsWith("-");
+      let hv = BigInt(neg ? s.slice(1) : s);
+      // A raw 64-bit hex value with the high bit set is a two's-complement
+      // negative — Integer8 durations (maxPwdAge, lockoutDuration) are commonly
+      // dumped this way. Sign-extend it, but leave the all-ones "never" sentinel
+      // (0xFFFFFFFFFFFFFFFF) intact so it still reads as "never".
+      if (!neg && hv > NEVER_MAX && hv < UINT64_MAX) hv -= UINT64_MAX + 1n;
+      v = neg ? -hv : hv;
     } else if (/^-?\d+$/.test(s)) {
       v = BigInt(s);
     } else {

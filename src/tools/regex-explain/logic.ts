@@ -227,6 +227,42 @@ function describeRoot(ast: AstRegExp): ExplainNode {
   };
 }
 
+/** Noun phrases for common Unicode property / general-category names. */
+const UNICODE_PROPERTY_NAMES: Record<string, string> = {
+  L: "a letter",
+  Lu: "an uppercase letter",
+  Ll: "a lowercase letter",
+  Lt: "a titlecase letter",
+  Lm: "a modifier letter",
+  Lo: "a letter without case",
+  N: "a number",
+  Nd: "a decimal digit",
+  Nl: "a letter-number",
+  No: "an other number",
+  P: "a punctuation character",
+  S: "a symbol",
+  Sc: "a currency symbol",
+  Sm: "a math symbol",
+  Z: "a separator/space",
+  Zs: "a space separator",
+  M: "a combining mark",
+  C: "a control/other character",
+  Cc: "a control character",
+  Alphabetic: "an alphabetic character",
+  White_Space: "a whitespace character",
+  Emoji: "an emoji code point",
+};
+
+function describeProperty(name: string): string {
+  const key = name
+    .replace(/^(General_Category|gc|Script|sc|Script_Extensions)\s*=\s*/i, "")
+    .trim();
+  const known = UNICODE_PROPERTY_NAMES[key];
+  if (known) return known;
+  if (/^[A-Za-z_]+$/.test(key)) return `in the "${key}" script/property`;
+  return `the Unicode property ${name}`;
+}
+
 /**
  * Explain a regex pattern + flags as a nested {@link ExplainNode} tree.
  * Empty pattern returns an empty result (no tree, no error).
@@ -234,9 +270,30 @@ function describeRoot(ast: AstRegExp): ExplainNode {
  */
 export function explainRegex(pattern: string, flags: string): ExplainResult {
   if (pattern === "") return {};
+  const props = [...pattern.matchAll(/\\([pP])\{([^}]+)\}/g)];
   try {
     const ast = parse(`/${pattern}/${flags}`);
-    return { tree: describeRoot(ast) };
+    const tree = describeRoot(ast);
+    if (props.length > 0) {
+      // regexp-tree (this version) doesn't model \p{...} / \P{...} and silently
+      // reduces them to their literal characters. Explain them explicitly so the
+      // breakdown isn't misleading.
+      const seen = new Set<string>();
+      const children: ExplainNode[] = [];
+      for (const [full, pP, name] of props) {
+        if (seen.has(full)) continue;
+        seen.add(full);
+        children.push({
+          label: full,
+          detail: `any code point that is ${pP === "P" ? "NOT " : ""}${describeProperty(name)}`,
+        });
+      }
+      tree.children = [
+        { label: "Unicode property escapes", detail: "matched by code-point property", children },
+        ...(tree.children ?? []),
+      ];
+    }
+    return { tree };
   } catch (e) {
     return { error: e instanceof Error ? e.message : String(e) };
   }

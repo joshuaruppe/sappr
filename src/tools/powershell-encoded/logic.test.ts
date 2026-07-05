@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { extractBase64, decodeOuter, decodePowerShell } from "./logic";
+import { extractBase64, decodeOuter, decodePowerShell, encodeToBase64 } from "./logic";
+
+describe("decodePowerShell resilience", () => {
+  it("does not raise a decode error for a long non-base64 word", async () => {
+    const r = await decodePowerShell("thisisareallylongwordwithnospaces");
+    expect(r.error).toBe("");
+  });
+});
 
 describe("extractBase64", () => {
   it("pulls the base64 out of a `powershell -enc` line", () => {
@@ -18,6 +25,18 @@ describe("decodeOuter", () => {
     const r = decodeOuter("dwBoAG8AYQBtAGkA");
     expect(r.encoding).toBe("UTF-16LE");
     expect(r.text).toBe("whoami");
+  });
+
+  it("honors a forced UTF-16LE encoding", () => {
+    const r = decodeOuter("dwBoAG8AYQBtAGkA", "utf-16le");
+    expect(r.encoding).toBe("UTF-16LE");
+    expect(r.text).toBe("whoami");
+  });
+
+  it("honors a forced UTF-8 encoding even on UTF-16LE bytes", () => {
+    const r = decodeOuter("dwBoAG8AYQBtAGkA", "utf-8");
+    expect(r.encoding).toBe("UTF-8");
+    expect(r.text).not.toBe("whoami");
   });
 
   it("falls back to UTF-8 when the bytes are not UTF-16LE", () => {
@@ -64,4 +83,19 @@ describe("decodePowerShell", () => {
       expect(r.layers[1].label).toMatch(/Gunzip/);
     },
   );
+});
+
+describe("encodeToBase64", () => {
+  it("encodes to Base64 of UTF-16LE (matches PowerShell -enc)", () => {
+    expect(encodeToBase64("whoami")).toBe("dwBoAG8AYQBtAGkA");
+  });
+
+  it("round-trips with decodeOuter", () => {
+    const script = `$x = 1\nWrite-Host "hi $x"\nGet-Date`;
+    expect(decodeOuter(encodeToBase64(script)).text).toBe(script);
+  });
+
+  it("returns empty for empty input", () => {
+    expect(encodeToBase64("")).toBe("");
+  });
 });

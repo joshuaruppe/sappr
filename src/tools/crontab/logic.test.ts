@@ -14,6 +14,24 @@ describe("describeSchedule", () => {
     expect(describeSchedule("* * * * *").description).toBe("Every minute");
   });
 
+  it("describes comma-separated minutes without leaking brace syntax", () => {
+    const d = describeSchedule("0,30 * * * *").description;
+    expect(d).not.toMatch(/[{}]/);
+    expect(d).toMatch(/0, 30/);
+  });
+
+  it("describes comma-separated hours in English", () => {
+    const d = describeSchedule("0 9,17 * * *").description;
+    expect(d).not.toMatch(/[{}]/);
+    expect(d).toMatch(/9, 17/);
+  });
+
+  it("uses a correct ordinal for a stepped hour", () => {
+    const d = describeSchedule("0 */2 * * *").description;
+    expect(d).toMatch(/2nd/);
+    expect(d).not.toMatch(/2th/);
+  });
+
   it("names months and weekdays", () => {
     const d = describeSchedule("0 0 1 1 *").description;
     expect(d).toMatch(/January/);

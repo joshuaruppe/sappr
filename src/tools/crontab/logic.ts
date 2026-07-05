@@ -118,6 +118,21 @@ function describeField(expr: string, nameFn?: (n: number) => string): string {
     .join(", ");
 }
 
+function ordinal(n: number): string {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return `${n}${s[(v - 20) % 10] ?? s[v] ?? s[0]}`;
+}
+
+/** A readable phrase for a minute/hour field: "every hour", "every 5 minutes",
+ * or "minute 0, 30" / "hour 9–17". */
+function fieldPhrase(expr: string, unit: string): string {
+  if (expr === "*") return `every ${unit}`;
+  const step = expr.match(/^\*\/(\d+)$/);
+  if (step) return `every ${step[1]} ${unit}s`;
+  return `${unit} ${describeField(expr)}`;
+}
+
 function describeTime(min: string, hour: string): string {
   const mn = /^\d+$/.test(min) ? +min : null;
   const hr = /^\d+$/.test(hour) ? +hour : null;
@@ -127,8 +142,8 @@ function describeTime(min: string, hour: string): string {
   if (ms && hour === "*") return `every ${ms[1]} minutes`;
   if (mn !== null && hour === "*") return `at minute ${mn} of every hour`;
   const hs = hour.match(/^\*\/(\d+)$/);
-  if (mn !== null && hs) return `at minute ${mn} past every ${hs[1]}th hour`;
-  return `at minute {${describeField(min)}} and hour {${describeField(hour)}}`;
+  if (mn !== null && hs) return `at minute ${mn} past every ${ordinal(+hs[1])} hour`;
+  return `at ${fieldPhrase(min, "minute")} of ${fieldPhrase(hour, "hour")}`;
 }
 
 /** Human-readable description of a 5-field cron expression or a @macro. */

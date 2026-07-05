@@ -1,6 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { parseMode, parseListing } from "./logic";
 
+describe("parseListing devices", () => {
+  it("parses a char device whose major,minor is a combined token", () => {
+    const r = parseListing("crw-rw-rw- 1 root root 1,3 Jul 16 2025 null");
+    expect(r.entries).toHaveLength(1);
+    expect(r.entries[0].name).toBe("null");
+  });
+
+  it("parses a char device whose major, minor is split", () => {
+    const r = parseListing("crw-rw-rw- 1 root root 1,  3 Jul 16 2025 null");
+    expect(r.entries).toHaveLength(1);
+    expect(r.entries[0].name).toBe("null");
+  });
+});
+
 describe("parseMode", () => {
   it("decodes a plain octal mode", () => {
     const { mode } = parseMode("755");

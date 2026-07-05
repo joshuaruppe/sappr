@@ -250,12 +250,12 @@ export default function FilePermsTool() {
             <span className="text-xs text-muted-foreground">{listing.entries.length} entries</span>
           </div>
 
-          {view === "concerning" ? (
-            <FindingsSection
-              findings={listing.findings}
-              emptyLabel={`Nothing concerning across ${listing.entries.length} entries.`}
-            />
-          ) : (
+          <FindingsSection
+            findings={listing.findings}
+            emptyLabel={`Nothing concerning across ${listing.entries.length} entries.`}
+          />
+
+          {view === "all" ? (
             <div className="overflow-x-auto rounded-lg border border-border">
               <table className="w-full text-left text-xs">
                 <thead className="bg-muted/40 text-muted-foreground">
@@ -341,7 +341,7 @@ export default function FilePermsTool() {
                 </tbody>
               </table>
             </div>
-          )}
+          ) : null}
         </div>
       ) : null}
     </>

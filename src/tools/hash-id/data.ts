@@ -350,7 +350,8 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
       "Cisco 'type 7' is obfuscation, not a hash — trivially reversible with no cracking needed (e.g. ciscot7, online decoders).",
     confidence: "low",
     note: "Not a real hash; decode it directly instead of cracking. No hashcat mode.",
-    match: (s) => /^07[0-9A-Fa-f]{4,}$/.test(s) && s.length % 2 === 0,
+    // Leading two digits are a decimal salt index 00–15, not a literal "07".
+    match: (s) => /^(0[0-9]|1[0-5])[0-9A-Fa-f]{4,}$/.test(s) && s.length % 2 === 0,
   },
   {
     id: "juniper-9",

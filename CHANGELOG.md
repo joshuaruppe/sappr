@@ -5,6 +5,50 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-07-05
+
+### Added
+
+- **Web** tool category for web-app pentest triage:
+  - **SAML** decoder/encoder — auto-detects the HTTP-Redirect (DEFLATE + Base64)
+    or HTTP-POST (Base64) binding into readable XML, and re-encodes into either.
+  - **Security Headers** analyzer — grades a pasted response-header block (CSP,
+    HSTS, framing, cookie flags, info-leak headers) and flags what's missing.
+  - **Session Cookie** decoder — reads Flask/itsdangerous (incl. compressed),
+    JWT-in-cookie and Django signed values without the secret.
+  - **Serialized Blob** identifier — fingerprints Java, JSF ViewState, ASP.NET
+    `__VIEWSTATE`, PHP `serialize()`, Ruby Marshal and Python pickle, decoding
+    what's cheap and pointing to the matching deserialization attack.
+- **PowerShell EncodedCommand** gained an **Encode** mode (script → Base64
+  UTF-16LE `-EncodedCommand`) alongside the existing decode.
+
+### Changed
+
+- Tool output boxes now auto-fit their content (up to 70vh, then scroll).
+- The PowerShell EncodedCommand sample now demonstrates the layered
+  Base64 + Gzip auto-unwrap.
+
+### Fixed
+
+- File Permissions: the Findings panel now stays visible when switching to the
+  "Explain all" view (previously it only appeared in "Concerning only").
+- A codebase-wide bug sweep hardened many tools:
+  - **Regex Tester** now evaluates patterns in a Web Worker with a timeout, so a
+    catastrophically-backtracking pattern (e.g. `(a+)+$`) can no longer freeze
+    the tab.
+  - A tool with a bad `meta.category`, or any tool that throws while rendering,
+    is now contained by an error boundary instead of blanking the whole app.
+  - **Hash Identifier** recognizes Cisco type-7 secrets with any salt
+    (`00`–`15`), not only seed `07`.
+  - **FILETIME / Integer8** sign-extends raw two's-complement hex durations
+    (e.g. a hex `maxPwdAge`) instead of reading them as far-future dates.
+  - **Crontab** explains multi-value minute/hour schedules in English (no more
+    leaked `{…}`), with correct ordinals ("2nd hour").
+  - **SAML** decodes BOM-prefixed POST-binding XML; **Session Cookie** no longer
+    mislabels a malformed JWT as Flask, and stops over-matching Django values.
+  - Smaller fixes across Base58, JWT expiry, PowerShell decode, timestamps,
+    `ls -l` device rows, regex-explain `\p{…}`, and NULL-DACL detection.
+
 ## [1.3.0] - 2026-07-04
 
 ### Added

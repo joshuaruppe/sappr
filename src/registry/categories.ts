@@ -9,6 +9,7 @@ import {
   Microscope,
   AppWindow,
   Terminal,
+  Globe,
   Blocks,
   ShieldHalf,
   type LucideIcon,
@@ -141,6 +142,15 @@ export const CATEGORIES: Record<CategoryId, CategoryInfo> = {
       "Triage Linux/Unix loot: parse passwd/shadow, sudoers, file permissions and crontabs, and surface privilege-escalation red flags.",
     icon: Terminal,
     order: 100,
+  },
+  web: {
+    id: "web",
+    label: "Web",
+    short: "Web",
+    description:
+      "Web-app pentest decoders: SAML messages, HTTP security headers/CSP, signed session cookies and serialized-object blobs.",
+    icon: Globe,
+    order: 110,
   },
 };
 

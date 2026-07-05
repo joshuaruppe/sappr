@@ -121,12 +121,15 @@ export function decodeJwt(token: string, now: number = Date.now()): DecodedJwt {
   const nowSec = now / 1000;
   const exp = payload.exp;
   const nbf = payload.nbf;
-  if (typeof nbf === "number" && Number.isFinite(nbf) && nowSec < nbf) {
+  const expValid = typeof exp === "number" && Number.isFinite(exp);
+  const nbfValid = typeof nbf === "number" && Number.isFinite(nbf);
+  // "expired" takes precedence: a token past its exp is expired regardless of
+  // an (unusual) future nbf, so the expired state is never masked.
+  if (expValid && nowSec >= exp) {
+    expiry = "expired";
+  } else if (nbfValid && nowSec < nbf) {
     expiry = "not-yet-valid";
-  } else if (typeof exp === "number" && Number.isFinite(exp)) {
-    expiry = nowSec >= exp ? "expired" : "valid";
-  } else if (typeof nbf === "number" && Number.isFinite(nbf)) {
-    // nbf passed but no exp present.
+  } else if (expValid || nbfValid) {
     expiry = "valid";
   }
 

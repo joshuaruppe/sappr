@@ -1,6 +1,23 @@
 import { describe, expect, it } from "vitest";
 import { decodeJwt, formatUtc, jwtFindings } from "./logic";
 
+function mkJwt(payload: Record<string, unknown>): string {
+  const b = (o: unknown) =>
+    btoa(JSON.stringify(o)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return `${b({ alg: "HS256", typ: "JWT" })}.${b(payload)}.sig`;
+}
+
+describe("decodeJwt expiry precedence", () => {
+  it("reports expired even when nbf is also in the future", () => {
+    // now = 5000s: exp (1000) has passed, nbf (9000) has not.
+    expect(decodeJwt(mkJwt({ nbf: 9000, exp: 1000 }), 5_000_000).expiry).toBe("expired");
+  });
+
+  it("reports not-yet-valid when nbf is future and exp has not passed", () => {
+    expect(decodeJwt(mkJwt({ nbf: 9000, exp: 9999 }), 5_000_000).expiry).toBe("not-yet-valid");
+  });
+});
+
 // Standard RFC 7519 example token (HS256), payload has sub/name/iat.
 const HS256 =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +

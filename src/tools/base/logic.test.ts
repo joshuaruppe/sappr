@@ -11,6 +11,14 @@ import {
   decodeHex,
 } from "./logic";
 
+describe("base58 whitespace tolerance", () => {
+  it("ignores internal whitespace when decoding", () => {
+    const enc = encodeBase58("hello world");
+    const spaced = `${enc.slice(0, 4)} ${enc.slice(4)}`;
+    expect(decodeBase58(spaced)).toBe("hello world");
+  });
+});
+
 describe("base64", () => {
   it("round-trips ASCII", () => {
     expect(encodeBase64("hello")).toBe("aGVsbG8=");

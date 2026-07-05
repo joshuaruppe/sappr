@@ -8,6 +8,11 @@ group("timestamp parseInput", () => {
     expect(date.getTime()).toBe(1_700_000_000_000);
   });
 
+  it("auto-detects s vs ms for decimal input too", () => {
+    expect(parseInput("1700000000.5").getTime()).toBe(1_700_000_000_500);
+    expect(parseInput("1700000000000.5").getTime()).toBe(1_700_000_000_000);
+  });
+
   it("auto-detects milliseconds vs seconds", () => {
     const seconds = parseInput("1700000000");
     const millis = parseInput("1700000000000");

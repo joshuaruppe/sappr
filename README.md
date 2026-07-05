@@ -13,7 +13,7 @@ Everything runs in your browser. No backend, nothing uploaded.
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-![Tests](https://img.shields.io/badge/tests-459_passing-3fb950?logo=vitest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-513_passing-3fb950?logo=vitest&logoColor=white)
 ![Runs](https://img.shields.io/badge/runs-in_your_browser-6d4aff)
 ![License](https://img.shields.io/badge/license-AGPL_v3-3fb950)
 ![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49)
@@ -35,6 +35,7 @@ Everything runs in your browser. No backend, nothing uploaded.
 - **Forensics**: `strings`-style printable extraction from any file · QR decode from an image
 - **Windows / AD**: security-descriptor (SDDL, ACLs, AD GUID names), Kerberos `.kirbi`, **SID** and PowerShell **`-EncodedCommand`** decoders · GPP `cpassword` decrypt · `userAccountControl` and **FILETIME / Integer8** converters
 - **Linux**: `passwd`/`shadow`, `/etc/group`, `sudoers` (GTFOBins-aware, reads `sudo -l`), SSH `authorized_keys`, capabilities and systemd-unit analysis · `ls -l` permission triage · crontab explainer — each flagging privilege-escalation red flags
+- **Web**: **SAML** decoder/encoder · HTTP **security-header + CSP** analyzer · signed **session-cookie** decoder (Flask/itsdangerous, JWT, Django) · **serialized-blob** identifier (Java/ViewState/PHP/Ruby/pickle)
 
 Every tool is a self-contained folder under [`src/tools/`](src/tools/); dropping
 a new one in registers it automatically across the nav, palette and launcher.
@@ -149,6 +150,7 @@ tooling and analysis, not a substitute for audited production key handling.
 - [x] Settings (theme, cracker choice) + optional Argon2id password gate
 - [x] Windows / AD: security-descriptor (with dangerous-ACL findings), Kerberos, SID and PowerShell EncodedCommand decoders, GPP cpassword, userAccountControl and FILETIME/Integer8
 - [x] Linux: passwd/shadow, /etc/group, sudoers, `ls -l` permissions, authorized_keys, capabilities, systemd-unit and crontab triage with privesc red flags
+- [x] Web: SAML decode/encode, security-header + CSP analysis, signed session-cookie and serialized-blob decoders
 
 **More tools**
 

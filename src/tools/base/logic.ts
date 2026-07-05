@@ -125,10 +125,11 @@ export function encodeBase58(text: string): string {
 }
 
 export function decodeBase58(input: string): string {
-  const trimmed = input.trim();
-  if (trimmed === "") return "";
+  // Strip all whitespace (incl. line wraps), matching the other decoders.
+  const cleaned = input.replace(/\s+/g, "");
+  if (cleaned === "") return "";
   // bs58.decode throws on invalid characters (0, O, I, l, etc.).
-  return new TextDecoder().decode(bs58.decode(trimmed));
+  return new TextDecoder().decode(bs58.decode(cleaned));
 }
 
 // --- Hex (base16) -------------------------------------------------------------

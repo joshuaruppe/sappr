@@ -18,6 +18,14 @@ describe("regex-explain", () => {
     expect(text).toContain('"a"');
   });
 
+  it("explains a Unicode property escape instead of flattening it", () => {
+    const { tree } = explainRegex("\\p{L}", "u");
+    expect(tree).toBeDefined();
+    const text = flatten(tree!);
+    expect(text).toContain("Unicode property");
+    expect(text).toMatch(/letter/i);
+  });
+
   it("describes [A-Z]\\d as a character class A-Z plus a digit", () => {
     const { tree, error } = explainRegex("[A-Z]\\d", "");
     expect(error).toBeUndefined();

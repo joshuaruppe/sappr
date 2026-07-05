@@ -15,6 +15,19 @@ describe("parseWindowsTime", () => {
     expect(r.iso).toBe("2000-01-01T00:00:00.000Z");
   });
 
+  it("sign-extends a two's-complement hex duration (maxPwdAge = 42 days)", () => {
+    // -36288000000000 stored as an unsigned 64-bit hex Integer8.
+    const hex = "0x" + (2n ** 64n - 36288000000000n).toString(16);
+    const r = parseWindowsTime(hex);
+    expect(r.kind).toBe("duration");
+    expect(r.duration).toMatch(/42 days/);
+  });
+
+  it("leaves the all-ones hex value as the 'never' sentinel", () => {
+    const r = parseWindowsTime("0xFFFFFFFFFFFFFFFF");
+    expect(r.kind).toBe("special");
+  });
+
   it("ignores commas and whitespace", () => {
     const r = parseWindowsTime(" 125,911,584,000,000,000 ");
     expect(r.iso).toBe("2000-01-01T00:00:00.000Z");

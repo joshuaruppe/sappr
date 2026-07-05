@@ -51,10 +51,12 @@ export function parseInput(str: string): Date {
     return date;
   }
 
-  // Decimal epoch seconds (e.g. "1700000000.5").
+  // Decimal epoch (e.g. "1700000000.5"). Auto-detect s vs ms by magnitude, the
+  // same way the integer branch does, so a fractional ms value isn't misread.
   if (/^[+-]?\d+\.\d+$/.test(trimmed)) {
-    const seconds = Number(trimmed);
-    const date = new Date(seconds * 1000);
+    const value = Number(trimmed);
+    const millis = Math.abs(value) >= MS_THRESHOLD ? value : value * 1000;
+    const date = new Date(millis);
     if (Number.isNaN(date.getTime())) {
       throw new Error("Epoch value is out of the representable range.");
     }

@@ -12,6 +12,21 @@ import {
   type SecurityDescriptor,
 } from "./security-descriptor";
 
+describe("analyzeDescriptor NULL DACL", () => {
+  it("flags a NULL DACL (no DACL present) as high", () => {
+    const sd = { daclPresent: false } as unknown as SecurityDescriptor;
+    const findings = analyzeDescriptor(sd);
+    expect(
+      findings.some((f) => f.severity === "high" && /NULL DACL/.test(f.message)),
+    ).toBe(true);
+  });
+
+  it("does not treat an empty present DACL as a NULL DACL", () => {
+    const sd = { daclPresent: true, dacl: { aces: [] } } as unknown as SecurityDescriptor;
+    expect(analyzeDescriptor(sd).some((f) => /NULL DACL/.test(f.message))).toBe(false);
+  });
+});
+
 // A known self-relative SECURITY_DESCRIPTOR, byte-for-byte:
 //   Owner = SYSTEM (S-1-5-18), Group = SYSTEM,
 //   DACL present with one ACE: Allow GENERIC_ALL to Everyone (S-1-1-0).

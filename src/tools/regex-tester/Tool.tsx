@@ -1,10 +1,11 @@
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Field, ErrorNote } from "@/components/tool/parts";
-import { runRegex } from "./logic";
+import type { RegexResult } from "./logic";
+import { runRegexAsync } from "./runner";
 
 const FLAGS: { flag: string; label: string; title: string }[] = [
   { flag: "g", label: "g", title: "Global: find all matches" },
@@ -55,10 +56,34 @@ export default function RegexTester() {
     [flags],
   );
 
-  const { matches, error } = useMemo(
-    () => runRegex(pattern, flagString, text),
-    [pattern, flagString, text],
-  );
+  // Matching runs in a Web Worker with a timeout (see runner.ts) so a
+  // catastrophically-backtracking pattern can't freeze the tab. Debounced so we
+  // don't spawn a worker on every keystroke.
+  const [result, setResult] = useState<RegexResult>({ matches: [] });
+  const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+    if (pattern === "") {
+      setResult({ matches: [] });
+      setRunning(false);
+      return;
+    }
+    let cancelled = false;
+    setRunning(true);
+    const t = setTimeout(() => {
+      void runRegexAsync(pattern, flagString, text).then((r) => {
+        if (cancelled) return;
+        setResult(r);
+        setRunning(false);
+      });
+    }, 120);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [pattern, flagString, text]);
+
+  const { matches, error } = result;
 
   const segments = useMemo(() => {
     if (!text || matches.length === 0) return null;
@@ -120,9 +145,13 @@ export default function RegexTester() {
         <Field
           label="Highlighted"
           actions={
-            <Badge variant={matches.length ? "primary" : "muted"}>
-              {matches.length} {matches.length === 1 ? "match" : "matches"}
-            </Badge>
+            running ? (
+              <Badge variant="muted">running…</Badge>
+            ) : (
+              <Badge variant={matches.length ? "primary" : "muted"}>
+                {matches.length} {matches.length === 1 ? "match" : "matches"}
+              </Badge>
+            )
           }
         >
           <div className="border-input bg-muted/30 min-h-24 whitespace-pre-wrap break-words rounded-md border px-3 py-2 font-mono text-sm">

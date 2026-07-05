@@ -506,6 +506,16 @@ const SEV_ORDER = { high: 0, medium: 1, info: 2 } as const;
 export function analyzeDescriptor(sd: SecurityDescriptor): AceFinding[] {
   const findings: AceFinding[] = [];
 
+  // A NULL DACL (no DACL present) is not the same as an empty DACL: it grants
+  // Everyone full control. An empty *present* DACL denies everyone, so only the
+  // absent case is dangerous.
+  if (!sd.daclPresent) {
+    findings.push({
+      severity: "high",
+      message: "NULL DACL — no access control is defined, which grants Everyone full control.",
+    });
+  }
+
   for (const ace of sd.dacl?.aces ?? []) {
     if (!ace.type.startsWith("ACCESS_ALLOWED")) continue;
     const has = (n: string) => ace.rights.includes(n);

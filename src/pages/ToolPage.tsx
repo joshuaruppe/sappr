@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { getToolById } from "@/registry/registry";
 import { CATEGORIES } from "@/registry/categories";
 import { ToolShell } from "@/components/tool/ToolShell";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/layout/Loading";
 import { NotFoundPage } from "./NotFoundPage";
 import { useRouter } from "@/lib/router";
@@ -37,14 +38,16 @@ export function ToolPage({ id }: { id: string }) {
             <ChevronRight className="size-3.5" />
           </li>
           <li className="text-foreground" aria-current="page">
-            {category.label}
+            {category?.label ?? "Tools"}
           </li>
         </ol>
       </nav>
       <ToolShell meta={meta}>
-        <Suspense fallback={<Loading />}>
-          <Component />
-        </Suspense>
+        <ErrorBoundary key={id}>
+          <Suspense fallback={<Loading />}>
+            <Component />
+          </Suspense>
+        </ErrorBoundary>
       </ToolShell>
     </>
   );

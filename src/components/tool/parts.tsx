@@ -2,6 +2,7 @@ import {
   cloneElement,
   isValidElement,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -70,6 +71,7 @@ export function OutputArea({
   mono = true,
   className,
   rows = 6,
+  autoGrow = true,
 }: {
   value: string;
   label?: ReactNode;
@@ -78,8 +80,22 @@ export function OutputArea({
   mono?: boolean;
   className?: string;
   rows?: number;
+  /** Size the box to fit its content (up to 70vh, then scroll). */
+  autoGrow?: boolean;
 }) {
   const bytes = useMemo(() => new Blob([value]).size, [value]);
+  const taRef = useRef<HTMLTextAreaElement>(null);
+  useLayoutEffect(() => {
+    const el = taRef.current;
+    if (!autoGrow || !el) return;
+    // Empty → fall back to the `rows` height so the placeholder box isn't tiny.
+    if (!value) {
+      el.style.height = "";
+      return;
+    }
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, [value, autoGrow]);
   return (
     <Field
       label={label}
@@ -102,14 +118,16 @@ export function OutputArea({
       }
     >
       <textarea
+        ref={taRef}
         readOnly
         rows={rows}
         value={value}
         placeholder={placeholder}
         spellCheck={false}
         className={cn(
-          "w-full resize-y rounded-md border border-input bg-muted/40 px-3 py-2 text-sm shadow-inner",
+          "w-full rounded-md border border-input bg-muted/40 px-3 py-2 text-sm shadow-inner",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          autoGrow ? "max-h-[70vh] resize-none overflow-auto" : "resize-y",
           mono && "font-mono text-[0.8125rem] leading-relaxed",
           className,
         )}
