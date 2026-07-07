@@ -5,6 +5,34 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-07-07
+
+### Added
+
+- **Forensics / DFIR** tools:
+  - **IOC Defang / Refang** — defang indicators for safe sharing (hxxp, `[.]`,
+    `[@]`), refang them back to live, and extract URLs, IPs, domains, emails and
+    hashes from a pasted blob.
+  - **LNK Parser** — parse a Windows `.lnk` shortcut (from a dropped file or
+    Base64/hex): target, arguments, MAC timestamps, volume serial and UNC share,
+    plus the tracker block that leaks the origin machine name + MAC address. Flags
+    living-off-the-land binaries, encoded PowerShell and remote payloads.
+  - **Forensic Timestamps** — decode a mystery numeric timestamp across Unix
+    (s/ms/µs/ns), FILETIME, Chrome/WebKit, Mac/Cocoa, APFS, HFS+, NTP, OLE and
+    packed DOS, showing every plausible date likeliest-first.
+  - **EXIF / Metadata Viewer** — read EXIF/GPS/XMP/IPTC metadata from an image
+    in the browser, surfacing embedded GPS location (with a map link), camera
+    serial, device and editing software as privacy/OSINT findings.
+- **Windows Error Code** decoder — look up a code across NTSTATUS, Win32 and
+  HRESULT at once (~9,000 codes with official Microsoft messages), decode the
+  HRESULT and NTSTATUS bit-fields (severity/facility/code), unwrap FACILITY_WIN32
+  (`0x8007xxxx`) HRESULTs to the underlying Win32 error, and suggest near-matches
+  for a mistyped code.
+
+### Changed
+
+- Added `exifr` as a dependency for client-side image-metadata parsing.
+
 ## [1.4.0] - 2026-07-05
 
 ### Added
