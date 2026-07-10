@@ -23,6 +23,13 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  optimizeDeps: {
+    // capstone-wasm loads its .wasm via `new URL("capstone.wasm", import.meta.url)`.
+    // Pre-bundling it breaks that URL in dev (it falls through to index.html), so
+    // exclude it and let Vite serve the package (and its .wasm) straight from
+    // node_modules. The production build emits + rewrites the asset regardless.
+    exclude: ["capstone-wasm"],
+  },
   server: {
     port: 5173,
     strictPort: true,

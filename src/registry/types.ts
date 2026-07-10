@@ -24,7 +24,8 @@ export type CategoryId =
   | "forensics"
   | "windows"
   | "linux"
-  | "web";
+  | "web"
+  | "reversing";
 
 /**
  * Metadata for a single tool. Lives in each tool's `meta.ts` and is loaded

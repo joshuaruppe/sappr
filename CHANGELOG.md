@@ -5,6 +5,32 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-07-10
+
+### Added
+
+- **Reversing** — a new top-level category for binary analysis, all in the browser:
+  - **ELF checksec** — an ELF's exploit-mitigation posture (RELRO, stack canary,
+    NX, PIE, Fortify, RPATH/RUNPATH, stripped) with findings on what's missing.
+  - **PE Inspector** — Windows PE (EXE/DLL/SYS) headers, ASLR/DEP/CFG mitigations,
+    data directories (signed? .NET?), the section table with Shannon entropy, and
+    the imported DLLs/APIs.
+  - **Mach-O Parser** — macOS/iOS binaries (32/64-bit, both byte orders,
+    fat/universal): header, load commands, segments, dylibs, UUID, signing and
+    encryption state.
+  - **Disassembler** — multi-architecture (x86/x64/ARM/ARM64/Thumb/MIPS) via
+    Capstone compiled to WebAssembly; paste bytes, choose an arch, read the listing.
+  - **Entropy Visualizer** — a Shannon-entropy graph over a file's length plus a
+    byte histogram, to spot packed/compressed/encrypted regions.
+  - **ASN.1 / DER Decoder** — X.509 / PKCS / CMS structures into a readable tree
+    with named object identifiers; accepts hex, Base64 or PEM.
+
+### Changed
+
+- Added `capstone-wasm` (WASM disassembler) and `asn1js` (ASN.1 parsing) as
+  dependencies, and a Vite `optimizeDeps` exclusion so the Capstone WASM loads
+  correctly in dev.
+
 ## [1.5.0] - 2026-07-07
 
 ### Added

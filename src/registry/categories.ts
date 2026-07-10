@@ -10,6 +10,7 @@ import {
   AppWindow,
   Terminal,
   Globe,
+  Cpu,
   Blocks,
   ShieldHalf,
   type LucideIcon,
@@ -151,6 +152,15 @@ export const CATEGORIES: Record<CategoryId, CategoryInfo> = {
       "Web-app pentest decoders: SAML messages, HTTP security headers/CSP, signed session cookies and serialized-object blobs.",
     icon: Globe,
     order: 110,
+  },
+  reversing: {
+    id: "reversing",
+    label: "Reversing",
+    short: "Reversing",
+    description:
+      "Reverse-engineering & binary analysis in the browser: ELF/PE/Mach-O parsers, a multi-arch disassembler, entropy visualization and ASN.1/DER decoding.",
+    icon: Cpu,
+    order: 120,
   },
 };
 
