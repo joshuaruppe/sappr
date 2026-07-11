@@ -1,6 +1,6 @@
 /**
  * Get bytes out of a pasted ticket (Base64 .kirbi is the norm; hex also works)
- * and hand them to the KRB-CRED decoder in `@/lib/kerberos`. Pure — no DOM.
+ * and hand them to the KRB-CRED decoder in `@/lib/kerberos`. Pure - no DOM.
  */
 import { parseKirbi, type KerberosCred } from "@/lib/kerberos";
 

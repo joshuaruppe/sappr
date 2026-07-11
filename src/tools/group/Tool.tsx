@@ -71,7 +71,7 @@ export default function GroupTool() {
                       </td>
                       <td className="px-2.5 py-1.5 text-muted-foreground">{g.gid}</td>
                       <td className="px-2.5 py-1.5 text-muted-foreground">
-                        {g.members.join(", ") || "—"}
+                        {g.members.join(", ") || "-"}
                       </td>
                     </tr>
                   ))}

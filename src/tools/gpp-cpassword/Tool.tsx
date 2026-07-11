@@ -3,6 +3,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Field, OutputArea, ErrorNote } from "@/components/tool/parts";
 import { decryptCpassword } from "./logic";
 
+// Well-known GPP cpassword; decrypts to "Local*P4ssword!" via the MS14-025 key.
+const SAMPLE = "j1Uyj3Vx8TY9LtLZil2uAuZkFQA/4latT76ZwgdHdhw";
+
 export default function GppCpasswordTool() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -38,6 +41,14 @@ export default function GppCpasswordTool() {
       <Field
         label="GPP cpassword"
         hint="Paste the cpassword from a Groups.xml / Services.xml / ScheduledTasks.xml on SYSVOL. Decrypted with Microsoft's published key (MS14-025)."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Textarea
           autoFocus

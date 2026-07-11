@@ -15,6 +15,9 @@ const DIALECTS: { value: SqlDialect; label: string }[] = [
   { value: "mariadb", label: "MariaDB" },
 ];
 
+const SAMPLE =
+  "select u.id,u.username,u.email from users u join sessions s on s.user_id=u.id where u.role='admin' and s.expires>now() order by u.username asc limit 50";
+
 export default function SqlFormatTool() {
   const [input, setInput] = useState("");
   const [dialect, setDialect] = useState<SqlDialect>("sql");
@@ -80,7 +83,17 @@ export default function SqlFormatTool() {
         </div>
       </div>
 
-      <Field label="SQL to format">
+      <Field
+        label="SQL to format"
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           value={input}

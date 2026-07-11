@@ -3,7 +3,7 @@
  * parsing: header (flags, attributes, MAC timestamps, show command), LinkInfo
  * (volume serial/label, local base path, UNC network share), the StringData
  * fields (name, relative path, working dir, arguments, icon), and the ExtraData
- * blocks — notably the TrackerDataBlock, which leaks the origin machine's
+ * blocks - notably the TrackerDataBlock, which leaks the origin machine's
  * NetBIOS name and MAC address (via the Distributed Link Tracking droid GUIDs).
  * Surfaces forensic red flags (LOLBins, encoded PowerShell, remote payloads).
  */
@@ -219,13 +219,13 @@ export function parseLnk(bytes: Uint8Array): LnkResult {
     const unicode = (flags & 0x80) !== 0;
     let off = 76;
 
-    // LinkTargetIDList — skip (shell item parsing is out of scope), just advance.
+    // LinkTargetIDList - skip (shell item parsing is out of scope), just advance.
     if (flags & 0x01) {
       const idListSize = view.getUint16(off, true);
       off += 2 + idListSize;
     }
 
-    // LinkInfo — volume + local base path + network share.
+    // LinkInfo - volume + local base path + network share.
     if (flags & 0x02 && !(flags & 0x100)) {
       const base = off;
       const linkInfoSize = view.getUint32(base, true);
@@ -326,7 +326,7 @@ function analyzeLnk(r: LnkResult): Finding[] {
   if (LOLBINS.test(combined)) {
     findings.push({
       severity: "high",
-      message: "Target or arguments invoke a living-off-the-land binary (powershell/cmd/mshta/rundll32/…) — a hallmark of malicious shortcuts.",
+      message: "Target or arguments invoke a living-off-the-land binary (powershell/cmd/mshta/rundll32/…) - a hallmark of malicious shortcuts.",
     });
   }
   if (/-e(nc|c|ncodedcommand)?\b|frombase64string|-w\s*(hidden|1)|iex|invoke-expression|downloadstring|downloadfile|-nop|-noni/i.test(args)) {
@@ -338,11 +338,11 @@ function analyzeLnk(r: LnkResult): Finding[] {
   if (r.netName || /^\\\\/.test(target)) {
     findings.push({
       severity: "medium",
-      message: `Points at a remote UNC/network path (${r.netName ?? target}) — possible remote payload or credential-capture (SMB) lure.`,
+      message: `Points at a remote UNC/network path (${r.netName ?? target}) - possible remote payload or credential-capture (SMB) lure.`,
     });
   }
   if (args.length > 260) {
-    findings.push({ severity: "medium", message: `Unusually long argument string (${args.length} chars) — often obfuscation.` });
+    findings.push({ severity: "medium", message: `Unusually long argument string (${args.length} chars) - often obfuscation.` });
   }
   if (r.tracker?.macAddress || r.tracker?.machineId) {
     findings.push({

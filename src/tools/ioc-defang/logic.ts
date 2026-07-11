@@ -5,7 +5,7 @@
  * can be pasted into reports, tickets and email without becoming clickable or
  * resolvable. Refanging reverses the common notations back to live form. Extract
  * refangs first, then pulls URLs, IPs, domains, emails and file hashes out of
- * arbitrary text. All pure string work — no network, no DOM.
+ * arbitrary text. All pure string work - no network, no DOM.
  */
 
 /** Rewrite live IOCs into an inert, shareable form. */
@@ -19,7 +19,7 @@ export function defang(input: string): string {
 
 /**
  * Reverse the common defang notations back to a live IOC. Only the delimited
- * forms ([.], (.), {.}, [dot], _dot_, \., hxxp, [@], [at], [://]) are reversed —
+ * forms ([.], (.), {.}, [dot], _dot_, \., hxxp, [@], [at], [://]) are reversed -
  * bare "dot"/"at" words are deliberately left alone so ordinary prose isn't
  * mangled.
  */

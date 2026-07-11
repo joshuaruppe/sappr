@@ -14,6 +14,8 @@ import {
 
 type Mode = "cipher" | "brute";
 
+const SAMPLE = { input: "Attack at dawn", key: "secret" };
+
 const FORMAT_OPTIONS: { value: ByteFormat; label: string }[] = [
   { value: "utf8", label: "UTF-8" },
   { value: "hex", label: "Hex" },
@@ -86,13 +88,26 @@ export default function XorTool() {
           <Field
             label="Input"
             actions={
-              <Segmented<ByteFormat>
-                aria-label="Input format"
-                size="sm"
-                value={inputFormat}
-                onChange={setInputFormat}
-                options={FORMAT_OPTIONS}
-              />
+              <>
+                <button
+                  onClick={() => {
+                    setInput(SAMPLE.input);
+                    setKeyText(SAMPLE.key);
+                    setInputFormat("utf8");
+                    setKeyFormat("utf8");
+                  }}
+                  className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Load sample
+                </button>
+                <Segmented<ByteFormat>
+                  aria-label="Input format"
+                  size="sm"
+                  value={inputFormat}
+                  onChange={setInputFormat}
+                  options={FORMAT_OPTIONS}
+                />
+              </>
             }
           >
             <Textarea

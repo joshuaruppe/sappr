@@ -15,6 +15,8 @@ function Row({ label, value, mono = true }: { label: string; value: ReactNode; m
   );
 }
 
+const SAMPLE = "S-1-5-21-1004336348-1177238915-682003330-512";
+
 export default function SidTool() {
   const [input, setInput] = useState("");
   const r = useMemo(() => parseSid(input), [input]);
@@ -25,6 +27,14 @@ export default function SidTool() {
       <Field
         label="SID (string or binary)"
         hint="A SID string (S-1-5-21-…-500) or its binary form as hex or base64. Both forms are shown."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Input
           autoFocus
@@ -55,7 +65,7 @@ export default function SidTool() {
                 </>
               }
             />
-            <Row label="Sub-authorities" value={r.subAuthorities.join(" · ") || "—"} />
+            <Row label="Sub-authorities" value={r.subAuthorities.join(" · ") || "-"} />
             {r.rid !== undefined ? (
               <Row
                 label="RID"

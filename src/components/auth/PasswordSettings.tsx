@@ -108,7 +108,7 @@ export function PasswordSettings() {
 
   // New + confirm password inputs with the live requirements checklist.
   // `autoFocusNew` focuses the first field (only when it's the first field on
-  // screen — i.e. the setup flow, not change where "current" comes first).
+  // screen - i.e. the setup flow, not change where "current" comes first).
   function newFields(autoFocusNew: boolean) {
     return (
       <>

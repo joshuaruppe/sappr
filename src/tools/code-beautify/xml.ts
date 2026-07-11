@@ -6,7 +6,7 @@
  * quote-aware (so `>` inside attribute values doesn't end a tag) and protects
  * comments, CDATA, processing instructions and declarations from being split.
  *
- * It's a *formatter*, not a validator — malformed input is re-indented
+ * It's a *formatter*, not a validator - malformed input is re-indented
  * best-effort rather than rejected.
  */
 
@@ -118,7 +118,7 @@ export function formatXml(input: string, opts: XmlFormatOptions = {}): string {
       continue;
     }
 
-    // Opening tag — keep simple element bodies on one line where we can.
+    // Opening tag - keep simple element bodies on one line where we can.
     const a = tokens[i + 1];
     const b = tokens[i + 2];
     if (a !== undefined && isClosing(a)) {

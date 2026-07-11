@@ -1,6 +1,6 @@
 /**
  * HMAC over a message with a secret key, using hash-wasm.
- * Pure functions — no DOM/React. The key may be provided as a string
+ * Pure functions - no DOM/React. The key may be provided as a string
  * (interpreted as UTF-8) or as raw bytes.
  */
 import {

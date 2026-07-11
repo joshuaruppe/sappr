@@ -50,7 +50,7 @@ export default function ChecksecTool() {
       } catch {
         if (!cancelled) {
           setR(null);
-          setError("Could not read the input — drop an ELF binary, or paste it as Base64 or hex.");
+          setError("Could not read the input - drop an ELF binary, or paste it as Base64 or hex.");
         }
       }
     })();
@@ -117,7 +117,7 @@ export default function ChecksecTool() {
             </div>
           ) : null}
 
-          <FindingsSection findings={r.findings} emptyLabel="Well-hardened — no missing mitigations flagged." />
+          <FindingsSection findings={r.findings} emptyLabel="Well-hardened - no missing mitigations flagged." />
         </div>
       ) : null}
     </>

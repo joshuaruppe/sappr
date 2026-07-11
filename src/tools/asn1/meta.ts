@@ -5,7 +5,7 @@ export const meta: ToolMeta = {
   id: "asn1",
   title: "ASN.1 / DER Decoder",
   description:
-    "Decode ASN.1 DER/BER (X.509 certificates, keys, PKCS, CMS) into a readable tree — SEQUENCE/SET/INTEGER/OID and more, with common object identifiers named. Accepts hex, Base64 or PEM.",
+    "Decode ASN.1 DER/BER (X.509 certificates, keys, PKCS, CMS) into a readable tree - SEQUENCE/SET/INTEGER/OID and more, with common object identifiers named. Accepts hex, Base64 or PEM.",
   category: "reversing",
   icon: ListTree,
   keywords: [

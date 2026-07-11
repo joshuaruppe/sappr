@@ -18,6 +18,8 @@ import {
   type CommandOptions,
 } from "./logic";
 
+const SAMPLE = "8846f7eaee8fb117ad06bdd830b7586c";
+
 const BADGE_VARIANT: Record<Confidence, "success" | "warning" | "muted"> = {
   high: "success",
   medium: "warning",
@@ -210,6 +212,14 @@ export default function HashIdTool() {
       <Field
         label="Hash or credential to identify"
         hint="Paste a raw hash or a structured credential (NTLM, Kerberos, /etc/shadow, JWT, …)."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Textarea
           autoFocus

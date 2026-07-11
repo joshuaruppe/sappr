@@ -8,6 +8,8 @@ import { vigenere, atbash, railFence } from "./logic";
 type Cipher = "vigenere" | "atbash" | "railfence";
 type Mode = "encode" | "decode";
 
+const SAMPLE = { input: "MEET AT THE SAFEHOUSE AT DAWN", key: "LEMON" };
+
 export default function CipherTool() {
   const [cipher, setCipher] = useState<Cipher>("vigenere");
   const [mode, setMode] = useState<Mode>("encode");
@@ -78,7 +80,22 @@ export default function CipherTool() {
         </Field>
       )}
 
-      <Field label={mode === "encode" ? "Plaintext" : "Ciphertext"}>
+      <Field
+        label={mode === "encode" ? "Plaintext" : "Ciphertext"}
+        actions={
+          <button
+            onClick={() => {
+              setCipher("vigenere");
+              setMode("encode");
+              setKey(SAMPLE.key);
+              setInput(SAMPLE.input);
+            }}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           mono={false}

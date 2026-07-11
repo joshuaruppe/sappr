@@ -3,7 +3,7 @@
  * 64-bit count of 100-nanosecond intervals since 1601-01-01 UTC. A positive
  * value is an absolute time (file times, lastLogonTimestamp, pwdLastSet); a
  * negative value is an AD duration (maxPwdAge, lockoutDuration). Handles the
- * "never" sentinels. Pure — no DOM.
+ * "never" sentinels. Pure - no DOM.
  */
 
 const EPOCH_DIFF_MS = 11644473600000n; // 1601-01-01 → 1970-01-01
@@ -53,7 +53,7 @@ export function parseWindowsTime(input: string): WindowsTimeResult {
       const neg = s.startsWith("-");
       let hv = BigInt(neg ? s.slice(1) : s);
       // A raw 64-bit hex value with the high bit set is a two's-complement
-      // negative — Integer8 durations (maxPwdAge, lockoutDuration) are commonly
+      // negative - Integer8 durations (maxPwdAge, lockoutDuration) are commonly
       // dumped this way. Sign-extend it, but leave the all-ones "never" sentinel
       // (0xFFFFFFFFFFFFFFFF) intact so it still reads as "never".
       if (!neg && hv > NEVER_MAX && hv < UINT64_MAX) hv -= UINT64_MAX + 1n;
@@ -71,7 +71,7 @@ export function parseWindowsTime(input: string): WindowsTimeResult {
     return {
       raw: s,
       kind: "special",
-      special: "0 — not set / never",
+      special: "0 - not set / never",
       note: "e.g. lastLogon = never logged on; maxPwdAge = 0 means passwords never expire.",
       error: "",
     };
@@ -80,7 +80,7 @@ export function parseWindowsTime(input: string): WindowsTimeResult {
     return {
       raw: s,
       kind: "special",
-      special: "max value — never / never expires",
+      special: "max value - never / never expires",
       note: "The 'never' sentinel, e.g. accountExpires / lockoutTime = never.",
       error: "",
     };
@@ -89,7 +89,7 @@ export function parseWindowsTime(input: string): WindowsTimeResult {
     return {
       raw: s,
       kind: "special",
-      special: "0x8000000000000000 — none / unset",
+      special: "0x8000000000000000 - none / unset",
       note: "Minimum value; some duration attributes use it to mean 'not configured'.",
       error: "",
     };

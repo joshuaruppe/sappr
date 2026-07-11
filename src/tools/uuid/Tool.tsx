@@ -48,7 +48,7 @@ export default function UuidTool() {
         </Button>
       </div>
 
-      <Field label="Count" hint="1–100">
+      <Field label="Count" hint="1-100">
         <Input
           type="number"
           min={1}

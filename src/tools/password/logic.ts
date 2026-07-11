@@ -1,6 +1,6 @@
 /**
  * Secure password generation using crypto.getRandomValues with unbiased
- * rejection sampling. Pure functions — no DOM/React, safe for tests & workers.
+ * rejection sampling. Pure functions - no DOM/React, safe for tests & workers.
  */
 
 export interface PasswordOptions {
@@ -51,7 +51,7 @@ export function buildAlphabet(opts: PasswordOptions): string {
       .join("");
     if (alphabet.length === 0) {
       throw new Error(
-        "No characters left after excluding ambiguous ones — enable more sets.",
+        "No characters left after excluding ambiguous ones - enable more sets.",
       );
     }
   }

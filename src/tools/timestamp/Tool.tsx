@@ -6,6 +6,8 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Field, ErrorNote } from "@/components/tool/parts";
 import { parseInput, describe, type TimestampParts } from "./logic";
 
+const SAMPLE = "1516239022";
+
 const ROWS: Array<{ key: keyof TimestampParts; label: string }> = [
   { key: "epochSeconds", label: "Unix (seconds)" },
   { key: "epochMillis", label: "Unix (milliseconds)" },
@@ -50,10 +52,18 @@ export default function TimestampTool() {
         label="Epoch or date"
         hint="A Unix timestamp (seconds or milliseconds) or an ISO / RFC date string."
         actions={
-          <Button size="sm" variant="ghost" onClick={setNow}>
-            <Clock className="size-3.5" />
-            Now
-          </Button>
+          <>
+            <button
+              onClick={() => setInput(SAMPLE)}
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Load sample
+            </button>
+            <Button size="sm" variant="ghost" onClick={setNow}>
+              <Clock className="size-3.5" />
+              Now
+            </Button>
+          </>
         }
       >
         <Input

@@ -4,6 +4,8 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Field, ErrorNote } from "@/components/tool/parts";
 import { hashAllText, HASH_ALGORITHMS, type HashResult } from "./logic";
 
+const SAMPLE = "The quick brown fox jumps over the lazy dog";
+
 export default function HashTextTool() {
   const [input, setInput] = useState("");
   const [results, setResults] = useState<HashResult[]>([]);
@@ -44,7 +46,17 @@ export default function HashTextTool() {
 
   return (
     <>
-      <Field label="Text to hash">
+      <Field
+        label="Text to hash"
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           mono={false}
@@ -75,7 +87,7 @@ export default function HashTextTool() {
                 <span className="min-w-0 flex-1 break-all font-mono text-xs">
                   {value || (
                     <span className="text-muted-foreground/50">
-                      {loading ? "…" : "—"}
+                      {loading ? "…" : "-"}
                     </span>
                   )}
                 </span>

@@ -13,6 +13,8 @@ import {
 
 type FromChoice = "2" | "8" | "10" | "16" | "custom";
 
+const SAMPLE = { value: "deadbeef", from: "16" as FromChoice };
+
 const FROM_OPTIONS = [
   { value: "2" as const, label: "Bin" },
   { value: "8" as const, label: "Oct" },
@@ -88,6 +90,17 @@ export default function BaseConvertTool() {
             ? `Digits in base ${customFrom || "?"}`
             : `Digits in base ${fromChoice}`
         }
+        actions={
+          <button
+            onClick={() => {
+              setValue(SAMPLE.value);
+              setFromChoice(SAMPLE.from);
+            }}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Input
           autoFocus
@@ -110,7 +123,7 @@ export default function BaseConvertTool() {
             actions={out ? <CopyButton value={out} /> : undefined}
           >
             <div className="min-h-[2.25rem] break-all rounded-md border border-input bg-muted/40 px-3 py-2 font-mono text-sm">
-              {out || <span className="text-muted-foreground">—</span>}
+              {out || <span className="text-muted-foreground">-</span>}
             </div>
           </Field>
         );
@@ -132,7 +145,7 @@ export default function BaseConvertTool() {
             aria-label="Target radix"
           />
           <div className="flex min-h-[2.25rem] flex-1 items-center break-all rounded-md border border-input bg-muted/40 px-3 py-2 font-mono text-sm">
-            {custom || <span className="text-muted-foreground">—</span>}
+            {custom || <span className="text-muted-foreground">-</span>}
           </div>
         </div>
       </Field>

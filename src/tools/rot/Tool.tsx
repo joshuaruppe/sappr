@@ -8,6 +8,8 @@ import { rot13, rot47, caesar } from "./logic";
 
 type Preset = "rot13" | "rot47" | "custom";
 
+const SAMPLE = "Pnrfne fnlf gur onpxhc pbqrf ner uvqqra va gur ertvfgel.";
+
 export default function RotTool() {
   const [preset, setPreset] = useState<Preset>("rot13");
   const [input, setInput] = useState("");
@@ -76,7 +78,17 @@ export default function RotTool() {
         )}
       </div>
 
-      <Field label="Text">
+      <Field
+        label="Text"
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           mono={false}

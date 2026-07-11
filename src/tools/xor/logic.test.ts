@@ -23,7 +23,7 @@ describe("xorCipher", () => {
   });
 
   it("is self-inverse with the same key", () => {
-    const input = utf8("Attack at dawn — 攻撃");
+    const input = utf8("Attack at dawn - 攻撃");
     const key = utf8("longer-key");
     const enc = xorCipher(input, key);
     expect(Array.from(xorCipher(enc, key))).toEqual(Array.from(input));

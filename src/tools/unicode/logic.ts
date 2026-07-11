@@ -1,5 +1,5 @@
 /**
- * Unicode inspection — break text into code points and describe each one.
+ * Unicode inspection - break text into code points and describe each one.
  * Pure functions: no DOM/React. Iterates by code point so astral characters
  * (emoji, etc.) count as a single entry.
  */
@@ -13,7 +13,7 @@ export interface CharFlags {
   control: boolean;
   /** Combining marks (Unicode category M, approximated by range). */
   combining: boolean;
-  /** Anything outside the printable ASCII range (0x20–0x7E). */
+  /** Anything outside the printable ASCII range (0x20-0x7E). */
   nonAscii: boolean;
 }
 
@@ -82,7 +82,7 @@ function isInvisibleExtra(cp: number): boolean {
 }
 
 function isControl(cp: number): boolean {
-  // C0 controls (0x00–0x1F), DEL (0x7F), and C1 controls (0x80–0x9F).
+  // C0 controls (0x00-0x1F), DEL (0x7F), and C1 controls (0x80-0x9F).
   return (cp >= 0x00 && cp <= 0x1f) || cp === 0x7f || (cp >= 0x80 && cp <= 0x9f);
 }
 

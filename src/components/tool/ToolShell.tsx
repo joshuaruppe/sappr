@@ -41,7 +41,7 @@ export function ToolShell({
               <span
                 role="img"
                 aria-label={exec.label}
-                title={`${exec.label} — ${exec.description}`}
+                title={`${exec.label} - ${exec.description}`}
                 className={cn(
                   "size-2 shrink-0 rounded-full ring-4 ring-current/15",
                   exec.dotClass,

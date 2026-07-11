@@ -1,5 +1,5 @@
 /**
- * Identifier generators — UUID v4, UUID v7, ULID and the NIL UUID.
+ * Identifier generators - UUID v4, UUID v7, ULID and the NIL UUID.
  * Pure functions; rely only on Web Crypto and Date, which exist in both the
  * browser and Node.
  */

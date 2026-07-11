@@ -25,7 +25,7 @@ export default function DisasmTool() {
     try {
       bytes = bytesFromInput(input);
     } catch {
-      setResult({ insns: [], error: "Could not read the bytes — paste as hex or Base64." });
+      setResult({ insns: [], error: "Could not read the bytes - paste as hex or Base64." });
       return;
     }
     const parsed = /^0x/i.test(addr.trim()) ? parseInt(addr.trim(), 16) : Number(addr.trim());

@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-/** Which offline cracker the user works with — drives the commands/flags shown. */
+/** Which offline cracker the user works with - drives the commands/flags shown. */
 export type Cracker = "hashcat" | "john";
 
 /** App-wide preferences (theme lives in its own provider). Extend freely. */
@@ -30,7 +30,7 @@ function load(): Settings {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULTS;
     const parsed = JSON.parse(raw) as Partial<Settings>;
-    // Validate the union rather than trusting stored JSON — a corrupt or
+    // Validate the union rather than trusting stored JSON - a corrupt or
     // hand-edited value would otherwise disable every cracker command.
     const cracker =
       parsed?.cracker === "hashcat" || parsed?.cracker === "john"

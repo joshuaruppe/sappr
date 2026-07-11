@@ -1,6 +1,6 @@
 /**
  * Pretty-print SQL via sql-formatter.
- * Pure functions — no DOM/React; safe to call from a test or a worker.
+ * Pure functions - no DOM/React; safe to call from a test or a worker.
  */
 import { format } from "sql-formatter";
 

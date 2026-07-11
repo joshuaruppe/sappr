@@ -6,6 +6,17 @@ import { Button } from "@/components/ui/button";
 import { Field, OutputArea, ErrorNote } from "@/components/tool/parts";
 import { convert, DATA_FORMATS, type DataFormat } from "./logic";
 
+const SAMPLE = {
+  format: "json" as DataFormat,
+  input: [
+    "{",
+    '  "target": "target.internal",',
+    '  "ports": [22, 443, 8443],',
+    '  "creds": { "user": "admin", "valid": true }',
+    "}",
+  ].join("\n"),
+};
+
 const FORMAT_OPTIONS = DATA_FORMATS.map((f) => ({
   value: f,
   label: f.toUpperCase(),
@@ -69,7 +80,20 @@ export default function DataConvertTool() {
         </Field>
       </div>
 
-      <Field label={`${from.toUpperCase()} input`}>
+      <Field
+        label={`${from.toUpperCase()} input`}
+        actions={
+          <button
+            onClick={() => {
+              setFrom(SAMPLE.format);
+              setInput(SAMPLE.input);
+            }}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           value={input}

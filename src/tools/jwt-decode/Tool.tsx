@@ -48,6 +48,14 @@ export default function JwtDecodeTool() {
       <Field
         label="JSON Web Token"
         hint="Paste a compact JWT (header.payload.signature)."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Textarea
           autoFocus

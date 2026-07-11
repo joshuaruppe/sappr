@@ -2,7 +2,7 @@
  * Analyze a systemd unit (.service) for persistence and privilege-escalation red
  * flags: a root service running a user-writable / relative ExecStart, a "+"/"!"
  * prefix that bypasses User=, secrets in Environment=, and missing sandboxing.
- * Pure — no DOM.
+ * Pure - no DOM.
  */
 
 export type Severity = "high" | "medium" | "info";
@@ -121,7 +121,7 @@ export function parseSystemdUnit(input: string): SystemdResult {
     } else if (!bin.startsWith("/")) {
       findings.push({
         severity: "medium",
-        message: `Relative ExecStart "${bin}" — resolved via PATH, hijackable if an earlier PATH entry is writable.`,
+        message: `Relative ExecStart "${bin}" - resolved via PATH, hijackable if an earlier PATH entry is writable.`,
       });
     }
     if (/\b(curl|wget)\b[^|]*\|\s*(sudo\s+)?(ba|da|z)?sh\b/.test(rest)) {

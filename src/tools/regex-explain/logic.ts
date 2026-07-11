@@ -1,6 +1,6 @@
 /**
  * Explain a regular expression in plain English by walking its AST.
- * Pure functions — no DOM/React. Uses `regexp-tree` to parse the pattern.
+ * Pure functions - no DOM/React. Uses `regexp-tree` to parse the pattern.
  */
 import { parse } from "regexp-tree";
 import type {

@@ -1,7 +1,7 @@
 /**
  * Decode Unix file modes between octal and symbolic form, spell out the
  * special bits (setuid/setgid/sticky), and flag dangerous combinations. Also a
- * umask calculator. Pure — no DOM.
+ * umask calculator. Pure - no DOM.
  */
 
 export type Severity = "high" | "medium" | "info";
@@ -95,24 +95,24 @@ function findingsFor(m: ParsedMode): Finding[] {
   if (m.setuid && m.other.write) {
     out.push({
       severity: "high",
-      message: "World-writable setuid file — anyone can replace it and run code as its owner.",
+      message: "World-writable setuid file - anyone can replace it and run code as its owner.",
     });
   } else if (m.setuid) {
     out.push({
       severity: "medium",
-      message: "setuid bit — runs with the file owner's privileges (root-owned = privilege-escalation target).",
+      message: "setuid bit - runs with the file owner's privileges (root-owned = privilege-escalation target).",
     });
   }
   if (m.setgid) {
-    out.push({ severity: "info", message: "setgid bit — runs with the file group's privileges." });
+    out.push({ severity: "info", message: "setgid bit - runs with the file group's privileges." });
   }
   if (m.other.write && !m.setuid) {
-    out.push({ severity: "medium", message: "World-writable — any user can modify this file." });
+    out.push({ severity: "medium", message: "World-writable - any user can modify this file." });
   }
   if (m.sticky) {
     out.push({
       severity: "info",
-      message: "Sticky bit — on a directory, only owners can delete their own files (e.g. /tmp).",
+      message: "Sticky bit - on a directory, only owners can delete their own files (e.g. /tmp).",
     });
   }
   return out;
@@ -199,7 +199,7 @@ function listingConcerns(entry: {
   name: string;
 }): Finding[] {
   const { type, mode, owner, name } = entry;
-  // Symlink permission bits are always rwxrwxrwx and ignored by the kernel —
+  // Symlink permission bits are always rwxrwxrwx and ignored by the kernel -
   // never flag them.
   if (type === "l") return [];
 
@@ -207,17 +207,17 @@ function listingConcerns(entry: {
   if (mode.setuid) {
     out.push({
       severity: type === "-" ? "medium" : "info",
-      message: `setuid ${TYPE_LABELS[type] ?? "file"} "${name}" — runs as its owner${owner ? ` (${owner})` : ""}.`,
+      message: `setuid ${TYPE_LABELS[type] ?? "file"} "${name}" - runs as its owner${owner ? ` (${owner})` : ""}.`,
     });
   }
   if (mode.setgid) {
-    out.push({ severity: "info", message: `setgid "${name}" — runs with its group.` });
+    out.push({ severity: "info", message: `setgid "${name}" - runs with its group.` });
   }
   if (mode.other.write) {
     if (type === "d" && mode.sticky) {
       out.push({
         severity: "info",
-        message: `"${name}" is world-writable but sticky — normal for shared temp dirs.`,
+        message: `"${name}" is world-writable but sticky - normal for shared temp dirs.`,
       });
     } else {
       out.push({

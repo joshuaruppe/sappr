@@ -55,7 +55,7 @@ export default function MachoTool() {
       } catch {
         if (!cancelled) {
           setR(null);
-          setError("Could not read the input — drop a Mach-O binary, or paste it as Base64 or hex.");
+          setError("Could not read the input - drop a Mach-O binary, or paste it as Base64 or hex.");
         }
       }
     })();
@@ -126,7 +126,7 @@ export default function MachoTool() {
                 <div key={s.name} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
                   <span className="shrink-0 font-mono text-sm sm:w-28">{s.name}</span>
                   <span className="min-w-0 break-all text-sm text-muted-foreground">
-                    {s.sections.join(" ") || "—"}
+                    {s.sections.join(" ") || "-"}
                   </span>
                 </div>
               ))}

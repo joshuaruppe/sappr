@@ -1,7 +1,7 @@
 /**
  * Multi-architecture disassembler powered by Capstone compiled to WebAssembly
  * (`capstone-wasm`). Paste raw bytes (hex/Base64), pick an architecture, and get
- * an address/bytes/mnemonic listing — for reading shellcode, gadgets, firmware
+ * an address/bytes/mnemonic listing - for reading shellcode, gadgets, firmware
  * snippets or a copied code blob. The ~1.8 MB WASM is dynamic-imported so it only
  * loads when this tool is opened. Analysis only.
  */
@@ -46,7 +46,7 @@ function getModule() {
         return m;
       })
       .catch((e) => {
-        modPromise = null; // don't memoize a failed load — let the next call retry
+        modPromise = null; // don't memoize a failed load - let the next call retry
         throw e;
       });
   }
@@ -76,7 +76,7 @@ export async function disassemble(
     }));
     return {
       insns,
-      error: insns.length ? "" : "No instructions decoded — wrong architecture for these bytes, or they aren't code.",
+      error: insns.length ? "" : "No instructions decoded - wrong architecture for these bytes, or they aren't code.",
     };
   } catch (e) {
     return { insns: [], error: e instanceof Error ? e.message : String(e) };

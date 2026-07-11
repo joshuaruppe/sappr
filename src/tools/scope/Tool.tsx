@@ -118,7 +118,7 @@ export default function ScopeTool() {
             <OutputArea value={output} label={outputMeta.label} filename={outputMeta.filename} mono />
           ) : null}
 
-          {/* IPv6 / hostnames aren't in the IPv4 expand/collapse output — show them
+          {/* IPv6 / hostnames aren't in the IPv4 expand/collapse output - show them
               on the side so nothing is lost. In Targets mode they're already merged. */}
           {mode !== "targets" && result.ipv6.length > 0 ? (
             <OutputArea

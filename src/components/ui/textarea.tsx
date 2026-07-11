@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export interface TextareaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  /** Render with a monospace font (default true — these are data fields). */
+  /** Render with a monospace font (default true - these are data fields). */
   mono?: boolean;
 }
 

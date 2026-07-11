@@ -2,10 +2,10 @@ import type { LucideIcon } from "lucide-react";
 
 /**
  * Where a tool's work physically happens:
- * - `client`   — entirely in the browser; nothing leaves the machine
- * - `server`   — on the self-hosted sappr server; stays within your instance
- * - `external` — calls a third-party API; input leaves the app entirely
- * - `mixed`    — hybrid (partly browser, partly server)
+ * - `client`   - entirely in the browser; nothing leaves the machine
+ * - `server`   - on the self-hosted sappr server; stays within your instance
+ * - `external` - calls a third-party API; input leaves the app entirely
+ * - `mixed`    - hybrid (partly browser, partly server)
  */
 export type ToolExecution = "client" | "server" | "external" | "mixed";
 

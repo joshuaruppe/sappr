@@ -1,6 +1,6 @@
 /**
  * Parse a URL into its components using the native `URL` API.
- * Pure functions — no DOM/React; safe to call from a Web Worker or a test.
+ * Pure functions - no DOM/React; safe to call from a Web Worker or a test.
  */
 
 export interface QueryParam {
@@ -33,7 +33,7 @@ function looksSchemeless(str: string): boolean {
   const s = str.trim();
   if (s === "") return false;
   if (s.startsWith("//")) return false; // protocol-relative
-  // Anything with an authority delimiter is attempting to be a full URL — if its
+  // Anything with an authority delimiter is attempting to be a full URL - if its
   // scheme is malformed (e.g. "ht!tp://x"), let it error rather than rescuing it.
   if (s.includes("://")) return false;
   // A scheme is letters/digits/+/-/. followed by ':' (e.g. "https:", "mailto:").

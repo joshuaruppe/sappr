@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Field, ErrorNote } from "@/components/tool/parts";
 import { explainRegex, type ExplainNode } from "./logic";
 
+const SAMPLE = "(?<user>[\\w.+-]+)@(?<domain>[\\w.-]+\\.[a-z]{2,})";
+
 function TreeNode({ node }: { node: ExplainNode }) {
   return (
     <li className="space-y-1">
@@ -34,7 +36,18 @@ export default function RegexExplainTool() {
 
   return (
     <>
-      <Field label="Pattern" hint="Enter the body of the regex, without slashes.">
+      <Field
+        label="Pattern"
+        hint="Enter the body of the regex, without slashes."
+        actions={
+          <button
+            onClick={() => setPattern(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Input
           autoFocus
           className="font-mono"

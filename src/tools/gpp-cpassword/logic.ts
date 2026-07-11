@@ -1,11 +1,11 @@
 /**
  * Decrypt a Group Policy Preferences `cpassword` using the AES-256 key
  * Microsoft published in [MS-GPPREF] (and deprecated in MS14-025). Because the
- * key is public, this is a pure client-side decrypt — no secret needed.
+ * key is public, this is a pure client-side decrypt - no secret needed.
  * Async (Web Crypto). No DOM.
  */
 
-// [MS-GPPREF] §2.2.1.1 — the fixed AES-256 key for cpassword.
+// [MS-GPPREF] §2.2.1.1 - the fixed AES-256 key for cpassword.
 const GPP_KEY = new Uint8Array([
   0x4e, 0x99, 0x06, 0xe8, 0xfc, 0xb6, 0x6c, 0xc9, 0xfa, 0xf4, 0x93, 0x10, 0x62, 0x0f, 0xfe, 0xe8,
   0xf4, 0x96, 0xe8, 0x06, 0xcc, 0x05, 0x79, 0x90, 0x20, 0x9b, 0x09, 0xa4, 0x33, 0xb6, 0x6c, 0x1b,
@@ -49,7 +49,7 @@ export async function decryptCpassword(cpassword: string): Promise<string> {
       ct as BufferSource,
     );
   } catch {
-    throw new Error("Could not decrypt — this does not look like a GPP cpassword.");
+    throw new Error("Could not decrypt - this does not look like a GPP cpassword.");
   }
   // GPP stores the password as UTF-16LE.
   return new TextDecoder("utf-16le").decode(plain);

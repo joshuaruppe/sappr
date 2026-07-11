@@ -1,6 +1,6 @@
 /**
  * Parse /etc/group and flag membership in privilege-escalation groups (docker,
- * lxd, disk, shadow ≈ instant root; sudo/wheel/adm and friends). Pure — no DOM.
+ * lxd, disk, shadow ≈ instant root; sudo/wheel/adm and friends). Pure - no DOM.
  */
 
 export type Severity = "high" | "medium" | "info";
@@ -33,13 +33,13 @@ const PRIVESC_GROUPS: Record<string, { severity: Severity; reason: string }> = {
   root: { severity: "high", reason: "are in the root group" },
   docker: {
     severity: "high",
-    reason: "can mount the host filesystem into a container — trivial root",
+    reason: "can mount the host filesystem into a container - trivial root",
   },
-  lxd: { severity: "high", reason: "can launch a privileged container — trivial root" },
-  lxc: { severity: "high", reason: "can launch a privileged container — trivial root" },
+  lxd: { severity: "high", reason: "can launch a privileged container - trivial root" },
+  lxc: { severity: "high", reason: "can launch a privileged container - trivial root" },
   disk: {
     severity: "high",
-    reason: "have raw block-device access — can read/modify any file (e.g. /etc/shadow)",
+    reason: "have raw block-device access - can read/modify any file (e.g. /etc/shadow)",
   },
   shadow: {
     severity: "high",
@@ -49,7 +49,7 @@ const PRIVESC_GROUPS: Record<string, { severity: Severity; reason: string }> = {
   adm: { severity: "medium", reason: "can read most system logs" },
   staff: {
     severity: "medium",
-    reason: "can write under /usr/local — PATH-hijack root binaries/cron",
+    reason: "can write under /usr/local - PATH-hijack root binaries/cron",
   },
   libvirt: { severity: "medium", reason: "can manage VMs and reach the host" },
   kvm: { severity: "info", reason: "can use hardware virtualization" },

@@ -1,7 +1,7 @@
 /**
  * Format source code in-browser, offline. Most languages go through Prettier's
  * standalone build; SQL uses sql-formatter and XML uses our own small formatter
- * (see ./xml). Pure async functions — no DOM/React.
+ * (see ./xml). Pure async functions - no DOM/React.
  *
  * Prettier plugins are loaded LAZILY (dynamic import) so each becomes its own
  * Vite chunk: opening the tool downloads only the plugin(s) for the language
@@ -33,7 +33,7 @@ export interface BeautifyOptions {
 
 type Engine = "prettier" | "sql" | "xml";
 
-/** Lazy loaders for Prettier plugins — one dynamic import (chunk) each. */
+/** Lazy loaders for Prettier plugins - one dynamic import (chunk) each. */
 const PLUGIN_LOADERS = {
   babel: () => import("prettier/plugins/babel"),
   estree: () => import("prettier/plugins/estree"),

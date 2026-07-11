@@ -9,6 +9,9 @@ import { encodeUrl, decodeUrl, type UrlScope } from "./logic";
 
 type Mode = "encode" | "decode";
 
+const SAMPLE =
+  "https://target.example/search?q=admin' OR 1=1-- &redirect=https://evil.example/#frag";
+
 export default function UrlEncodeTool() {
   const [mode, setMode] = useState<Mode>("encode");
   const [input, setInput] = useState("");
@@ -68,10 +71,18 @@ export default function UrlEncodeTool() {
       <Field
         label={mode === "encode" ? "Text to encode" : "URL to decode"}
         actions={
-          <Button size="sm" variant="ghost" onClick={swap} disabled={!output}>
-            <ArrowDownUp className="size-3.5" />
-            Use output as input
-          </Button>
+          <>
+            <button
+              onClick={() => setInput(SAMPLE)}
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Load sample
+            </button>
+            <Button size="sm" variant="ghost" onClick={swap} disabled={!output}>
+              <ArrowDownUp className="size-3.5" />
+              Use output as input
+            </Button>
+          </>
         }
       >
         <Textarea

@@ -49,7 +49,7 @@ export default function PeInspectorTool() {
       } catch {
         if (!cancelled) {
           setR(null);
-          setError("Could not read the input — drop a PE file, or paste it as Base64 or hex.");
+          setError("Could not read the input - drop a PE file, or paste it as Base64 or hex.");
         }
       }
     })();

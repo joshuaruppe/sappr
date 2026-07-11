@@ -115,7 +115,7 @@ export default function ErrorDecodeTool() {
           {result.unrecognized && !busy ? (
             <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
               <p className="text-sm">
-                No match among the {count?.toLocaleString() ?? "indexed"} codes — double-check the
+                No match among the {count?.toLocaleString() ?? "indexed"} codes - double-check the
                 code you pasted. It may be mistyped, truncated, or in a different format.
               </p>
               {result.suggestions && result.suggestions.length > 0 ? (

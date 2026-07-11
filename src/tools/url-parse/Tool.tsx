@@ -4,6 +4,9 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Field, ErrorNote } from "@/components/tool/parts";
 import { parseUrl, type ParsedUrl } from "./logic";
 
+const SAMPLE =
+  "https://admin:s3cr3t@target.internal:8443/admin/login?redirect=/dashboard&token=abc123&debug=true#session";
+
 const COMPONENT_FIELDS: { key: keyof ParsedUrl; label: string }[] = [
   { key: "href", label: "Href" },
   { key: "protocol", label: "Protocol" },
@@ -35,7 +38,17 @@ export default function UrlParserTool() {
 
   return (
     <>
-      <Field label="URL">
+      <Field
+        label="URL"
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Input
           autoFocus
           value={input}
@@ -62,7 +75,7 @@ export default function UrlParserTool() {
                     </dt>
                     <dd className="min-w-0 flex-1 break-all font-mono">
                       {value || (
-                        <span className="text-muted-foreground/60">—</span>
+                        <span className="text-muted-foreground/60">-</span>
                       )}
                     </dd>
                     {value ? (
@@ -105,7 +118,7 @@ export default function UrlParserTool() {
                         </td>
                         <td className="px-3 py-1.5 font-mono break-all">
                           {p.value || (
-                            <span className="text-muted-foreground/60">—</span>
+                            <span className="text-muted-foreground/60">-</span>
                           )}
                         </td>
                         <td className="px-3 py-1.5 text-right">

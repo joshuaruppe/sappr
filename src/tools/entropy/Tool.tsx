@@ -77,7 +77,7 @@ export default function EntropyTool() {
       } catch {
         if (!cancelled) {
           setR(null);
-          setError("Could not read the input — drop a file, or paste it as Base64 or hex.");
+          setError("Could not read the input - drop a file, or paste it as Base64 or hex.");
         }
       }
     })();
@@ -121,7 +121,7 @@ export default function EntropyTool() {
 
           <div className="rounded-lg border border-border bg-card/40 p-4">
             <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Byte distribution (0–255)
+              Byte distribution (0-255)
             </div>
             <Histogram hist={r.histogram} />
           </div>

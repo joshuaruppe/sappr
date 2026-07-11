@@ -7,6 +7,16 @@ import { Field, ErrorNote } from "@/components/tool/parts";
 import type { RegexResult } from "./logic";
 import { runRegexAsync } from "./runner";
 
+const SAMPLE = {
+  pattern: "(?<user>[\\w.+-]+)@(?<domain>[\\w.-]+\\.[a-z]{2,})",
+  flags: { g: true, i: true } as Record<string, boolean>,
+  text:
+    "Harvested creds from the breach dump:\n" +
+    "alice.smith@corp-target.com:Winter2024!\n" +
+    "bob@mail.internal.target.io:hunter2\n" +
+    "svc-backup@target.com used for lateral movement.",
+};
+
 const FLAGS: { flag: string; label: string; title: string }[] = [
   { flag: "g", label: "g", title: "Global: find all matches" },
   { flag: "i", label: "i", title: "Ignore case" },
@@ -97,7 +107,21 @@ export default function RegexTester() {
 
   return (
     <>
-      <Field label="Pattern">
+      <Field
+        label="Pattern"
+        actions={
+          <button
+            onClick={() => {
+              setPattern(SAMPLE.pattern);
+              setFlags(SAMPLE.flags);
+              setText(SAMPLE.text);
+            }}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground select-none font-mono text-sm">
             /

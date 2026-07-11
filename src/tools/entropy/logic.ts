@@ -1,8 +1,8 @@
 /**
- * Shannon-entropy analysis of a file — the "is this packed/encrypted?" view.
+ * Shannon-entropy analysis of a file - the "is this packed/encrypted?" view.
  * Computes overall entropy, a per-block entropy series (for an entropy-vs-offset
  * graph) and a byte histogram, then verdicts and flags high-entropy regions that
- * suggest compression, encryption or packing. Pure — no DOM.
+ * suggest compression, encryption or packing. Pure - no DOM.
  */
 
 export type Severity = "high" | "medium" | "info";
@@ -66,25 +66,25 @@ export function analyzeEntropy(bytes: Uint8Array): EntropyResult {
 
   const verdict =
     overall >= 7.5
-      ? "Very high — likely compressed, encrypted or packed"
+      ? "Very high - likely compressed, encrypted or packed"
       : overall >= 6.5
-        ? "High — compressed/encrypted data likely present"
+        ? "High - compressed/encrypted data likely present"
         : overall >= 4.5
-          ? "Moderate — typical of native code or mixed data"
-          : "Low — sparse or highly structured data";
+          ? "Moderate - typical of native code or mixed data"
+          : "Low - sparse or highly structured data";
 
   const findings: Finding[] = [];
   if (overall >= 7.5) {
     findings.push({
       severity: "info",
-      message: `Overall entropy ${overall}/8 — the whole file looks compressed, encrypted or packed.`,
+      message: `Overall entropy ${overall}/8 - the whole file looks compressed, encrypted or packed.`,
     });
   }
   const hotBlocks = blocks.filter((b) => b >= 7.5).length;
   if (hotBlocks && overall < 7.5) {
     findings.push({
       severity: "info",
-      message: `${hotBlocks} high-entropy region${hotBlocks === 1 ? "" : "s"} (≥ 7.5) — a packed/encrypted blob embedded in otherwise normal data.`,
+      message: `${hotBlocks} high-entropy region${hotBlocks === 1 ? "" : "s"} (≥ 7.5) - a packed/encrypted blob embedded in otherwise normal data.`,
     });
   }
 

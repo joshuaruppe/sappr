@@ -1,6 +1,6 @@
 /**
  * Cryptographically-secure random helpers.
- * Pure functions (apart from the CSPRNG) — no DOM/React, safe for tests.
+ * Pure functions (apart from the CSPRNG) - no DOM/React, safe for tests.
  */
 
 export type TokenFormat = "hex" | "base64" | "base64url" | "decimal";
@@ -53,7 +53,7 @@ export function randomToken(n: number, fmt: TokenFormat): string {
 
 /**
  * Uniform random integer in the inclusive range [min, max] using rejection
- * sampling over crypto bytes — no modulo bias.
+ * sampling over crypto bytes - no modulo bias.
  */
 export function randomInt(min: number, max: number): number {
   if (!Number.isInteger(min) || !Number.isInteger(max)) {
@@ -74,7 +74,7 @@ export function randomInt(min: number, max: number): number {
   // Number of bytes needed to cover the range.
   const bytesNeeded = Math.ceil(Math.log2(range) / 8);
   const maxUint = 2 ** (bytesNeeded * 8);
-  // Largest multiple of `range` that fits — values at/above are rejected.
+  // Largest multiple of `range` that fits - values at/above are rejected.
   const limit = maxUint - (maxUint % range);
 
   const buf = new Uint8Array(bytesNeeded);

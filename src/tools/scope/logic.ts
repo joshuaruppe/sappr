@@ -1,11 +1,11 @@
 /**
- * Scope / target-list cleanup. Paste a messy engagement scope — a mix of single
+ * Scope / target-list cleanup. Paste a messy engagement scope - a mix of single
  * IPs, CIDRs, hyphen ranges (full or nmap-style short), IPs with ports, URLs,
- * IPv6 and hostnames, with dupes and surrounding junk — and get back a clean,
+ * IPv6 and hostnames, with dupes and surrounding junk - and get back a clean,
  * deduped result in the form you need: every IPv4 host one-per-line (for
  * `nmap -iL`), the minimal set of collapsed CIDRs, or a single nmap-ready target
  * string. IPv4 is modeled as merged integer intervals, so a /8 doesn't blow up
- * memory and CIDR aggregation is exact. Nothing is silently dropped — unparsed
+ * memory and CIDR aggregation is exact. Nothing is silently dropped - unparsed
  * tokens are surfaced so you always see what got skipped. Entirely client-side.
  */
 
@@ -21,7 +21,7 @@ export interface ScopeStats {
   ipv6: number;
   hostnames: number;
   invalid: number;
-  /** IP-shaped tokens that failed validation (bad octet/prefix) — likely typos. */
+  /** IP-shaped tokens that failed validation (bad octet/prefix) - likely typos. */
   malformed: number;
   /** Tokens dropped as exact duplicates of an already-seen entry. */
   duplicatesRemoved: number;
@@ -38,11 +38,11 @@ export interface ScopeResult {
   targets: string;
   /** Normalized, deduped IPv6 addresses/CIDRs (not expanded). */
   ipv6: string[];
-  /** Deduped hostnames (not resolved — no backend). */
+  /** Deduped hostnames (not resolved - no backend). */
   hostnames: string[];
   /** Tokens that couldn't be classified, verbatim. */
   invalid: string[];
-  /** IP-shaped tokens that failed validation (bad octet/prefix) — likely typos. */
+  /** IP-shaped tokens that failed validation (bad octet/prefix) - likely typos. */
   malformed: string[];
   stats: ScopeStats;
   findings: Finding[];
@@ -232,7 +232,7 @@ type Classified =
 /** Pull the host out of a token: strip URL scheme/path/userinfo and a trailing
  * `:port`, unwrap `[ipv6]`. Leaves CIDRs and bare IPv6 intact. */
 function hostFromToken(raw: string): string {
-  // Strip wrapping quotes/parens/angles — but NOT `[`, which brackets IPv6.
+  // Strip wrapping quotes/parens/angles - but NOT `[`, which brackets IPv6.
   let t = raw.trim().replace(/^["'<(]+/, "").replace(/["'>).,;]+$/, "");
   const scheme = t.match(/^[a-z][a-z0-9+.-]*:\/\/(.*)$/i);
   if (scheme) {
@@ -290,7 +290,7 @@ function classify(host: string): Classified | null {
     return { kind: "ipv4", iv: { start: single, end: single }, norm: intToIpv4(single) };
   }
 
-  // Salvage a leading IPv4 from a token mangled with stray separators — a
+  // Salvage a leading IPv4 from a token mangled with stray separators - a
   // mistyped `IP::port`, an `IP/tcp:port`, and so on. A valid IPv6 address never
   // starts with a dotted quad (embedded IPv4 only ever sits in the low 32 bits),
   // so this can't steal a real IPv6 address; it just keeps a real host from
@@ -325,7 +325,7 @@ function classify(host: string): Classified | null {
 
 // ---- entry point ----------------------------------------------------------
 
-/** A token shaped like an IPv4 address (or CIDR) that failed to validate — an
+/** A token shaped like an IPv4 address (or CIDR) that failed to validate - an
  * out-of-range octet or prefix. Almost always a typo, so it's surfaced with a
  * warning rather than lumped in with ordinary junk. Only consulted after normal
  * classification has already failed, so a valid address never reaches here. */

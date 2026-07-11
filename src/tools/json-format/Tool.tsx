@@ -7,6 +7,9 @@ import { formatJson, type JsonIndent } from "./logic";
 
 type Action = "beautify" | "minify";
 
+const SAMPLE =
+  '{"user":"admin","roles":["superuser","auditor"],"session":{"token":"eyJhbGciOiJIUzI1NiJ9","expires":1720656000,"mfa":false},"scopes":[{"host":"10.0.0.5","ports":[22,80,443]},{"host":"10.0.0.6","ports":[3389]}]}';
+
 export default function JsonFormatTool() {
   const [action, setAction] = useState<Action>("beautify");
   const [indent, setIndent] = useState<JsonIndent>("2");
@@ -63,7 +66,17 @@ export default function JsonFormatTool() {
         </div>
       </div>
 
-      <Field label="JSON input">
+      <Field
+        label="JSON input"
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           value={input}

@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { FindingsSection } from "@/components/tool/findings";
 import { parseUac } from "./logic";
 
+// 4194816 = 0x400200: NORMAL_ACCOUNT (0x200) + DONT_REQ_PREAUTH (0x400000),
+// an AS-REP roastable user (high-severity finding).
+const SAMPLE = "4194816";
+
 export default function UacTool() {
   const [input, setInput] = useState("");
   const r = useMemo(() => parseUac(input), [input]);
@@ -15,6 +19,14 @@ export default function UacTool() {
       <Field
         label="userAccountControl value"
         hint="Decimal (e.g. 66048) or hex (e.g. 0x10200)."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Input
           autoFocus

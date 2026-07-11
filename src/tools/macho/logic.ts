@@ -1,5 +1,5 @@
 /**
- * Parse a Mach-O (macOS / iOS) binary — the third leg of the ELF/PE/Mach-O trio.
+ * Parse a Mach-O (macOS / iOS) binary - the third leg of the ELF/PE/Mach-O trio.
  * Handles 32- and 64-bit, both byte orders, and fat/universal binaries. Reads the
  * mach header, walks the load commands for segments/sections, linked dylibs, the
  * UUID, entry point, code-signature and encryption state, and decodes the MH_
@@ -144,7 +144,7 @@ function parseSlice(bytes: Uint8Array, base: number, le: boolean, is64: boolean)
       const strOff = u32(off + 8);
       r.dylibs.push(cstr(bytes, off + strOff).replace(/^.*\//, "")); // basename
     } else if (cmd === LC_ID_DYLIB) {
-      // this dylib's own id — skip from the linked list
+      // this dylib's own id - skip from the linked list
     } else if (cmd === LC_RPATH) {
       const strOff = u32(off + 8);
       r.rpaths.push(cstr(bytes, off + strOff));
@@ -169,16 +169,16 @@ function parseSlice(bytes: Uint8Array, base: number, le: boolean, is64: boolean)
 function analyzeMacho(r: MachoResult): Finding[] {
   const f: Finding[] = [];
   if (r.filetype === "EXECUTE" && !r.flags.includes("PIE")) {
-    f.push({ severity: "medium", message: "No PIE (MH_PIE not set) — the executable isn't position-independent, defeating ASLR." });
+    f.push({ severity: "medium", message: "No PIE (MH_PIE not set) - the executable isn't position-independent, defeating ASLR." });
   }
   if (r.flags.includes("ALLOW_STACK_EXECUTION")) {
-    f.push({ severity: "high", message: "MH_ALLOW_STACK_EXECUTION — the stack is executable." });
+    f.push({ severity: "high", message: "MH_ALLOW_STACK_EXECUTION - the stack is executable." });
   }
   if (r.encrypted) {
-    f.push({ severity: "info", message: "Encrypted segment (cryptid ≠ 0) — FairPlay / App Store protection; dump from memory to analyze." });
+    f.push({ severity: "info", message: "Encrypted segment (cryptid ≠ 0) - FairPlay / App Store protection; dump from memory to analyze." });
   }
   if (r.filetype === "EXECUTE" && !r.signed) {
-    f.push({ severity: "info", message: "No LC_CODE_SIGNATURE — the binary is unsigned." });
+    f.push({ severity: "info", message: "No LC_CODE_SIGNATURE - the binary is unsigned." });
   }
   return f;
 }
@@ -205,12 +205,12 @@ export function parseMacho(bytes: Uint8Array): MachoResult {
     const beMagic = dv.getUint32(0, false);
 
     // Fat / universal binary (big-endian magic). Note: shares 0xCAFEBABE with a
-    // Java .class file — guard on a sane arch count.
+    // Java .class file - guard on a sane arch count.
     if (beMagic === 0xcafebabe || beMagic === 0xcafebabf) {
       const fat64 = beMagic === 0xcafebabf;
       const nfat = dv.getUint32(4, false);
       if (nfat > 30) {
-        return { ...base, error: "0xCAFEBABE with an implausible arch count — this looks like a Java .class file, not a Mach-O fat binary." };
+        return { ...base, error: "0xCAFEBABE with an implausible arch count - this looks like a Java .class file, not a Mach-O fat binary." };
       }
       const arches: { cpu: string; offset: number; size: number }[] = [];
       const entrySize = fat64 ? 32 : 20;

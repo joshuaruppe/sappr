@@ -1,6 +1,6 @@
 /**
  * Repeating-key XOR cipher with multi-format I/O, plus single-byte brute force.
- * Pure functions — no DOM/React; safe for tests and Web Workers.
+ * Pure functions - no DOM/React; safe for tests and Web Workers.
  */
 
 export type ByteFormat = "utf8" | "hex" | "base64";
@@ -122,11 +122,11 @@ export function formatBytesAs(bytes: Uint8Array, format: ByteFormat): string {
 // ---------------------------------------------------------------------------
 
 export interface SingleByteCandidate {
-  /** The XOR key byte (0–255). */
+  /** The XOR key byte (0-255). */
   key: number;
   /** Decoded output, with the key applied, as Latin-1 text. */
   output: string;
-  /** Fraction of bytes that are printable ASCII (0–1). */
+  /** Fraction of bytes that are printable ASCII (0-1). */
   printableRatio: number;
   /** English-likeness heuristic used to break printable-ratio ties. */
   textScore: number;

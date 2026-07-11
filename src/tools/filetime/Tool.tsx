@@ -4,6 +4,9 @@ import { Field, ErrorNote } from "@/components/tool/parts";
 import { Badge } from "@/components/ui/badge";
 import { parseWindowsTime } from "./logic";
 
+// A positive FILETIME (pwdLastSet-style Integer8) that decodes to Oct 2024.
+const SAMPLE = "133736472000000000";
+
 export default function FiletimeTool() {
   const [input, setInput] = useState("");
   const r = useMemo(() => parseWindowsTime(input), [input]);
@@ -14,6 +17,14 @@ export default function FiletimeTool() {
       <Field
         label="FILETIME / Integer8 value"
         hint="Enter a decimal (e.g. 133736472000000000) or 0x-hex integer. A positive value is a timestamp; a negative value (e.g. -36288000000000) is an AD duration; 0 and the max value are 'never' sentinels."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Input
           autoFocus

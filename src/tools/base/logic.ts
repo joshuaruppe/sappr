@@ -1,6 +1,6 @@
 /**
  * Byte-encoding codecs for the unified Base tool: Base64, Base32, Base58 and
- * hex (base16), all over UTF-8 bytes. Pure functions — no DOM, safe to call
+ * hex (base16), all over UTF-8 bytes. Pure functions - no DOM, safe to call
  * from a Web Worker or a test. Each base keeps its own options; the tool shows
  * only the ones relevant to the selected base + mode.
  */

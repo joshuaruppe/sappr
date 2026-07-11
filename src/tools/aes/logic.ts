@@ -1,6 +1,6 @@
 /**
  * Symmetric AES encrypt/decrypt over the Web Crypto API (crypto.subtle).
- * Pure async functions — no DOM/React, safe for tests & workers.
+ * Pure async functions - no DOM/React, safe for tests & workers.
  *
  * ## Output container layout
  *
@@ -8,8 +8,8 @@
  *
  *   [ magic(3) | version(1) | flags(1) | salt(16, only if passphrase) | iv(N) | ciphertext ]
  *
- *   - magic   : 0x41 0x45 0x53  ("AES")        — sanity check on decrypt
- *   - version : 0x01                            — container revision
+ *   - magic   : 0x41 0x45 0x53  ("AES")        - sanity check on decrypt
+ *   - version : 0x01                            - container revision
  *   - flags   : bit0 = cipher (0 = GCM, 1 = CBC)
  *               bit1 = key kind (0 = raw key, 1 = passphrase/PBKDF2)
  *   - salt    : 16 random bytes, present ONLY when bit1 is set (passphrase)
@@ -260,7 +260,7 @@ export async function decryptAes(
       ct as BufferSource,
     );
   } catch {
-    throw new Error("Decryption failed — wrong key or corrupted ciphertext.");
+    throw new Error("Decryption failed - wrong key or corrupted ciphertext.");
   }
   return new TextDecoder("utf-8", { fatal: false }).decode(plainBuf);
 }

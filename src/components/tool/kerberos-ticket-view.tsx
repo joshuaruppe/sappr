@@ -91,7 +91,7 @@ export function KerberosTicketView({ cred }: { cred: KerberosCred }) {
           <span className="text-muted-foreground/70">@ {t.realm}</span> · encrypted with{" "}
           <span className="font-mono">{t.encPart.etypeName}</span>
           {t.encPart.kvno !== undefined ? ` (kvno ${t.encPart.kvno})` : ""}. Sealed with the
-          service/krbtgt key — not decrypted here.
+          service/krbtgt key - not decrypted here.
         </div>
       ) : null}
 

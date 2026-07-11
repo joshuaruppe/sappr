@@ -1,6 +1,6 @@
 /**
  * JSON pretty-print / minify / validate using the native JSON parser.
- * Pure functions — no DOM/React, safe for tests and workers.
+ * Pure functions - no DOM/React, safe for tests and workers.
  */
 
 export type JsonIndent = "2" | "4" | "tab";

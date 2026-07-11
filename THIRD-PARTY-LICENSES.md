@@ -6,7 +6,7 @@ remains under its own license and whose notice is reproduced here as required.
 
 ---
 
-## hashcat — example hashes / mode table
+## hashcat - example hashes / mode table
 
 sappr's Hash Identifier bundles hashcat's mode → name → example-hash table,
 derived from hashcat's `example_hashes`, in:

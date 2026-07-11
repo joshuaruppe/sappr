@@ -7,6 +7,11 @@ import { useRouter } from "@/lib/router";
 import { analyzeDescriptor } from "@/lib/security-descriptor";
 import { parseSdInput } from "./logic";
 
+// O:SYG:SYD:(A;;GA;;;WD) - GENERIC_ALL granted to Everyone (S-1-1-0), a
+// dangerous ACL. Self-relative SECURITY_DESCRIPTOR, Base64-encoded.
+const SAMPLE =
+  "AQAEgBQAAAAgAAAAAAAAACwAAAABAQAAAAAABRIAAAABAQAAAAAABRIAAAACABwAAQAAAAAAFAAAAAAQAQEAAAAAAAEAAAAA";
+
 export default function SecurityDescriptorTool() {
   const { query } = useRouter();
   // Seed from a `?in=` handoff (e.g. "detected in Base64" from the Base tool).
@@ -18,7 +23,15 @@ export default function SecurityDescriptorTool() {
     <>
       <Field
         label="Security descriptor (Base64 or hex)"
-        hint="Paste a self-relative SECURITY_DESCRIPTOR — e.g. an AD nTSecurityDescriptor blob or the output of a Get-Acl .GetSecurityDescriptorBinaryForm()."
+        hint="Paste a self-relative SECURITY_DESCRIPTOR - e.g. an AD nTSecurityDescriptor blob or the output of a Get-Acl .GetSecurityDescriptorBinaryForm()."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Textarea
           autoFocus

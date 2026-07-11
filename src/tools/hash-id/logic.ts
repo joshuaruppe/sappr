@@ -1,7 +1,7 @@
 /**
  * Identify the likely type(s) of an unknown hash and, for credential hashes,
  * say what they are, where they come from, and how to crack them (hashcat /
- * John). Pure functions — no DOM.
+ * John). Pure functions - no DOM.
  */
 import {
   STRUCTURED_DETECTORS,
@@ -26,9 +26,9 @@ export const DEFAULT_WORDLIST = "/usr/share/wordlists/rockyou.txt";
  * have to edit out.
  */
 export interface CommandOptions {
-  /** Wordlist path — appended (positional for hashcat, --wordlist for John). */
+  /** Wordlist path - appended (positional for hashcat, --wordlist for John). */
   wordlist?: string;
-  /** Rules file path — appended as hashcat -r. */
+  /** Rules file path - appended as hashcat -r. */
   rules?: string;
   /** hashcat workload profile (-w): 1 Low, 2 Default, 3 High, 4 Nightmare. */
   workload?: number;
@@ -76,7 +76,7 @@ export interface IdentifiedHash extends HashType {
   hashcatExample?: string;
   /**
    * Set when the input matched this type's marker but is structurally invalid
-   * (e.g. right prefix, wrong length) — i.e. it can't actually be cracked as-is.
+   * (e.g. right prefix, wrong length) - i.e. it can't actually be cracked as-is.
    */
   warning?: string;
 }
@@ -100,7 +100,7 @@ function enrich(t: HashType, warning?: string): IdentifiedHash {
  * Identify likely hash types for `input`, ranked best-first. Structured /
  * credential formats are matched first; otherwise plain hex is classified by
  * length. A detector may flag a match as malformed (right marker, wrong
- * structure) — those sort last and are surfaced with a warning, not commands.
+ * structure) - those sort last and are surfaced with a warning, not commands.
  * Empty input returns [] (no error).
  */
 export function identifyHash(input: string): IdentifiedHash[] {

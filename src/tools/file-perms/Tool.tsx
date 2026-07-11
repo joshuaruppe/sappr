@@ -108,7 +108,7 @@ function ClassCell({
 }
 
 /** The octal value with a glassy hover-card explaining what each class grants.
- * A pointer-events-none portal tooltip — the mouse can never enter it, so it
+ * A pointer-events-none portal tooltip - the mouse can never enter it, so it
  * can't get stuck open; it closes cleanly on mouseleave/blur. */
 function OctalHover({ mode, typeChar }: { mode: ParsedMode; typeChar: string }) {
   const ref = useRef<HTMLSpanElement>(null);

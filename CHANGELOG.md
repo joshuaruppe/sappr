@@ -5,21 +5,38 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-07-11
+
+### Added
+
+- A "Load sample" button on ~29 more tools (encode / format / convert, crypto and
+  hash, and the Windows and value decoders). Each loads a realistic, pentest-flavored
+  example that exercises the tool: an NTLM hash for the hash identifier, an
+  AS-REP-roastable userAccountControl, a Vigenere cipher message, an email-harvesting
+  regex with named groups, a dangerous-ACL SDDL, and so on. Nobody memorizes 60-plus
+  input formats.
+
+### Changed
+
+- Swept em-dashes out of all user-facing copy and source in favor of plain punctuation.
+- Replaced the Kerberos ticket sample and test fixture with a fully synthetic,
+  fabricated `.kirbi`, so no third-party lab material ships in the repo.
+
 ## [1.7.0] - 2026-07-10
 
 ### Added
 
-- **Network** — the category is now populated with two tools pentesters actually
+- **Network** - the category is now populated with two tools pentesters actually
   reach for (the network-engineer filler like subnet math is deliberately left out):
-  - **Scope Cleanup** — paste a messy engagement scope (any mix of CIDRs, hyphen
+  - **Scope Cleanup** - paste a messy engagement scope (any mix of CIDRs, hyphen
     ranges, nmap-style short ranges, single IPs, URLs, `host:port`, IPv6 and
     hostnames, with dupes and junk) and get it back clean and deduped in the form
     you need: every IPv4 host one-per-line for `nmap -iL`, the minimal set of
     aggregated CIDRs, or a single nmap-ready target string. IPv4 is modeled as
     merged integer intervals, so a `/8` doesn't blow up and CIDR collapsing is
-    exact. Nothing is dropped silently — unrecognized tokens are surfaced.
-  - **MAC Vendor Lookup** — extract every MAC from pasted text (colon, hyphen,
-    Cisco dotted or bare-hex — so `arp -a` / `ip neigh` dumps work as-is) and
+    exact. Nothing is dropped silently - unrecognized tokens are surfaced.
+  - **MAC Vendor Lookup** - extract every MAC from pasted text (colon, hyphen,
+    Cisco dotted or bare-hex - so `arp -a` / `ip neigh` dumps work as-is) and
     resolve each to its IEEE-registered vendor from the bundled OUI registry
     (~53k MA-L/MA-M/MA-S prefixes, most-specific block wins). Decodes the
     unicast/multicast and universal/local bits, flagging randomized or private
@@ -35,20 +52,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Reversing** — a new top-level category for binary analysis, all in the browser:
-  - **ELF checksec** — an ELF's exploit-mitigation posture (RELRO, stack canary,
+- **Reversing** - a new top-level category for binary analysis, all in the browser:
+  - **ELF checksec** - an ELF's exploit-mitigation posture (RELRO, stack canary,
     NX, PIE, Fortify, RPATH/RUNPATH, stripped) with findings on what's missing.
-  - **PE Inspector** — Windows PE (EXE/DLL/SYS) headers, ASLR/DEP/CFG mitigations,
+  - **PE Inspector** - Windows PE (EXE/DLL/SYS) headers, ASLR/DEP/CFG mitigations,
     data directories (signed? .NET?), the section table with Shannon entropy, and
     the imported DLLs/APIs.
-  - **Mach-O Parser** — macOS/iOS binaries (32/64-bit, both byte orders,
+  - **Mach-O Parser** - macOS/iOS binaries (32/64-bit, both byte orders,
     fat/universal): header, load commands, segments, dylibs, UUID, signing and
     encryption state.
-  - **Disassembler** — multi-architecture (x86/x64/ARM/ARM64/Thumb/MIPS) via
+  - **Disassembler** - multi-architecture (x86/x64/ARM/ARM64/Thumb/MIPS) via
     Capstone compiled to WebAssembly; paste bytes, choose an arch, read the listing.
-  - **Entropy Visualizer** — a Shannon-entropy graph over a file's length plus a
+  - **Entropy Visualizer** - a Shannon-entropy graph over a file's length plus a
     byte histogram, to spot packed/compressed/encrypted regions.
-  - **ASN.1 / DER Decoder** — X.509 / PKCS / CMS structures into a readable tree
+  - **ASN.1 / DER Decoder** - X.509 / PKCS / CMS structures into a readable tree
     with named object identifiers; accepts hex, Base64 or PEM.
 
 ### Changed
@@ -62,20 +79,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Forensics / DFIR** tools:
-  - **IOC Defang / Refang** — defang indicators for safe sharing (hxxp, `[.]`,
+  - **IOC Defang / Refang** - defang indicators for safe sharing (hxxp, `[.]`,
     `[@]`), refang them back to live, and extract URLs, IPs, domains, emails and
     hashes from a pasted blob.
-  - **LNK Parser** — parse a Windows `.lnk` shortcut (from a dropped file or
+  - **LNK Parser** - parse a Windows `.lnk` shortcut (from a dropped file or
     Base64/hex): target, arguments, MAC timestamps, volume serial and UNC share,
     plus the tracker block that leaks the origin machine name + MAC address. Flags
     living-off-the-land binaries, encoded PowerShell and remote payloads.
-  - **Forensic Timestamps** — decode a mystery numeric timestamp across Unix
+  - **Forensic Timestamps** - decode a mystery numeric timestamp across Unix
     (s/ms/µs/ns), FILETIME, Chrome/WebKit, Mac/Cocoa, APFS, HFS+, NTP, OLE and
     packed DOS, showing every plausible date likeliest-first.
-  - **EXIF / Metadata Viewer** — read EXIF/GPS/XMP/IPTC metadata from an image
+  - **EXIF / Metadata Viewer** - read EXIF/GPS/XMP/IPTC metadata from an image
     in the browser, surfacing embedded GPS location (with a map link), camera
     serial, device and editing software as privacy/OSINT findings.
-- **Windows Error Code** decoder — look up a code across NTSTATUS, Win32 and
+- **Windows Error Code** decoder - look up a code across NTSTATUS, Win32 and
   HRESULT at once (~9,000 codes with official Microsoft messages), decode the
   HRESULT and NTSTATUS bit-fields (severity/facility/code), unwrap FACILITY_WIN32
   (`0x8007xxxx`) HRESULTs to the underlying Win32 error, and suggest near-matches
@@ -90,13 +107,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Web** tool category for web-app pentest triage:
-  - **SAML** decoder/encoder — auto-detects the HTTP-Redirect (DEFLATE + Base64)
+  - **SAML** decoder/encoder - auto-detects the HTTP-Redirect (DEFLATE + Base64)
     or HTTP-POST (Base64) binding into readable XML, and re-encodes into either.
-  - **Security Headers** analyzer — grades a pasted response-header block (CSP,
+  - **Security Headers** analyzer - grades a pasted response-header block (CSP,
     HSTS, framing, cookie flags, info-leak headers) and flags what's missing.
-  - **Session Cookie** decoder — reads Flask/itsdangerous (incl. compressed),
+  - **Session Cookie** decoder - reads Flask/itsdangerous (incl. compressed),
     JWT-in-cookie and Django signed values without the secret.
-  - **Serialized Blob** identifier — fingerprints Java, JSF ViewState, ASP.NET
+  - **Serialized Blob** identifier - fingerprints Java, JSF ViewState, ASP.NET
     `__VIEWSTATE`, PHP `serialize()`, Ruby Marshal and Python pickle, decoding
     what's cheap and pointing to the matching deserialization attack.
 - **PowerShell EncodedCommand** gained an **Encode** mode (script → Base64
@@ -119,7 +136,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - A tool with a bad `meta.category`, or any tool that throws while rendering,
     is now contained by an error boundary instead of blanking the whole app.
   - **Hash Identifier** recognizes Cisco type-7 secrets with any salt
-    (`00`–`15`), not only seed `07`.
+    (`00`-`15`), not only seed `07`.
   - **FILETIME / Integer8** sign-extends raw two's-complement hex durations
     (e.g. a hex `maxPwdAge`) instead of reading them as far-future dates.
   - **Crontab** explains multi-value minute/hour schedules in English (no more
@@ -134,36 +151,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Two Windows tools:
-  - **PowerShell EncodedCommand** decoder — decodes `-EncodedCommand`
+  - **PowerShell EncodedCommand** decoder - decodes `-EncodedCommand`
     (Base64 → UTF-16LE) and auto-unwraps the common inner Base64 +
     DeflateStream/GzipStream obfuscation layer used by fileless malware.
-  - **SID Decoder** — converts a Windows SID between string and binary form,
+  - **SID Decoder** - converts a Windows SID between string and binary form,
     resolves well-known SIDs and RIDs (Administrator, Domain Admins, krbtgt…),
     and breaks out the identifier authority and sub-authorities.
 - Four Linux tools:
-  - **/etc/group** parser — flags membership in privilege-escalation groups
+  - **/etc/group** parser - flags membership in privilege-escalation groups
     (docker, lxd, disk, shadow ≈ instant root; sudo/wheel/adm).
-  - **SSH authorized_keys** analyzer — SHA-256 fingerprints each key, shows its
+  - **SSH authorized_keys** analyzer - SHA-256 fingerprints each key, shows its
     options, and flags weak algorithms and unrestricted (backdoor-shaped) keys.
-  - **Linux Capabilities** decoder — turns getcap output into plain meaning and
+  - **Linux Capabilities** decoder - turns getcap output into plain meaning and
     flags privesc capabilities (cap_setuid, cap_dac_read_search, cap_sys_admin…).
-  - **systemd Unit** analyzer — flags a root service with a writable/relative
+  - **systemd Unit** analyzer - flags a root service with a writable/relative
     ExecStart, a `User=` bypass, secrets in `Environment=`, and missing sandboxing.
 
 ### Changed
 
 - The **FILETIME** tool now also interprets AD **Integer8** (LargeInteger)
-  values — negative durations (maxPwdAge, lockoutDuration) alongside absolute
-  timestamps — and is renamed **FILETIME / Integer8**.
+  values - negative durations (maxPwdAge, lockoutDuration) alongside absolute
+  timestamps - and is renamed **FILETIME / Integer8**.
 - Every **Findings** panel is now a collapsible card (collapsed by default) with
   color-coded per-severity counts next to the title and a copy button that
   exports the findings as plain text (one per line, severity-tagged).
-- The **userAccountControl** and **JWT** decoders gained a Findings panel — UAC
+- The **userAccountControl** and **JWT** decoders gained a Findings panel - UAC
   surfaces delegation / AS-REP-roastable / reversible-encryption flags; JWT
   flags `alg: none`, expired, symmetric-algorithm and no-expiry tokens.
-- The **Security Descriptor** decoder now flags dangerous ACL grants — DCSync,
+- The **Security Descriptor** decoder now flags dangerous ACL grants - DCSync,
   GenericAll, WriteDacl/WriteOwner, Shadow Credentials, RBCD, targeted
-  Kerberoast and group-membership writes — downgrading grants to well-known
+  Kerberoast and group-membership writes - downgrading grants to well-known
   privileged principals (Domain Admins, SYSTEM…) to informational.
 
 ## [1.2.0] - 2026-07-03
@@ -172,16 +189,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Linux** tool category for post-exploitation triage, with four tools that
   each surface privilege-escalation red flags:
-  - **passwd / shadow** parser — structures /etc/passwd and /etc/shadow and
+  - **passwd / shadow** parser - structures /etc/passwd and /etc/shadow and
     flags UID 0 accounts, empty or unshadowed passwords, weak hash schemes and
     duplicate UIDs.
-  - **sudoers** analyzer — flags passwordless `ALL` rules, command wildcards,
+  - **sudoers** analyzer - flags passwordless `ALL` rules, command wildcards,
     `env_keep`/`!authenticate` tricks and GTFOBins-runnable commands; also reads
     `sudo -l` output.
-  - **File Permissions** — triages a pasted `ls -l` / `ls -la` listing,
+  - **File Permissions** - triages a pasted `ls -l` / `ls -la` listing,
     flagging world-writable and setuid entries (concerning-only or explain-all
     view), with per-class r/w/x tags and a hover-card breakdown of any octal.
-  - **Crontab** analyzer — explains cron schedules in plain English and flags
+  - **Crontab** analyzer - explains cron schedules in plain English and flags
     `@reboot` persistence, world-writable script paths and PATH hijacks.
 
 ### Changed
@@ -189,7 +206,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tool pages now open with a breadcrumb (**All tools › category**) and show a
   compact execution status dot beside the title, replacing the old
   "category · In your browser" meta line.
-- Removed the redundant "in your browser" note from tool input hints — the
+- Removed the redundant "in your browser" note from tool input hints - the
   status dot in the header already conveys it.
 
 ## [1.1.1] - 2026-07-02
@@ -219,8 +236,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   nothing leaves the machine.
 - **Kerberos Ticket** decoder (Windows): paste a `.kirbi` / KRB-CRED (Rubeus,
   Mimikatz) and read its service, client, encryption types, ticket flags,
-  validity window, and session key. It decodes only — the ticket itself stays
-  encrypted (sealed with the service/krbtgt key) — and runs entirely client-side.
+  validity window, and session key. It decodes only - the ticket itself stays
+  encrypted (sealed with the service/krbtgt key) - and runs entirely client-side.
 - More Windows tools: a **GPP cpassword** decrypter (uses Microsoft's published
   key, entirely in-browser), a **userAccountControl** flag decoder (flags
   delegation, AS-REP roastable, disabled and more), and a **Windows FILETIME**

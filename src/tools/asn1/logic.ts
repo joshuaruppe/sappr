@@ -183,7 +183,7 @@ export function decodeAsn1(input: string): AsnResult {
 
   const parsed = fromBER(bytes);
   if (parsed.offset === -1) {
-    return { error: "Not valid ASN.1 DER/BER — check the bytes." };
+    return { error: "Not valid ASN.1 DER/BER - check the bytes." };
   }
   return { tree: walk(parsed.result as unknown as AsnBlock), error: "" };
 }

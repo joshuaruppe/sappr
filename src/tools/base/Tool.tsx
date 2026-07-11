@@ -24,6 +24,8 @@ import {
 
 type Mode = "encode" | "decode";
 
+const SAMPLE = "admin:S3cr3tP@ssw0rd!";
+
 export default function BaseTool() {
   const { navigate } = useRouter();
   const [base, setBase] = useState<BaseKind>("base64");
@@ -194,10 +196,18 @@ export default function BaseTool() {
       <Field
         label={mode === "encode" ? "Text to encode" : `${info.label} to decode`}
         actions={
-          <Button size="sm" variant="ghost" onClick={swap} disabled={!output}>
-            <ArrowDownUp className="size-3.5" />
-            Use output as input
-          </Button>
+          <>
+            <button
+              onClick={() => setInput(SAMPLE)}
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Load sample
+            </button>
+            <Button size="sm" variant="ghost" onClick={swap} disabled={!output}>
+              <ArrowDownUp className="size-3.5" />
+              Use output as input
+            </Button>
+          </>
         }
       >
         <Textarea

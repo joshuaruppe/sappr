@@ -5,7 +5,7 @@ export const meta: ToolMeta = {
   id: "ssh-authorized-keys",
   title: "SSH authorized_keys",
   description:
-    "Analyze an SSH authorized_keys file — SHA-256 fingerprint each key, show its options, and flag weak algorithms and unrestricted keys (a top persistence vector).",
+    "Analyze an SSH authorized_keys file - SHA-256 fingerprint each key, show its options, and flag weak algorithms and unrestricted keys (a top persistence vector).",
   category: "linux",
   icon: KeySquare,
   keywords: [

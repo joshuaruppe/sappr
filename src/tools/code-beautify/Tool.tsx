@@ -12,6 +12,11 @@ import {
 
 type TabWidth = "2" | "4";
 
+const SAMPLE = {
+  language: "javascript" as Language,
+  code: "function scan(hosts){const open=[];for(const h of hosts){for(let p=1;p<=1024;p++){if(probe(h,p)){open.push({host:h,port:p})}}}return open.filter(r=>[22,80,443,3389].includes(r.port))}",
+};
+
 const PLACEHOLDERS: Record<Language, string> = {
   json: '{"name":"sappr","nested":{"a":1,"b":[1,2,3]}}',
   yaml: "name:   sappr\nlist:\n-  a\n-   b",
@@ -116,7 +121,20 @@ export default function CodeBeautifyTool() {
         </Field>
       </div>
 
-      <Field label="Code to format">
+      <Field
+        label="Code to format"
+        actions={
+          <button
+            onClick={() => {
+              setLanguage(SAMPLE.language);
+              setInput(SAMPLE.code);
+            }}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           mono

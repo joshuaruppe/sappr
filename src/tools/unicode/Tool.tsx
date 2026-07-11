@@ -6,6 +6,8 @@ import { Field, ErrorNote } from "@/components/tool/parts";
 import { cn } from "@/lib/utils";
 import { inspect, summarizeFrom, type CharInfo } from "./logic";
 
+const SAMPLE = "Paуpal.com​ logon \u{1F510}";
+
 /** A human-readable label for a code point that renders as blank/whitespace. */
 function displayGlyph(info: CharInfo): { text: string; muted: boolean } {
   const { codePoint, flags, char } = info;
@@ -50,7 +52,17 @@ export default function UnicodeInspectorTool() {
 
   return (
     <>
-      <Field label="Text to inspect">
+      <Field
+        label="Text to inspect"
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           mono={false}
@@ -145,7 +157,7 @@ export default function UnicodeInspectorTool() {
                           ))}
                         </span>
                       ) : (
-                        <span className="text-muted-foreground">{"—"}</span>
+                        <span className="text-muted-foreground">{"-"}</span>
                       )}
                     </td>
                   </tr>

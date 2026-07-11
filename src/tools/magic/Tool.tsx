@@ -25,6 +25,8 @@ function scoreVariant(score: number): "success" | "warning" | "muted" {
   return "muted";
 }
 
+const SAMPLE = "aGVsbG8gd29ybGQ=";
+
 export default function MagicTool() {
   const [input, setInput] = useState("");
   // Defer the expensive work so typing stays responsive on large inputs.
@@ -56,6 +58,14 @@ export default function MagicTool() {
       <Field
         label="Unknown blob"
         hint="Paste anything: Base64, hex, ROT13, URL-encoded, byte lists, and nested layers are auto-detected and ranked."
+        actions={
+          <button
+            onClick={() => setInput(SAMPLE)}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Textarea
           autoFocus

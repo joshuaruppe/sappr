@@ -117,9 +117,9 @@ export default function PasswordTool() {
 
       <Field label="Character sets">
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-          <Switch checked={lowercase} onChange={setLowercase} label="Lowercase" title="a–z" />
-          <Switch checked={uppercase} onChange={setUppercase} label="Uppercase" title="A–Z" />
-          <Switch checked={digits} onChange={setDigits} label="Digits" title="0–9" />
+          <Switch checked={lowercase} onChange={setLowercase} label="Lowercase" title="a-z" />
+          <Switch checked={uppercase} onChange={setUppercase} label="Uppercase" title="A-Z" />
+          <Switch checked={digits} onChange={setDigits} label="Digits" title="0-9" />
           <Switch checked={symbols} onChange={setSymbols} label="Symbols" title="!@#$…" />
           <Switch
             checked={excludeAmbiguous}

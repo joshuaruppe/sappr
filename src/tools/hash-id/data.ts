@@ -37,7 +37,7 @@ export interface StructuredDetector extends HashType {
 }
 
 /**
- * Structured / prefixed formats — checked in order, most specific first. These
+ * Structured / prefixed formats - checked in order, most specific first. These
  * are high-signal: the prefix or layout usually pins the type exactly.
  */
 export const STRUCTURED_DETECTORS: StructuredDetector[] = [
@@ -146,7 +146,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "NetNTLMv1",
     category: "Windows · NetNTLM",
     context:
-      "Net-NTLMv1 challenge/response — weak. Crack offline, or with a fixed challenge (1122334455667788) submit to crack.sh for guaranteed NT-hash recovery.",
+      "Net-NTLMv1 challenge/response - weak. Crack offline, or with a fixed challenge (1122334455667788) submit to crack.sh for guaranteed NT-hash recovery.",
     confidence: "high",
     hashcatMode: 5500,
     johnFormat: "netntlm",
@@ -191,7 +191,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     id: "md5crypt",
     name: "md5crypt ($1$)",
     category: "Linux · /etc/shadow",
-    context: "Older Unix shadow password — also Cisco IOS 'enable secret 5'.",
+    context: "Older Unix shadow password - also Cisco IOS 'enable secret 5'.",
     confidence: "high",
     hashcatMode: 500,
     johnFormat: "md5crypt",
@@ -202,7 +202,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "yescrypt ($y$)",
     category: "Linux · /etc/shadow",
     context:
-      "Default shadow hash on recent Debian/Ubuntu/Fedora. Not supported by hashcat — crack with John.",
+      "Default shadow hash on recent Debian/Ubuntu/Fedora. Not supported by hashcat - crack with John.",
     confidence: "high",
     johnFormat: "yescrypt",
     note: "hashcat has no yescrypt mode; use John the Ripper.",
@@ -233,7 +233,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "Argon2 ($argon2*$)",
     category: "Linux · /etc/shadow",
     context:
-      "Argon2 (i/d/id) — modern memory-hard KDF, increasingly used for shadow and app password stores. Crack with John.",
+      "Argon2 (i/d/id) - modern memory-hard KDF, increasingly used for shadow and app password stores. Crack with John.",
     confidence: "high",
     johnFormat: "argon2",
     note: "hashcat Argon2 support is very recent/limited; John handles all variants.",
@@ -245,7 +245,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "bcrypt ($2*$)",
     category: "Web app · password store",
     context:
-      "bcrypt (Blowfish) — very common in app databases (Laravel, Spring, Node bcrypt, Rails). Deliberately slow.",
+      "bcrypt (Blowfish) - very common in app databases (Laravel, Spring, Node bcrypt, Rails). Deliberately slow.",
     confidence: "high",
     hashcatMode: 3200,
     johnFormat: "bcrypt",
@@ -316,7 +316,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "Cisco IOS type 4 (SHA-256)",
     category: "Network · Cisco",
     context:
-      "Cisco IOS 'type 4' secret — a single unsalted SHA-256 (a flawed design Cisco later deprecated). 43-char base64.",
+      "Cisco IOS 'type 4' secret - a single unsalted SHA-256 (a flawed design Cisco later deprecated). 43-char base64.",
     confidence: "medium",
     hashcatMode: 5700,
     johnFormat: "cisco4",
@@ -347,10 +347,10 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "Cisco type 7 (reversible)",
     category: "Network · Cisco",
     context:
-      "Cisco 'type 7' is obfuscation, not a hash — trivially reversible with no cracking needed (e.g. ciscot7, online decoders).",
+      "Cisco 'type 7' is obfuscation, not a hash - trivially reversible with no cracking needed (e.g. ciscot7, online decoders).",
     confidence: "low",
     note: "Not a real hash; decode it directly instead of cracking. No hashcat mode.",
-    // Leading two digits are a decimal salt index 00–15, not a literal "07".
+    // Leading two digits are a decimal salt index 00-15, not a literal "07".
     match: (s) => /^(0[0-9]|1[0-5])[0-9A-Fa-f]{4,}$/.test(s) && s.length % 2 === 0,
   },
   {
@@ -457,14 +457,14 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     hashcatMode: 1731,
     johnFormat: "mssql12",
     // The 0x0200 header is MSSQL 2012/2014's version marker, so trust it even if
-    // the body length is off — but flag it as malformed in that case.
+    // the body length is off - but flag it as malformed in that case.
     match: (s) =>
       /^0x0200[0-9a-fA-F]+$/i.test(s) || /^[0-9a-fA-F]{136}$/.test(s),
     malformedReason: (s) => {
       if (!/^0x0200/i.test(s)) return undefined; // bare form is length-exact
       const body = s.slice(6);
       if (body.length === 136) return undefined;
-      return `The 0x0200 marker indicates MSSQL 2012/2014, but the body is ${body.length} hex chars — a valid hash needs 136 (8-hex salt + 128-hex SHA-512). It can't be cracked as-is.`;
+      return `The 0x0200 marker indicates MSSQL 2012/2014, but the body is ${body.length} hex chars - a valid hash needs 136 (8-hex salt + 128-hex SHA-512). It can't be cracked as-is.`;
     },
   },
   {
@@ -483,7 +483,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "MSSQL 2000 (SHA-1, case-sensitive + upper)",
     category: "Database · MSSQL",
     context:
-      "SQL Server 2000 password hash: optional 0x0100 header, 4-byte (8-hex) salt, then two SHA-1 digests (80-hex) — one of the password, one of its upper-cased form.",
+      "SQL Server 2000 password hash: optional 0x0100 header, 4-byte (8-hex) salt, then two SHA-1 digests (80-hex) - one of the password, one of its upper-cased form.",
     confidence: "high",
     hashcatMode: 131,
     johnFormat: "mssql",
@@ -529,7 +529,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
       "A JSON Web Token. If HMAC-signed (HS256/384/512), hashcat 16500 can brute-force the signing secret to forge tokens.",
     confidence: "high",
     hashcatMode: 16500,
-    note: "RS/ES (asymmetric) tokens aren't crackable this way — only HMAC (HS*) secrets.",
+    note: "RS/ES (asymmetric) tokens aren't crackable this way - only HMAC (HS*) secrets.",
     match: (s) =>
       /^eyJ[A-Za-z0-9_-]+\.eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(s),
   },
@@ -654,7 +654,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     context:
       "VeraCrypt encrypted volume. hashcat modes 137xx select the PRF/cipher; extract with veracrypt2hashcat.",
     confidence: "high",
-    note: "Mode is in the 13700–13799 range depending on PRF/cipher combination.",
+    note: "Mode is in the 13700-13799 range depending on PRF/cipher combination.",
     match: (s) => /^\$veracrypt\$/i.test(s),
   },
   {
@@ -762,7 +762,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     name: "PDF (older, RC4/AES-128)",
     category: "Document",
     context:
-      "Older PDF encryption (1.1–1.6). hashcat modes 10400–10600 depending on revision.",
+      "Older PDF encryption (1.1-1.6). hashcat modes 10400-10600 depending on revision.",
     confidence: "high",
     note: "Modes: 10400/10410/10420 (rev2-3), 10500 (rev4), 10600 (rev5/6 owner pw).",
     johnFormat: "pdf",
@@ -785,7 +785,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
     context:
       "Legacy PKZIP/ZipCrypto archive. hashcat 17200/17210/17220/17225 by compression layout.",
     confidence: "high",
-    note: "Modes 17200–17225 depending on compressed/uncompressed/multi-file layout.",
+    note: "Modes 17200-17225 depending on compressed/uncompressed/multi-file layout.",
     johnFormat: "PKZIP",
     match: (s) => /^\$pkzip2?\$/.test(s),
   },
@@ -822,7 +822,7 @@ export const STRUCTURED_DETECTORS: StructuredDetector[] = [
 ];
 
 /**
- * Plain-hex candidates keyed by hex length (ambiguous — multiple types share a
+ * Plain-hex candidates keyed by hex length (ambiguous - multiple types share a
  * length, so we list them by descending likelihood). Lengths shown in hex
  * digits: 8=32-bit, 16=64-bit, 32=128-bit, 40=160-bit, 56=224-bit, 64=256-bit,
  * 96=384-bit, 128=512-bit.
@@ -882,7 +882,7 @@ export const HEX_BY_LENGTH: Record<number, HashType[]> = {
       name: "DES / Oracle 7-10g (DES)",
       category: "Database · Oracle",
       context:
-        "A 16-hex DES output — e.g. the legacy Oracle 7-10g password hash (usually paired with a username).",
+        "A 16-hex DES output - e.g. the legacy Oracle 7-10g password hash (usually paired with a username).",
       confidence: "low",
       hashcatMode: 3100,
       johnFormat: "oracle",
@@ -893,7 +893,7 @@ export const HEX_BY_LENGTH: Record<number, HashType[]> = {
       id: "md5",
       name: "MD5",
       category: "Raw hash",
-      context: "MD5 digest — ubiquitous in app DBs and integrity checks.",
+      context: "MD5 digest - ubiquitous in app DBs and integrity checks.",
       confidence: "high",
       hashcatMode: 0,
       johnFormat: "raw-md5",
@@ -931,7 +931,7 @@ export const HEX_BY_LENGTH: Record<number, HashType[]> = {
       name: "Domain Cached Credentials (DCC/mscash)",
       category: "Windows · cached creds",
       context:
-        "MS-CACHE v1 — cached domain logon hash (often shown with the username).",
+        "MS-CACHE v1 - cached domain logon hash (often shown with the username).",
       confidence: "low",
       hashcatMode: 1100,
       johnFormat: "mscash",
@@ -956,7 +956,7 @@ export const HEX_BY_LENGTH: Record<number, HashType[]> = {
     },
     {
       id: "double-md5",
-      name: "double MD5 — md5(md5(pw))",
+      name: "double MD5 - md5(md5(pw))",
       category: "Raw hash",
       context: "Iterated MD5 (md5(md5($pass))), seen in some legacy web apps.",
       confidence: "low",

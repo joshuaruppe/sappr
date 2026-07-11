@@ -115,7 +115,7 @@ export default function PowerShellEncodedTool() {
       {mode === "encode" ? (
         <Field
           label="PowerShell script"
-          hint="Enter a script to build a -EncodedCommand — Base64 of UTF-16LE, the format `powershell -enc` takes."
+          hint="Enter a script to build a -EncodedCommand - Base64 of UTF-16LE, the format `powershell -enc` takes."
           actions={
             <button
               onClick={() => setInput(ENCODE_SAMPLE)}
@@ -143,7 +143,7 @@ export default function PowerShellEncodedTool() {
             <OutputArea
               key={i}
               value={layer.text}
-              label={`Layer ${i + 1} — ${layer.label}`}
+              label={`Layer ${i + 1} - ${layer.label}`}
               filename={`layer-${i + 1}.ps1`}
               mono
             />

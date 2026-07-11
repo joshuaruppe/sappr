@@ -1,16 +1,16 @@
 /**
  * Client-side password gate for sappr (1.0, browser-only).
  *
- * THREAT MODEL — read before relying on this. In a browser-only build this is
+ * THREAT MODEL - read before relying on this. In a browser-only build this is
  * a *deterrent*, not a cryptographic access boundary: anyone with devtools or
  * filesystem access to the machine can clear the unlock marker and bypass the
  * gate, and sappr keeps no sensitive data at rest to encrypt. What it DOES
- * guarantee is that the password is never stored in a recoverable form — only
+ * guarantee is that the password is never stored in a recoverable form - only
  * an Argon2id hash (random salt, memory-hard params) lives in localStorage, so
  * reading the stored record cannot reveal the password or enable its reuse.
  *
  * For a real team/company gate on a self-hosted instance, enforce at the server
- * (reverse-proxy basic auth / SSO) — this layer is the convenience front-end to
+ * (reverse-proxy basic auth / SSO) - this layer is the convenience front-end to
  * that, and becomes server-backed in 2.0.
  */
 
@@ -39,7 +39,7 @@ export interface PasswordRule {
 
 /**
  * Password policy for enabling/changing protection. A light barrier (this is a
- * client-side deterrent, see the threat model above) — but enough to stop weak
+ * client-side deterrent, see the threat model above) - but enough to stop weak
  * shared secrets. The UI surfaces each unmet rule live.
  */
 export const PASSWORD_RULES: PasswordRule[] = [
@@ -93,7 +93,7 @@ const ARGON2 = {
 export interface AuthRecord {
   /** Schema version. */
   v: 1;
-  /** Argon2id PHC-encoded hash — embeds the random salt and params. */
+  /** Argon2id PHC-encoded hash - embeds the random salt and params. */
   hash: string;
   /** How often to re-prompt. */
   interval: LockInterval;

@@ -5,7 +5,7 @@ export const meta: ToolMeta = {
   id: "saml",
   title: "SAML",
   description:
-    "Decode a SAML AuthnRequest/Response — auto-detecting the HTTP-Redirect (DEFLATE + Base64) or HTTP-POST (Base64) binding — into readable XML, and re-encode into either binding.",
+    "Decode a SAML AuthnRequest/Response - auto-detecting the HTTP-Redirect (DEFLATE + Base64) or HTTP-POST (Base64) binding - into readable XML, and re-encode into either binding.",
   category: "web",
   icon: KeyRound,
   keywords: [

@@ -1,6 +1,6 @@
 /**
  * URL percent-encoding/decoding over the native (de|en)codeURI(Component)
- * functions. Pure functions — no DOM/React, safe for tests or a Web Worker.
+ * functions. Pure functions - no DOM/React, safe for tests or a Web Worker.
  */
 
 export type UrlScope = "component" | "full";

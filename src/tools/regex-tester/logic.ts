@@ -1,6 +1,6 @@
 /**
  * Run a JavaScript regular expression against text and collect every match
- * (with capture groups). Pure functions — no DOM/React.
+ * (with capture groups). Pure functions - no DOM/React.
  */
 
 export interface RegexMatch {
@@ -24,7 +24,7 @@ export interface RegexResult {
  *
  * The `g` flag is forced internally so we can enumerate every match, but the
  * user's flags are still applied for matching semantics (i, m, s, u, y, and
- * whether they asked for `g` at all — without it we only return the first).
+ * whether they asked for `g` at all - without it we only return the first).
  */
 export function runRegex(
   pattern: string,
@@ -67,7 +67,7 @@ export function runRegex(
 
       // Guard against zero-length matches causing an infinite loop. Under the
       // unicode (`u`) flag, advance a whole code point so we never land in the
-      // middle of a surrogate pair — which the engine would snap back from,
+      // middle of a surrogate pair - which the engine would snap back from,
       // re-matching the same index forever and hanging the tab on astral input.
       if (m.index === re.lastIndex) {
         if (re.unicode) {

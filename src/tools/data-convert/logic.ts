@@ -1,6 +1,6 @@
 /**
  * Convert structured data between JSON, YAML, CSV and TOML.
- * Pure functions — no DOM or React. Safe for tests and workers.
+ * Pure functions - no DOM or React. Safe for tests and workers.
  */
 import YAML from "yaml";
 import Papa from "papaparse";

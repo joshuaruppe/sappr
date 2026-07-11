@@ -1,5 +1,5 @@
 /**
- * Inspect an ELF binary's exploit-mitigation posture — the `checksec` view —
+ * Inspect an ELF binary's exploit-mitigation posture - the `checksec` view -
  * entirely in the browser. Parses the ELF header, program headers, section
  * headers and the dynamic/symbol tables to determine RELRO, stack canary, NX,
  * PIE, Fortify, RPATH/RUNPATH and whether it's stripped. Pure binary parsing,
@@ -257,13 +257,13 @@ export function parseElf(bytes: Uint8Array): ElfResult {
 
 function analyzeElf(r: ElfResult): Finding[] {
   const f: Finding[] = [];
-  if (!r.nx) f.push({ severity: "high", message: "NX disabled — the stack is executable, so injected shellcode can run directly." });
-  if (r.pie === "No PIE") f.push({ severity: "medium", message: "No PIE — the executable loads at a fixed base, defeating ASLR for its own code/gadgets." });
-  if (!r.canary && r.pie !== "DSO (shared object)") f.push({ severity: "medium", message: "No stack canary — stack buffer overflows aren't detected before the return address is used." });
-  if (r.relro === "None") f.push({ severity: "medium", message: "No RELRO — the GOT is writable; a write primitive can hijack control flow via GOT overwrite." });
-  else if (r.relro === "Partial") f.push({ severity: "info", message: "Partial RELRO — the GOT is still writable (lazy binding); Full RELRO (BIND_NOW) would harden it." });
-  if (r.rpath) f.push({ severity: "medium", message: `RPATH set (${r.rpath}) — libraries load from a hard-coded, non-overridable path; a writable entry enables library injection.` });
-  if (r.runpath) f.push({ severity: "info", message: `RUNPATH set (${r.runpath}) — check the listed directories aren't attacker-writable.` });
-  if (!r.fortify && r.linkage === "dynamic") f.push({ severity: "info", message: "No Fortify Source — libc `_chk` bounds-checked wrappers aren't used." });
+  if (!r.nx) f.push({ severity: "high", message: "NX disabled - the stack is executable, so injected shellcode can run directly." });
+  if (r.pie === "No PIE") f.push({ severity: "medium", message: "No PIE - the executable loads at a fixed base, defeating ASLR for its own code/gadgets." });
+  if (!r.canary && r.pie !== "DSO (shared object)") f.push({ severity: "medium", message: "No stack canary - stack buffer overflows aren't detected before the return address is used." });
+  if (r.relro === "None") f.push({ severity: "medium", message: "No RELRO - the GOT is writable; a write primitive can hijack control flow via GOT overwrite." });
+  else if (r.relro === "Partial") f.push({ severity: "info", message: "Partial RELRO - the GOT is still writable (lazy binding); Full RELRO (BIND_NOW) would harden it." });
+  if (r.rpath) f.push({ severity: "medium", message: `RPATH set (${r.rpath}) - libraries load from a hard-coded, non-overridable path; a writable entry enables library injection.` });
+  if (r.runpath) f.push({ severity: "info", message: `RUNPATH set (${r.runpath}) - check the listed directories aren't attacker-writable.` });
+  if (!r.fortify && r.linkage === "dynamic") f.push({ severity: "info", message: "No Fortify Source - libc `_chk` bounds-checked wrappers aren't used." });
   return f;
 }

@@ -40,7 +40,7 @@ export function runRegexAsync(
         finish({
           matches: [],
           error:
-            "Pattern timed out (over 1.5s) — this usually means catastrophic backtracking. Simplify nested quantifiers such as (a+)+ or (a|a)+.",
+            "Pattern timed out (over 1.5s) - this usually means catastrophic backtracking. Simplify nested quantifiers such as (a+)+ or (a|a)+.",
         }),
       TIMEOUT_MS,
     );

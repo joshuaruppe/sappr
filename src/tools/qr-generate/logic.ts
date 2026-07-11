@@ -1,6 +1,6 @@
 /**
  * Thin wrappers around the `qrcode` library.
- * Pure async functions — no DOM/React; safe for tests and workers.
+ * Pure async functions - no DOM/React; safe for tests and workers.
  */
 import QRCode from "qrcode";
 

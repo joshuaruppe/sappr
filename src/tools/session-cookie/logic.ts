@@ -1,7 +1,7 @@
 /**
  * Decode signed web-app session cookies without the secret: Flask / itsdangerous
  * (optionally zlib-compressed), a JWT stored in a cookie, and Django's
- * colon-separated signed values. These are SIGNED, not encrypted — the payload
+ * colon-separated signed values. These are SIGNED, not encrypted - the payload
  * is readable (and forgeable if the secret is weak). Client-side only.
  */
 
@@ -67,7 +67,7 @@ function isJson(text: string): boolean {
 const SIGNED_NOTE: Finding = {
   severity: "info",
   message:
-    "Signed, not encrypted — the payload is readable as-is, and can be forged if the signing secret is weak or leaked.",
+    "Signed, not encrypted - the payload is readable as-is, and can be forged if the signing secret is weak or leaked.",
 };
 
 /** Decode a session cookie, auto-detecting its format. */
@@ -96,11 +96,11 @@ export async function decodeCookie(input: string): Promise<CookieResult> {
       // header isn't a JWT header
     }
     if (header) {
-      // Commit to JWT once the header is valid — don't let a malformed payload
+      // Commit to JWT once the header is valid - don't let a malformed payload
       // segment fall through and get mislabeled as Flask/Django below.
       const findings: Finding[] = [SIGNED_NOTE];
       if (String(header.alg).toLowerCase() === "none") {
-        findings.push({ severity: "high", message: "JWT alg: none — unsigned; trivially forgeable if accepted." });
+        findings.push({ severity: "high", message: "JWT alg: none - unsigned; trivially forgeable if accepted." });
       }
       let payload = "";
       try {
@@ -108,7 +108,7 @@ export async function decodeCookie(input: string): Promise<CookieResult> {
       } catch {
         findings.push({
           severity: "medium",
-          message: "Payload segment is not valid base64url — the token is malformed or truncated.",
+          message: "Payload segment is not valid base64url - the token is malformed or truncated.",
         });
       }
       return {
@@ -160,7 +160,7 @@ export async function decodeCookie(input: string): Promise<CookieResult> {
   }
 
   // Django signed value: value:timestamp:signature. Django session cookies hold
-  // base64(JSON) in the value, so require the decoded value to be JSON — this
+  // base64(JSON) in the value, so require the decoded value to be JSON - this
   // stops arbitrary "a:b:c" strings from being confidently labeled as Django.
   const colonParts = s.split(":");
   if (colonParts.length === 3) {

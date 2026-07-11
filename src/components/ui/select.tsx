@@ -20,7 +20,7 @@ export interface SelectProps
   groups?: SelectOptionGroup[];
 }
 
-/** A styled native <select> — keeps the OS dropdown (offline, accessible). */
+/** A styled native <select> - keeps the OS dropdown (offline, accessible). */
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, options, groups, ...props }, ref) => {
     return (

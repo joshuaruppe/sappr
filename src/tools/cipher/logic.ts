@@ -1,6 +1,6 @@
 /**
  * Classical ciphers: Vigenere, Atbash, Rail Fence.
- * Pure functions — no DOM, safe to call from a Web Worker or a test.
+ * Pure functions - no DOM, safe to call from a Web Worker or a test.
  */
 
 const A = 65; // 'A'

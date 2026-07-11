@@ -1,6 +1,6 @@
 /**
  * MAC address → vendor lookup and bit-field decoding. Extracts every MAC it can
- * find in pasted text (colon, hyphen, Cisco dotted or bare-12-hex forms — so you
+ * find in pasted text (colon, hyphen, Cisco dotted or bare-12-hex forms - so you
  * can paste `arp -a`, `ip neigh` or config dumps directly), then for each one
  * resolves the vendor from the bundled IEEE OUI registry and decodes the two
  * meaningful bits of the first octet:
@@ -8,7 +8,7 @@
  *   - U/L bit → globally-unique (real vendor) vs locally administered
  * The U/L bit is the useful pentest tell: a set U/L bit with no registered
  * vendor is almost always a randomized/private MAC (modern iOS/Android privacy)
- * or a virtual interface — not real hardware. More-specific IEEE blocks (MA-S
+ * or a virtual interface - not real hardware. More-specific IEEE blocks (MA-S
  * 36-bit, MA-M 28-bit) win over the 24-bit MA-L block. The registry is
  * dynamic-imported so it only loads with the tool. Entirely client-side.
  */
@@ -97,7 +97,7 @@ export function analyzeMac(hex: string, input: string, data: OuiData): MacInfo {
   };
 }
 
-/** Whether a token is laid out like a MAC address — hex pairs joined by `:`/`-`,
+/** Whether a token is laid out like a MAC address - hex pairs joined by `:`/`-`,
  * or Cisco-style 4-hex groups joined by `.`. Lets us tell a mistyped MAC apart
  * from ordinary text (words, IPs, IPv6), which never matches this shape. */
 function looksLikeMacAttempt(tok: string): boolean {
@@ -139,7 +139,7 @@ export function lookupMacs(input: string, data: OuiData): MacResult {
 
 /** A NIST NVD keyword-search URL for a vendor, with common corporate suffixes
  * trimmed for a less-noisy query. Deliberately vendor-level: an OUI identifies
- * only the manufacturer, never the device model or firmware — so this is a lead
+ * only the manufacturer, never the device model or firmware - so this is a lead
  * to chase, not evidence that a particular device is vulnerable. */
 export function nvdSearchUrl(vendor: string): string {
   const q = vendor
@@ -151,7 +151,7 @@ export function nvdSearchUrl(vendor: string): string {
     .replace(/\s+/g, " ")
     .trim();
   const query = q || vendor;
-  // NVD's search is a hash-routed SPA — the keyword lives in the fragment, not a
+  // NVD's search is a hash-routed SPA - the keyword lives in the fragment, not a
   // query string (the old ?query= endpoint just redirects to an empty search).
   return `https://nvd.nist.gov/vuln/search#/nvd/home?keyword=${encodeURIComponent(query)}&resultType=records`;
 }
@@ -176,7 +176,7 @@ export async function analyzeMacs(input: string): Promise<MacResult> {
   return lookupMacs(input, data);
 }
 
-/** Number of OUI prefixes in the bundled registry — for the tool's stat field. */
+/** Number of OUI prefixes in the bundled registry - for the tool's stat field. */
 export async function getOuiCount(): Promise<number> {
   return (await getData()).count;
 }

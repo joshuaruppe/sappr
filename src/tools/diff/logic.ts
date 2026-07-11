@@ -1,6 +1,6 @@
 /**
  * Text diffing over lines, words, or characters, built on the `diff` library.
- * Pure functions — no DOM or React.
+ * Pure functions - no DOM or React.
  */
 import * as Diff from "diff";
 

@@ -7,13 +7,13 @@ tools you actually reach for: encoding/decoding, hashing, hash identification,
 crypto, formatting, regex, conversions, generators and binary forensics.
 Everything runs in your browser. No backend, nothing uploaded.
 
-<img src="docs/screenshot.png" alt="sappr — the pentester's toolkit, running entirely in the browser" width="840" />
+<img src="docs/screenshot.png" alt="sappr - the pentester's toolkit, running entirely in the browser" width="840" />
 
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-![Tests](https://img.shields.io/badge/tests-613_passing-3fb950?logo=vitest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-629_passing-3fb950?logo=vitest&logoColor=white)
 ![Runs](https://img.shields.io/badge/runs-in_your_browser-6d4aff)
 ![License](https://img.shields.io/badge/license-AGPL_v3-3fb950)
 ![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49)
@@ -32,12 +32,12 @@ Everything runs in your browser. No backend, nothing uploaded.
 - **Regex**: live tester with match highlighting · plain-English explainer
 - **Convert**: Unix timestamps · number-base converter · text diff · Unicode inspector
 - **Generate**: UUID / ULID · secure passwords · random tokens · QR codes
-- **Network**: **scope cleanup** — normalize a messy engagement scope (mixed CIDRs, ranges, single IPs, URLs, host:port, IPv6, hostnames, dupes) into a deduped host list for `nmap -iL`, the minimal set of collapsed CIDRs, or a single nmap-ready target string · **MAC vendor lookup** against the IEEE OUI registry (~53k MA-L/M/S prefixes) with unicast/multicast + universal/local bit decoding and randomized/private-MAC detection
+- **Network**: **scope cleanup** - normalize a messy engagement scope (mixed CIDRs, ranges, single IPs, URLs, host:port, IPv6, hostnames, dupes) into a deduped host list for `nmap -iL`, the minimal set of collapsed CIDRs, or a single nmap-ready target string · **MAC vendor lookup** against the IEEE OUI registry (~53k MA-L/M/S prefixes) with unicast/multicast + universal/local bit decoding and randomized/private-MAC detection
 - **Forensics / DFIR**: **IOC defang/refang** + IOC extraction · Windows **`.lnk`** shortcut parser (target/args, MAC timestamps, origin machine + MAC address) · multi-format **forensic timestamp** decoder (FILETIME, Chrome/WebKit, Cocoa, APFS, OLE, DOS…) · **EXIF / metadata** viewer (GPS→map, camera, privacy findings) · `strings`-style extraction · QR decode
 - **Windows / AD**: security-descriptor (SDDL, ACLs, AD GUID names), Kerberos `.kirbi`, **SID** and PowerShell **`-EncodedCommand`** decoders · GPP `cpassword` decrypt · `userAccountControl` and **FILETIME / Integer8** converters · **NTSTATUS / HRESULT / Win32 error-code** decoder (~9,000 codes)
-- **Linux**: `passwd`/`shadow`, `/etc/group`, `sudoers` (GTFOBins-aware, reads `sudo -l`), SSH `authorized_keys`, capabilities and systemd-unit analysis · `ls -l` permission triage · crontab explainer — each flagging privilege-escalation red flags
+- **Linux**: `passwd`/`shadow`, `/etc/group`, `sudoers` (GTFOBins-aware, reads `sudo -l`), SSH `authorized_keys`, capabilities and systemd-unit analysis · `ls -l` permission triage · crontab explainer - each flagging privilege-escalation red flags
 - **Web**: **SAML** decoder/encoder · HTTP **security-header + CSP** analyzer · signed **session-cookie** decoder (Flask/itsdangerous, JWT, Django) · **serialized-blob** identifier (Java/ViewState/PHP/Ruby/pickle)
-- **Reversing / Binary**: **ELF checksec** (RELRO/NX/PIE/canary/Fortify) · **PE inspector** (headers, ASLR/DEP/CFG, sections + entropy, imports) · **Mach-O** parser (fat binaries, dylibs, signing) · multi-arch **disassembler** (WASM Capstone — x86/x64/ARM/ARM64/Thumb/MIPS) · **entropy visualizer** · **ASN.1 / DER** decoder (X.509/PKCS, named OIDs)
+- **Reversing / Binary**: **ELF checksec** (RELRO/NX/PIE/canary/Fortify) · **PE inspector** (headers, ASLR/DEP/CFG, sections + entropy, imports) · **Mach-O** parser (fat binaries, dylibs, signing) · multi-arch **disassembler** (WASM Capstone - x86/x64/ARM/ARM64/Thumb/MIPS) · **entropy visualizer** · **ASN.1 / DER** decoder (X.509/PKCS, named OIDs)
 
 Every tool is a self-contained folder under [`src/tools/`](src/tools/); dropping
 a new one in registers it automatically across the nav, palette and launcher.
@@ -172,7 +172,7 @@ tooling and analysis, not a substitute for audited production key handling.
 
 - [ ] Shareable tool-state permalinks + PWA update prompts
 
-**2.0 — backend & deployment**
+**2.0 - backend & deployment**
 
 - [ ] Optional Go backend (WHOIS/RDAP, passive DNS/geo, server-backed auth/SSO, `/api/update-check`)
 - [ ] One multi-arch Docker image (GHCR, cosign-signed) + in-app "update available" banner

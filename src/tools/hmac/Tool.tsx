@@ -6,6 +6,11 @@ import { Field, OutputArea, ErrorNote } from "@/components/tool/parts";
 import { computeHmac, decodeKey } from "./logic";
 import type { HmacAlgo, KeyEncoding } from "./logic";
 
+const SAMPLE = {
+  message: "The quick brown fox jumps over the lazy dog",
+  key: "s3cr3t-signing-key",
+};
+
 export default function HmacTool() {
   const [message, setMessage] = useState("");
   const [key, setKey] = useState("");
@@ -60,7 +65,20 @@ export default function HmacTool() {
         />
       </Field>
 
-      <Field label="Message">
+      <Field
+        label="Message"
+        actions={
+          <button
+            onClick={() => {
+              setMessage(SAMPLE.message);
+              setKey(SAMPLE.key);
+            }}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
+      >
         <Textarea
           autoFocus
           mono={false}

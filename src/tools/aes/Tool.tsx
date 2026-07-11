@@ -13,6 +13,16 @@ import {
 
 type Mode = "encrypt" | "decrypt";
 
+// Encrypt-mode sample: a passphrase + plaintext. The IV and PBKDF2 salt are
+// generated at encrypt time, so this always produces valid AES-GCM output.
+const SAMPLE = {
+  mode: "encrypt" as Mode,
+  cipher: "AES-GCM" as AesCipher,
+  keyType: "passphrase" as AesKeyType,
+  key: "correct horse battery staple",
+  input: "Beacon check-in every 300s. Fallback C2: 192.168.13.37:8443. Burn on detection.",
+};
+
 export default function AesTool() {
   const [mode, setMode] = useState<Mode>("encrypt");
   const [cipher, setCipher] = useState<AesCipher>("AES-GCM");
@@ -123,6 +133,20 @@ export default function AesTool() {
 
       <Field
         label={mode === "encrypt" ? "Plaintext" : "Ciphertext (Base64)"}
+        actions={
+          <button
+            onClick={() => {
+              setMode(SAMPLE.mode);
+              setCipher(SAMPLE.cipher);
+              setKeyType(SAMPLE.keyType);
+              setKeyValue(SAMPLE.key);
+              setInput(SAMPLE.input);
+            }}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Load sample
+          </button>
+        }
       >
         <Textarea
           autoFocus

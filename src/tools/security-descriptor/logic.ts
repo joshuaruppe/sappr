@@ -1,7 +1,7 @@
 /**
  * Turn a pasted security descriptor (Base64 or hex bytes) into a parsed
  * structure. The heavy lifting lives in `@/lib/security-descriptor`; this just
- * gets bytes out of whatever text the user pasted. Pure — no DOM.
+ * gets bytes out of whatever text the user pasted. Pure - no DOM.
  */
 import {
   parseSecurityDescriptor,

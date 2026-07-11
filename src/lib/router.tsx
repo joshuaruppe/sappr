@@ -10,8 +10,8 @@ import {
 
 /**
  * Tiny hash-based router. Hash routing keeps the whole app a single static
- * file (trivial self-hosting, no server rewrite rules) and — importantly for a
- * security tool — lets tools stash large/sensitive state in the fragment, which
+ * file (trivial self-hosting, no server rewrite rules) and - importantly for a
+ * security tool - lets tools stash large/sensitive state in the fragment, which
  * is never sent to the server or written to access logs.
  *
  * Hash format: `#/<path>?<query>` e.g. `#/t/base64?in=...`

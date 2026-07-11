@@ -5,7 +5,7 @@ export const meta: ToolMeta = {
   id: "uac-flags",
   title: "userAccountControl",
   description:
-    "Decode a Windows/AD userAccountControl value into its named flags — spot delegation, AS-REP roastable, disabled and more.",
+    "Decode a Windows/AD userAccountControl value into its named flags - spot delegation, AS-REP roastable, disabled and more.",
   category: "windows",
   icon: UserCog,
   keywords: [

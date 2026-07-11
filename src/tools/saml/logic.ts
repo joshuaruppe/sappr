@@ -70,7 +70,7 @@ export function prettyXml(xml: string): string {
     const isSelfContained = /^<[^>]+>[^<]*<\/[^>]+>$/.test(tok); // <a>text</a> on one line
     const isSelfClosing = /\/>$/.test(tok);
     const isOpening = /^<[^/!?]/.test(tok) && !isSelfContained && !isSelfClosing;
-    // Collapse an empty element written as a pair — <a></a> — onto one line
+    // Collapse an empty element written as a pair - <a></a> - onto one line
     // instead of splitting it across two indented lines.
     if (isOpening) {
       const next = tokens[i + 1];
@@ -112,7 +112,7 @@ export async function decodeSaml(input: string): Promise<SamlDecodeResult> {
   }
 
   // HTTP-POST binding: the Base64 already holds XML. Allow a leading UTF-8 BOM
-  // (EF BB BF) before the '<' — TextDecoder strips it during decode.
+  // (EF BB BF) before the '<' - TextDecoder strips it during decode.
   const xmlStart =
     bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf ? 3 : 0;
   if (bytes[xmlStart] === 0x3c) {
@@ -132,7 +132,7 @@ export async function decodeSaml(input: string): Promise<SamlDecodeResult> {
 
   return {
     ...empty,
-    error: "Could not decode as SAML — expected Base64 XML, or DEFLATE + Base64.",
+    error: "Could not decode as SAML - expected Base64 XML, or DEFLATE + Base64.",
   };
 }
 

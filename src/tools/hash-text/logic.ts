@@ -1,6 +1,6 @@
 /**
  * Compute a fixed set of text digests at once.
- * Pure async functions — no DOM/React; all hashing runs via hash-wasm,
+ * Pure async functions - no DOM/React; all hashing runs via hash-wasm,
  * which accepts a string (UTF-8) or a Uint8Array and returns lowercase hex.
  */
 
@@ -37,7 +37,7 @@ const ALGORITHMS: { algo: string; run: (text: string) => Promise<string> }[] = [
   { algo: "CRC32", run: (t) => crc32(t) },
 ];
 
-/** The labels, in display order — handy for rendering placeholders. */
+/** The labels, in display order - handy for rendering placeholders. */
 export const HASH_ALGORITHMS: string[] = ALGORITHMS.map((a) => a.algo);
 
 /**

@@ -1,6 +1,6 @@
 /**
  * QR decoding over raw RGBA image data.
- * Pure-ish function — no DOM; safe to call from a test or worker.
+ * Pure-ish function - no DOM; safe to call from a test or worker.
  */
 
 import jsQR from "jsqr";

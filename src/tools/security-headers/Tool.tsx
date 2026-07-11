@@ -22,7 +22,7 @@ export default function SecurityHeadersTool() {
     <>
       <Field
         label="HTTP response headers"
-        hint="Paste a raw response header block (from Burp, curl -I, or devtools). Analyzed in your browser — no request is made."
+        hint="Paste a raw response header block (from Burp, curl -I, or devtools). Analyzed in your browser - no request is made."
         actions={
           <button
             onClick={() => setInput(SAMPLE)}

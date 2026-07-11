@@ -2,7 +2,7 @@
  * "Magic" auto-detector: given an unknown blob, recursively try a set of
  * reversible decoders and rank the results by how "text-like" they look.
  *
- * Pure functions — no DOM/React. Safe for tests and Web Workers.
+ * Pure functions - no DOM/React. Safe for tests and Web Workers.
  *
  * Each decoder is *guarded*: it only runs when the input plausibly matches its
  * shape, so we don't waste branching on obviously-wrong transforms. Results are
@@ -123,7 +123,7 @@ export function scoreText(s: string): number {
   if (/[a-z]+:\/\//i.test(s)) score += 4; // any scheme
 
   // Mostly-alphanumeric soup (e.g. another layer of base64) is less satisfying
-  // as a *final* answer, but still valid — nudge it down slightly.
+  // as a *final* answer, but still valid - nudge it down slightly.
   if (/^[A-Za-z0-9+/=_-]+$/.test(s.trim()) && !/ /.test(s)) score -= 8;
 
   return score;

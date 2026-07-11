@@ -123,14 +123,14 @@ export function shapeMetadata(raw: Record<string, unknown>): MetadataResult {
   if (gps) {
     findings.push({
       severity: "medium",
-      message: `Embedded GPS location: ${gps.lat}, ${gps.lon} — a privacy / OSINT leak that pinpoints where the photo was taken.`,
+      message: `Embedded GPS location: ${gps.lat}, ${gps.lon} - a privacy / OSINT leak that pinpoints where the photo was taken.`,
     });
   }
   const serial = raw.SerialNumber ?? raw.BodySerialNumber;
   if (serial) {
     findings.push({
       severity: "medium",
-      message: `Camera serial number embedded (${formatValue(serial)}) — ties every photo from this device together.`,
+      message: `Camera serial number embedded (${formatValue(serial)}) - ties every photo from this device together.`,
     });
   }
   if (raw.Make || raw.Model) {

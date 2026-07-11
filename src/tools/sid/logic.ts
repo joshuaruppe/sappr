@@ -1,7 +1,7 @@
 /**
  * Decode a Windows Security Identifier (SID) between string and binary form,
  * resolve well-known SIDs and RIDs, and break out the identifier authority and
- * sub-authorities. Pure — no DOM. Reuses the well-known-SID table from the
+ * sub-authorities. Pure - no DOM. Reuses the well-known-SID table from the
  * Security Descriptor library.
  */
 import { wellKnownSidName } from "@/lib/security-descriptor";

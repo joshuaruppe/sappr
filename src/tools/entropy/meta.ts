@@ -5,7 +5,7 @@ export const meta: ToolMeta = {
   id: "entropy",
   title: "Entropy Visualizer",
   description:
-    "Graph a file's Shannon entropy over its length (and its byte histogram) to spot packed, compressed or encrypted regions — the quick 'is this obfuscated?' check.",
+    "Graph a file's Shannon entropy over its length (and its byte histogram) to spot packed, compressed or encrypted regions - the quick 'is this obfuscated?' check.",
   category: "reversing",
   icon: Activity,
   keywords: [

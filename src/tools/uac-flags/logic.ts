@@ -1,6 +1,6 @@
 /**
  * Decode a Windows/AD userAccountControl bitmask into its named flags, and
- * surface the security-relevant ones as prioritized findings. Pure — no DOM.
+ * surface the security-relevant ones as prioritized findings. Pure - no DOM.
  */
 
 export type Severity = "high" | "medium" | "info";
@@ -20,7 +20,7 @@ const UAC_FLAGS: { bit: number; name: string; note?: string; severity?: Severity
   {
     bit: 0x00000080,
     name: "ENCRYPTED_TEXT_PWD_ALLOWED",
-    note: "reversible encryption — password recoverable",
+    note: "reversible encryption - password recoverable",
     severity: "high",
   },
   { bit: 0x00000100, name: "TEMP_DUPLICATE_ACCOUNT" },
@@ -44,20 +44,20 @@ const UAC_FLAGS: { bit: number; name: string; note?: string; severity?: Severity
   {
     bit: 0x00080000,
     name: "TRUSTED_FOR_DELEGATION",
-    note: "unconstrained delegation — high-value target",
+    note: "unconstrained delegation - high-value target",
     severity: "high",
   },
   {
     bit: 0x00100000,
     name: "NOT_DELEGATED",
-    note: "sensitive — cannot be delegated (protective)",
+    note: "sensitive - cannot be delegated (protective)",
     severity: "info",
   },
   { bit: 0x00200000, name: "USE_DES_KEY_ONLY", note: "DES only (weak crypto)", severity: "medium" },
   {
     bit: 0x00400000,
     name: "DONT_REQ_PREAUTH",
-    note: "AS-REP roastable — offline-crackable",
+    note: "AS-REP roastable - offline-crackable",
     severity: "high",
   },
   { bit: 0x00800000, name: "PASSWORD_EXPIRED" },
@@ -122,7 +122,7 @@ export function parseUac(input: string): UacResult {
       flags.push({ bit: f.bit, hex: `0x${f.bit.toString(16)}`, name: f.name, note: f.note, severity: f.severity });
       covered |= f.bit;
       if (f.severity && f.note) {
-        findings.push({ severity: f.severity, message: `${f.name} — ${f.note}` });
+        findings.push({ severity: f.severity, message: `${f.name} - ${f.note}` });
       }
     }
   }

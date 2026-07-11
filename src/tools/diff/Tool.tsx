@@ -6,6 +6,23 @@ import { Field, ErrorNote } from "@/components/tool/parts";
 import { cn } from "@/lib/utils";
 import { computeDiff, type DiffMode } from "./logic";
 
+const SAMPLE = {
+  original: [
+    "Host: 10.10.14.7",
+    "Port: 22",
+    "Service: OpenSSH 7.6",
+    "Status: open",
+    "Note: default creds",
+  ].join("\n"),
+  changed: [
+    "Host: 10.10.14.7",
+    "Port: 2222",
+    "Service: OpenSSH 8.9",
+    "Status: open",
+    "Note: patched",
+  ].join("\n"),
+};
+
 export default function DiffTool() {
   const [mode, setMode] = useState<DiffMode>("lines");
   const [original, setOriginal] = useState("");
@@ -58,7 +75,20 @@ export default function DiffTool() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Field label="Original">
+        <Field
+          label="Original"
+          actions={
+            <button
+              onClick={() => {
+                setOriginal(SAMPLE.original);
+                setChanged(SAMPLE.changed);
+              }}
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Load sample
+            </button>
+          }
+        >
           <Textarea
             value={original}
             onChange={(e) => setOriginal(e.target.value)}

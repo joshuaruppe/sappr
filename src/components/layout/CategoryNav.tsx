@@ -73,7 +73,7 @@ export function CategoryMenubar({ className }: { className?: string }) {
   function hoverOpen(id: string) {
     clearTimer();
     if (value) {
-      setValue(id); // a menu is already open — switch immediately
+      setValue(id); // a menu is already open - switch immediately
     } else {
       openTimer.current = setTimeout(() => setValue(id), 90);
     }

@@ -5,7 +5,7 @@ export const meta: ToolMeta = {
   id: "serialized",
   title: "Serialized Blob",
   description:
-    "Identify a serialized-object blob (Java, JSF ViewState, ASP.NET __VIEWSTATE, PHP, Ruby Marshal, Python pickle) and decode what's cheap — pointing to the right deserialization attack.",
+    "Identify a serialized-object blob (Java, JSF ViewState, ASP.NET __VIEWSTATE, PHP, Ruby Marshal, Python pickle) and decode what's cheap - pointing to the right deserialization attack.",
   category: "web",
   icon: Boxes,
   keywords: [

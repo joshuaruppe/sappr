@@ -1,7 +1,7 @@
 /**
  * Parse an SSH authorized_keys file: SHA-256 fingerprint each key, surface the
  * key options (command=/from= restrictions, forwarding), and flag weak algorithms
- * and unrestricted keys — a top persistence vector (ATT&CK T1098.004).
+ * and unrestricted keys - a top persistence vector (ATT&CK T1098.004).
  * Uses WebCrypto; client-side only.
  */
 
@@ -133,19 +133,19 @@ export async function analyzeAuthorizedKeys(input: string): Promise<AuthKeysResu
     if (type === "ssh-dss") {
       findings.push({
         severity: "high",
-        message: `DSA key (${label}) — deprecated and weak; disabled by default in modern OpenSSH.`,
+        message: `DSA key (${label}) - deprecated and weak; disabled by default in modern OpenSSH.`,
       });
     }
     if (type === "ssh-rsa" && bits !== undefined && bits < 2048) {
       findings.push({
         severity: "high",
-        message: `${bits}-bit RSA key (${label}) — too small; 3072+ or ed25519 recommended.`,
+        message: `${bits}-bit RSA key (${label}) - too small; 3072+ or ed25519 recommended.`,
       });
     }
     if (!restricted) {
       findings.push({
         severity: "medium",
-        message: `Unrestricted key (${label}) — no from=/command= limit, so it grants an interactive shell from any host (persistence vector).`,
+        message: `Unrestricted key (${label}) - no from=/command= limit, so it grants an interactive shell from any host (persistence vector).`,
       });
     }
   }

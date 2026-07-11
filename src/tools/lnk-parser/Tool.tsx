@@ -68,7 +68,7 @@ export default function LnkParserTool() {
       } catch {
         if (!cancelled) {
           setR(null);
-          setError("Could not read the input — drop a .lnk file, or paste it as Base64 or hex.");
+          setError("Could not read the input - drop a .lnk file, or paste it as Base64 or hex.");
         }
       }
     })();

@@ -1,6 +1,6 @@
 /**
  * Convert integers between bases using BigInt, so arbitrarily large values
- * (e.g. 2^100) round-trip without loss. Pure functions — no DOM, no React.
+ * (e.g. 2^100) round-trip without loss. Pure functions - no DOM, no React.
  */
 
 const DIGITS = "0123456789abcdefghijklmnopqrstuvwxyz";

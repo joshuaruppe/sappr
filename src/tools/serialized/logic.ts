@@ -1,7 +1,7 @@
 /**
  * Identify and (where cheap) decode serialized-object blobs seen in web apps:
  * Java serialized, JSF ViewState (Base64+Gzip), ASP.NET __VIEWSTATE, PHP
- * serialize(), Ruby Marshal and Python pickle. Detection is the point — it tells
+ * serialize(), Ruby Marshal and Python pickle. Detection is the point - it tells
  * a tester which deserialization attack applies. Client-side only.
  */
 
@@ -94,7 +94,7 @@ function hexPreview(bytes: Uint8Array, n = 48): string {
 
 const JAVA_FINDING: Finding = {
   severity: "high",
-  message: "Java serialized object — test for insecure deserialization (ysoserial gadget chains).",
+  message: "Java serialized object - test for insecure deserialization (ysoserial gadget chains).",
 };
 
 export async function analyzeSerialized(input: string): Promise<SerializedResult> {
@@ -109,7 +109,7 @@ export async function analyzeSerialized(input: string): Promise<SerializedResult
       formatId: "php",
       decoded: t.replace(/;/g, ";\n").replace(/\{/g, "{\n"),
       findings: [
-        { severity: "medium", message: "PHP serialized data — check for object injection / POP chains." },
+        { severity: "medium", message: "PHP serialized data - check for object injection / POP chains." },
       ],
       error: "",
     };
@@ -140,7 +140,7 @@ export async function analyzeSerialized(input: string): Promise<SerializedResult
         source,
         decoded: text,
         findings: isXml
-          ? [{ severity: "medium", message: "JSF ViewState — if unsigned, vulnerable to Java deserialization." }]
+          ? [{ severity: "medium", message: "JSF ViewState - if unsigned, vulnerable to Java deserialization." }]
           : [],
         error: "",
       };
@@ -160,7 +160,7 @@ export async function analyzeSerialized(input: string): Promise<SerializedResult
         {
           severity: "high",
           message:
-            "ASP.NET ViewState — if MAC is disabled or the machineKey is known, this deserializes to RCE (ysoserial.net).",
+            "ASP.NET ViewState - if MAC is disabled or the machineKey is known, this deserializes to RCE (ysoserial.net).",
         },
       ],
       error: "",
@@ -174,7 +174,7 @@ export async function analyzeSerialized(input: string): Promise<SerializedResult
       source,
       strings: extractStrings(b),
       hex: hexPreview(b),
-      findings: [{ severity: "high", message: "Ruby Marshal data — insecure deserialization risk." }],
+      findings: [{ severity: "high", message: "Ruby Marshal data - insecure deserialization risk." }],
       error: "",
     };
   }
@@ -189,7 +189,7 @@ export async function analyzeSerialized(input: string): Promise<SerializedResult
       findings: [
         {
           severity: "high",
-          message: "Python pickle — unpickling untrusted data executes arbitrary code (__reduce__).",
+          message: "Python pickle - unpickling untrusted data executes arbitrary code (__reduce__).",
         },
       ],
       error: "",

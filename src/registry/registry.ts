@@ -12,11 +12,11 @@ import {
  * Auto-discovering tool registry.
  *
  * Every tool is a folder under `src/tools/<id>/` containing:
- *   - `meta.ts`  — exports `meta: ToolMeta` (loaded eagerly; tiny)
- *   - `Tool.tsx` — default-exports the React component (code-split, lazy)
+ *   - `meta.ts`  - exports `meta: ToolMeta` (loaded eagerly; tiny)
+ *   - `Tool.tsx` - default-exports the React component (code-split, lazy)
  *
  * Dropping in a new folder registers the tool everywhere (nav, palette,
- * launcher, routing). No central list to edit — this is the plugin-style
+ * launcher, routing). No central list to edit - this is the plugin-style
  * extensibility CyberChef lacks.
  */
 
@@ -58,7 +58,7 @@ function buildEntries(): ToolEntry[] {
     }
     if (mod.meta.id !== dir && import.meta.env.DEV) {
       console.warn(
-        `[registry] tool "${dir}" declares id "${mod.meta.id}" — id should match the folder name`,
+        `[registry] tool "${dir}" declares id "${mod.meta.id}" - id should match the folder name`,
       );
     }
     out.push({ meta: mod.meta, Component: lazy(loader) });
@@ -98,7 +98,7 @@ export function getToolsByCategory(): CategoryGroup[] {
 
 /**
  * Precomputed category grouping. The tool set is fixed at module load, so the
- * result never changes — compute it once instead of per render in nav/home.
+ * result never changes - compute it once instead of per render in nav/home.
  */
 export const toolsByCategory: CategoryGroup[] = getToolsByCategory();
 

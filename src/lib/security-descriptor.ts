@@ -1,14 +1,14 @@
 /**
  * Parse a Windows self-relative SECURITY_DESCRIPTOR from raw bytes into a
  * readable structure (owner/group SIDs, DACL/SACL, decoded ACEs) and render it
- * back as SDDL. Pure functions, no DOM — usable from any tool, a worker, or a test.
+ * back as SDDL. Pure functions, no DOM - usable from any tool, a worker, or a test.
  *
  * Binary layout per [MS-DTYP]:
  *   2.4.6 SECURITY_DESCRIPTOR (self-relative), 2.4.5 ACL, 2.4.4 ACE, 2.4.2 SID.
  *
  * Only the self-relative form is supported (the form you get from a base64/hex
  * blob); the absolute form uses in-memory pointers and can't be parsed standalone.
- * Anything that doesn't cleanly parse returns `null` — callers treat that as
+ * Anything that doesn't cleanly parse returns `null` - callers treat that as
  * "these bytes are not a security descriptor".
  */
 
@@ -217,7 +217,7 @@ export function sddlSid(sid: string): string {
 
 // Well-known AD schema GUIDs used in object ACEs: extended rights, validated
 // writes, property sets, notable attributes, and object classes. Curated for
-// security relevance (not exhaustive) — enough to surface the ACEs that matter
+// security relevance (not exhaustive) - enough to surface the ACEs that matter
 // on an engagement (DCSync, password reset, Shadow Credentials, RBCD, ...).
 const GUID_NAMES: Record<string, string> = {
   // Extended rights (control-access rights)
@@ -498,7 +498,7 @@ function isPrivilegedTrustee(sid: string): boolean {
 const SEV_ORDER = { high: 0, medium: 1, info: 2 } as const;
 
 /**
- * Flag DACL ACEs that grant AD attack-primitive rights — DCSync, GenericAll,
+ * Flag DACL ACEs that grant AD attack-primitive rights - DCSync, GenericAll,
  * WriteDacl/WriteOwner, Shadow Credentials, RBCD, targeted Kerberoast, group
  * membership. Grants to well-known privileged principals (Domain Admins,
  * SYSTEM, …) are downgraded to info, since those are expected. Allow ACEs only.
@@ -512,7 +512,7 @@ export function analyzeDescriptor(sd: SecurityDescriptor): AceFinding[] {
   if (!sd.daclPresent) {
     findings.push({
       severity: "high",
-      message: "NULL DACL — no access control is defined, which grants Everyone full control.",
+      message: "NULL DACL - no access control is defined, which grants Everyone full control.",
     });
   }
 
@@ -526,9 +526,9 @@ export function analyzeDescriptor(sd: SecurityDescriptor): AceFinding[] {
       if (!ace.objectType) {
         grants.push({ sev: "high", label: "all extended rights (includes password reset and DCSync)" });
       } else if (/replication-get-changes/.test(otn)) {
-        grants.push({ sev: "high", label: `${ace.objectTypeName} — DCSync (replicate directory secrets)` });
+        grants.push({ sev: "high", label: `${ace.objectTypeName} - DCSync (replicate directory secrets)` });
       } else if (/force-change-password/.test(otn)) {
-        grants.push({ sev: "high", label: `${ace.objectTypeName} — force password reset` });
+        grants.push({ sev: "high", label: `${ace.objectTypeName} - force password reset` });
       } else {
         grants.push({ sev: "medium", label: `extended right: ${ace.objectTypeName ?? ace.objectType}` });
       }
@@ -559,7 +559,7 @@ export function analyzeDescriptor(sd: SecurityDescriptor): AceFinding[] {
     for (const g of grants) {
       findings.push({
         severity: privileged ? "info" : g.sev,
-        message: `${who} — ${g.label}${privileged ? " (expected for a privileged principal)" : ""}`,
+        message: `${who} - ${g.label}${privileged ? " (expected for a privileged principal)" : ""}`,
       });
     }
   }

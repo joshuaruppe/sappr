@@ -5,7 +5,7 @@ export const meta: ToolMeta = {
   id: "powershell-encoded",
   title: "PowerShell EncodedCommand",
   description:
-    "Encode a script into — or decode — a PowerShell -EncodedCommand (Base64 ↔ UTF-16LE). Decoding auto-unwraps the common inner Base64 + DeflateStream/GzipStream obfuscation used by malware.",
+    "Encode a script into - or decode - a PowerShell -EncodedCommand (Base64 ↔ UTF-16LE). Decoding auto-unwraps the common inner Base64 + DeflateStream/GzipStream obfuscation used by malware.",
   category: "windows",
   icon: SquareTerminal,
   keywords: [

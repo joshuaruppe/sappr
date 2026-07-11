@@ -44,7 +44,7 @@ export function Footer() {
             href={LICENSE_URL}
             target="_blank"
             rel="noreferrer noopener"
-            title={`Licensed under ${LICENSE_NAME} — source available`}
+            title={`Licensed under ${LICENSE_NAME} - source available`}
             className="transition-colors hover:text-foreground"
           >
             {LICENSE_NAME}

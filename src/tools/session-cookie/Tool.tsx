@@ -35,7 +35,7 @@ export default function SessionCookieTool() {
     <>
       <Field
         label="Session cookie"
-        hint="Paste a session cookie value (Flask/itsdangerous, a JWT, or a Django signed value). Decoded — not verified."
+        hint="Paste a session cookie value (Flask/itsdangerous, a JWT, or a Django signed value). Decoded - not verified."
         actions={
           <button
             onClick={() => setInput(SAMPLE)}

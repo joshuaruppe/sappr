@@ -1,7 +1,7 @@
 /**
  * Parse a crontab and explain each schedule in English, plus flag persistence
  * and privilege-escalation red flags: @reboot jobs, world-writable script
- * paths, PATH hijacks and remote-download-piped-to-shell. Pure — no DOM.
+ * paths, PATH hijacks and remote-download-piped-to-shell. Pure - no DOM.
  *
  * Handles user crontabs (5 fields + command) and system crontabs / cron.d
  * (5 fields + user + command), plus the @macros.
@@ -107,7 +107,7 @@ function describeTok(tok: string, nameFn?: (n: number) => string): string {
     return `every ${step[2]}${within}`;
   }
   const range = tok.match(/^(\d+)-(\d+)$/);
-  if (range) return `${nm(range[1], nameFn)}–${nm(range[2], nameFn)}`;
+  if (range) return `${nm(range[1], nameFn)}-${nm(range[2], nameFn)}`;
   return nm(tok, nameFn);
 }
 
@@ -125,7 +125,7 @@ function ordinal(n: number): string {
 }
 
 /** A readable phrase for a minute/hour field: "every hour", "every 5 minutes",
- * or "minute 0, 30" / "hour 9–17". */
+ * or "minute 0, 30" / "hour 9-17". */
 function fieldPhrase(expr: string, unit: string): string {
   if (expr === "*") return `every ${unit}`;
   const step = expr.match(/^\*\/(\d+)$/);
@@ -176,7 +176,7 @@ export function describeSchedule(schedule: string): { description: string; valid
 
   let description = parts.join(", ");
   if (dom !== "*" && dow !== "*") {
-    description += " (day-of-month OR day-of-week — cron runs when either matches)";
+    description += " (day-of-month OR day-of-week - cron runs when either matches)";
   }
   return { description: description.charAt(0).toUpperCase() + description.slice(1), valid: true };
 }
@@ -201,7 +201,7 @@ function commandFindings(command: string, user: string | undefined, findings: Fi
   if (firstTok && !firstTok.startsWith("/") && !firstTok.includes("=")) {
     findings.push({
       severity: "medium",
-      message: `Relative command "${firstTok}" is resolved via PATH — hijackable if an earlier PATH dir is writable.`,
+      message: `Relative command "${firstTok}" is resolved via PATH - hijackable if an earlier PATH dir is writable.`,
     });
   }
   if (user === "root" && /\/home\//.test(command)) {
@@ -237,7 +237,7 @@ export function parseCrontab(input: string, system: boolean): CrontabResult {
         if (entries.some((e) => e === "" || e === "." || !e.startsWith("/"))) {
           findings.push({
             severity: "high",
-            message: `cron PATH contains a relative or empty entry (${value}) — a writable early entry hijacks every job.`,
+            message: `cron PATH contains a relative or empty entry (${value}) - a writable early entry hijacks every job.`,
           });
         }
       }
@@ -275,7 +275,7 @@ export function parseCrontab(input: string, system: boolean): CrontabResult {
     if (schedule.toLowerCase() === "@reboot") {
       findings.push({
         severity: "info",
-        message: `Runs at boot (${command || "no command"}) — common persistence mechanism.`,
+        message: `Runs at boot (${command || "no command"}) - common persistence mechanism.`,
       });
     }
     if (command) commandFindings(command, user, findings);

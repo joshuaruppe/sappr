@@ -94,7 +94,7 @@ function AclSection({
       </p>
       {aces.length === 0 ? (
         <p className="text-xs text-warning">
-          Present but empty — this denies all access (an explicit lockout).
+          Present but empty - this denies all access (an explicit lockout).
         </p>
       ) : (
         aces.map((ace, i) => <AceRow key={i} ace={ace} />)

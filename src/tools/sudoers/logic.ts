@@ -1,7 +1,7 @@
 /**
  * Parse a sudoers file and surface privilege-escalation red flags: passwordless
  * ALL rules, wildcard commands, environment-preservation tricks, and commands
- * that are known GTFOBins shell-out vectors. Pure — no DOM.
+ * that are known GTFOBins shell-out vectors. Pure - no DOM.
  *
  * This is a pragmatic line parser for triage, not a full sudoers grammar. It
  * covers the common user-spec and Defaults forms you meet on real hosts.
@@ -33,7 +33,7 @@ export interface SudoersResult {
 }
 
 /** A curated subset of GTFOBins binaries that grant a shell / command exec when
- * runnable via sudo. Not exhaustive — enough to catch the usual suspects. */
+ * runnable via sudo. Not exhaustive - enough to catch the usual suspects. */
 const GTFOBINS = new Set([
   "vi", "vim", "vimdiff", "view", "rvim", "nano", "pico", "less", "more", "most",
   "man", "awk", "gawk", "mawk", "find", "env", "python", "python2", "python3",
@@ -118,13 +118,13 @@ export function parseSudoers(input: string): SudoersResult {
       if (/!authenticate\b/.test(line)) {
         findings.push({
           severity: "high",
-          message: "Authentication disabled (Defaults !authenticate) — sudo runs without a password.",
+          message: "Authentication disabled (Defaults !authenticate) - sudo runs without a password.",
         });
       }
       if (/env_keep\b/.test(line) && /LD_PRELOAD|LD_LIBRARY_PATH/.test(line)) {
         findings.push({
           severity: "high",
-          message: "Defaults env_keep preserves LD_PRELOAD/LD_LIBRARY_PATH — library injection into sudo commands.",
+          message: "Defaults env_keep preserves LD_PRELOAD/LD_LIBRARY_PATH - library injection into sudo commands.",
         });
       }
       if (/\b(targetpw|rootpw|runaspw)\b/.test(line)) {
@@ -225,14 +225,14 @@ export function parseSudoers(input: string): SudoersResult {
         findings.push({
           severity: nopasswd ? "high" : "medium",
           account: principal,
-          message: `"${principal}" may run ${bn} as ${label}${nopasswd ? " without a password" : ""} — known GTFOBins escalation vector.`,
+          message: `"${principal}" may run ${bn} as ${label}${nopasswd ? " without a password" : ""} - known GTFOBins escalation vector.`,
         });
       }
       if (cmd.includes("*")) {
         findings.push({
           severity: "medium",
           account: principal,
-          message: `Wildcard in "${cmd}" for "${principal}" — argument-injection risk.`,
+          message: `Wildcard in "${cmd}" for "${principal}" - argument-injection risk.`,
         });
       }
     }

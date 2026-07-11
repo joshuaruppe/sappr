@@ -1,6 +1,6 @@
 /**
  * ROT / Caesar letter rotation.
- * Pure functions — no DOM/React, safe for tests and workers.
+ * Pure functions - no DOM/React, safe for tests and workers.
  */
 
 /** Shift A-Za-z by `shift` positions (0-25), wrapping within each case. */

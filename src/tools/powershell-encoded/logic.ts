@@ -1,6 +1,6 @@
 /**
  * Decode a PowerShell -EncodedCommand: extract the Base64, decode it as UTF-16LE
- * (the PowerShell default) and then auto-unwrap the common obfuscation layer —
+ * (the PowerShell default) and then auto-unwrap the common obfuscation layer -
  * an inner Base64 payload run through DeflateStream/GzipStream. Uses the browser
  * DecompressionStream, so it's client-side only. No DOM beyond that global.
  */
@@ -74,7 +74,7 @@ export function decodeOuter(
   const utf8 = new TextDecoder("utf-8", { fatal: false }).decode(bytes);
   // Non-Latin UTF-16LE payloads (e.g. CJK) don't trip the zero-high-byte
   // heuristic, but decoding them as UTF-8 produces replacement characters.
-  // Prefer UTF-16LE when it is both even-length and demonstrably cleaner — this
+  // Prefer UTF-16LE when it is both even-length and demonstrably cleaner - this
   // never fires for genuine UTF-8 text, which has no replacement characters.
   if (bytes.length % 2 === 0 && replacementRatio(utf8) > 0.1) {
     const utf16 = new TextDecoder("utf-16le").decode(bytes);
@@ -118,7 +118,7 @@ export async function decodePowerShell(
   try {
     outer = decodeOuter(b64, force);
   } catch {
-    // Only surface an error when the blob actually looked like Base64 — a long
+    // Only surface an error when the blob actually looked like Base64 - a long
     // ordinary word shouldn't trigger a scary "could not decode" message.
     const looksB64 = b64.length % 4 === 0 && /^[A-Za-z0-9+/]+={0,2}$/.test(b64);
     return { layers: [], error: looksB64 ? "Could not Base64-decode the input." : "" };

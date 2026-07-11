@@ -174,7 +174,7 @@ export default function RandomTool() {
             actions={num ? <CopyButton value={num} /> : undefined}
           >
             <div className="flex h-12 items-center rounded-md border border-input bg-card/60 px-4 font-mono text-2xl tabular-nums">
-              {num || <span className="text-muted-foreground">—</span>}
+              {num || <span className="text-muted-foreground">-</span>}
             </div>
           </Field>
         </>

@@ -6,7 +6,7 @@
  * This DECODES; it does not decrypt. The ticket's own EncTicketPart (the PAC) is
  * sealed with the service/krbtgt key and stays opaque. But a `.kirbi`'s
  * EncKrbCredPart is stored unencrypted (etype 0), so the session key, flags,
- * times and names are all readable without any secret — exactly what
+ * times and names are all readable without any secret - exactly what
  * `Rubeus describe` shows.
  *
  * Structures per RFC 4120 (KRB-CRED [APPLICATION 22], Ticket [APPLICATION 1],
@@ -125,7 +125,7 @@ export interface KerberosTime {
 export interface KerberosPrincipal {
   nameType: number;
   nameTypeName: string;
-  /** name-string joined with "/", e.g. "krbtgt/CONTOSO.COM". */
+  /** name-string joined with "/", e.g. "krbtgt/EXAMPLE.LOCAL". */
   name: string;
 }
 

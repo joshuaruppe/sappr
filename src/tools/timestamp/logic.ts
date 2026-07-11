@@ -1,6 +1,6 @@
 /**
  * Unix epoch <-> date conversion helpers.
- * Pure functions — no DOM/React. Uses the standard `Date` global, which is
+ * Pure functions - no DOM/React. Uses the standard `Date` global, which is
  * available in both the browser and Node.
  */
 

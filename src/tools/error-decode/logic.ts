@@ -1,6 +1,6 @@
 /**
- * Decode a Windows error code across all three families at once — NTSTATUS,
- * Win32 (ERROR_*) and HRESULT — the way Microsoft's Err.exe does. Looks the value
+ * Decode a Windows error code across all three families at once - NTSTATUS,
+ * Win32 (ERROR_*) and HRESULT - the way Microsoft's Err.exe does. Looks the value
  * up in a bundled map of ~9,000 codes (name + official message), decodes the
  * HRESULT bit-fields (severity / facility / code), and unwraps the very common
  * FACILITY_WIN32 HRESULTs (0x8007xxxx) back to their underlying Win32 error.
@@ -58,9 +58,9 @@ export interface DecodeResult {
   interpretations: Interpretation[];
   hresultStructure?: HresultStructure;
   ntstatusStructure?: NtstatusStructure;
-  /** Near-matches when the input doesn't resolve — likely a typo. */
+  /** Near-matches when the input doesn't resolve - likely a typo. */
   suggestions?: Suggestion[];
-  /** True when no named code matched — nudge the user to double-check. */
+  /** True when no named code matched - nudge the user to double-check. */
   unrecognized?: boolean;
   error: string;
 }
@@ -139,7 +139,7 @@ function build(value: number, data: ErrorData): Interpretation[] {
         family: "HRESULT",
         code: disp,
         names: [`HRESULT_FROM_WIN32(${low})`],
-        description: `Wraps Win32 error ${low} — ${w2[0].name}: ${w2[0].desc}`,
+        description: `Wraps Win32 error ${low} - ${w2[0].name}: ${w2[0].desc}`,
         note: "FACILITY_WIN32",
       });
     }
@@ -148,7 +148,7 @@ function build(value: number, data: ErrorData): Interpretation[] {
   return out;
 }
 
-/** Whether a value is plausibly a real HRESULT — a failure severity with a named
+/** Whether a value is plausibly a real HRESULT - a failure severity with a named
  * facility. NTSTATUS values, Win32 decimals and typos don't qualify, so we don't
  * mislead by decoding them through the (different) HRESULT bit layout. */
 function looksLikeHresult(value: number): boolean {
@@ -248,7 +248,7 @@ function suggestions(token: string, data: ErrorData): Suggestion[] {
     .map((h) => h.s);
 }
 
-/** Look up a parsed code against the dataset. Pure — the async wrapper supplies data. */
+/** Look up a parsed code against the dataset. Pure - the async wrapper supplies data. */
 export function lookupError(input: string, data: ErrorData): DecodeResult {
   const t = input.trim().replace(/[,\s]/g, "");
   if (t === "") return { interpretations: [], error: "" };
@@ -260,7 +260,7 @@ export function lookupError(input: string, data: ErrorData): DecodeResult {
 
   if (value !== null && Number.isFinite(value)) {
     let interpretations = build(value, data);
-    // A bare decimal that matches nothing but is a plausible hex code — try hex too.
+    // A bare decimal that matches nothing but is a plausible hex code - try hex too.
     if (interpretations.length === 0 && /^\d{5,8}$/.test(t)) {
       const hv = parseInt(t, 16) >>> 0;
       const alt = build(hv, data);
@@ -285,7 +285,7 @@ export function lookupError(input: string, data: ErrorData): DecodeResult {
       error: "",
     };
     if (interpretations.length > 0) return { ...base, interpretations };
-    // Parsed to a real value, but no named code matches — nudge + near-matches.
+    // Parsed to a real value, but no named code matches - nudge + near-matches.
     return { ...base, interpretations: [], suggestions: suggestions(t, data), unrecognized: true };
   }
 
@@ -308,7 +308,7 @@ export async function decodeError(input: string): Promise<DecodeResult> {
   return lookupError(input, data);
 }
 
-/** How many codes the bundled dataset indexes — for the tool's stat field. */
+/** How many codes the bundled dataset indexes - for the tool's stat field. */
 export async function getCodeCount(): Promise<number> {
   const data = (await import("./data.json")).default as unknown as ErrorData;
   return countCodes(data);

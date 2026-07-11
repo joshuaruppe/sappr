@@ -1,6 +1,6 @@
 /**
  * HTML entity encode/decode built on the `he` library.
- * Pure functions — no DOM/React, safe to call from a Web Worker or a test.
+ * Pure functions - no DOM/React, safe to call from a Web Worker or a test.
  */
 import he from "he";
 
@@ -16,7 +16,7 @@ export function encodeHtmlEntities(
   opts: HtmlEntitiesEncodeOptions = {},
 ): string {
   return he.encode(text, {
-    // Default to named references (e.g. &lt;) — matches the tool's UI default
+    // Default to named references (e.g. &lt;) - matches the tool's UI default
     // and is the more human-readable choice.
     useNamedReferences: opts.useNamedReferences ?? true,
     encodeEverything: opts.encodeEverything ?? false,

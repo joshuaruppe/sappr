@@ -29,7 +29,7 @@ describe("wrangleScope", () => {
   it("aggregates a non-aligned range into minimal CIDRs", () => {
     // 10.0.0.1 and 10.0.0.2 straddle a /31 boundary → two /32s.
     expect(wrangleScope("10.0.0.1-10.0.0.2").cidrs).toEqual(["10.0.0.1/32", "10.0.0.2/32"]);
-    // 10.0.0.0 .. 10.0.0.5 → /29 covers .0-.7? no — exact: /30 (.0-.3) + /31 (.4-.5)
+    // 10.0.0.0 .. 10.0.0.5 → /29 covers .0-.7? no - exact: /30 (.0-.3) + /31 (.4-.5)
     expect(wrangleScope("10.0.0.0-10.0.0.5").cidrs).toEqual(["10.0.0.0/30", "10.0.0.4/31"]);
   });
 
@@ -113,7 +113,7 @@ describe("wrangleScope", () => {
 
   it("pulls every IPv4 out of a real-world, heavily-annotated scope dump", () => {
     // Regression fixture: an actual messy pentest scope. Every IPv4 must survive
-    // the cleanup — this list is the ground truth (46 distinct addresses).
+    // the cleanup - this list is the ground truth (46 distinct addresses).
     const messy = `### our IPs - rough list, needs cleanup - Josh pls parse
 # some of these might be dead, idk
 web-prod-01.corp.local:8080     153.195.224.51, 220.79.62.45 - port 443 (maybe? check w/ netops)  http://65.233.61.171:3000

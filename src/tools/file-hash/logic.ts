@@ -1,7 +1,7 @@
 /**
  * Streaming file hashing with hash-wasm. Computes MD5, SHA-1 and SHA-256 in a
  * single pass over the file, reading it in fixed-size chunks so large files do
- * not have to be held in memory all at once. Pure logic — no DOM/React.
+ * not have to be held in memory all at once. Pure logic - no DOM/React.
  */
 
 import { createMD5, createSHA1, createSHA256 } from "hash-wasm";

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { randomBytes, format, randomToken, randomInt } from "./logic";
 
-describe("random — bytes", () => {
+describe("random - bytes", () => {
   it("returns the requested number of bytes", () => {
     expect(randomBytes(1).length).toBe(1);
     expect(randomBytes(32).length).toBe(32);
@@ -21,7 +21,7 @@ describe("random — bytes", () => {
   });
 });
 
-describe("random — format", () => {
+describe("random - format", () => {
   const bytes = new Uint8Array([0, 1, 15, 16, 255, 128]);
 
   it("hex has two chars per byte and round-trips length", () => {
@@ -52,7 +52,7 @@ describe("random — format", () => {
   });
 });
 
-describe("random — randomInt", () => {
+describe("random - randomInt", () => {
   it("stays within the inclusive range over many samples", () => {
     const min = -5;
     const max = 17;

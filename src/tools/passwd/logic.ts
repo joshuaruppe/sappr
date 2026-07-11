@@ -1,7 +1,7 @@
 /**
  * Parse Linux/Unix /etc/passwd and /etc/shadow into structured accounts and
  * surface post-exploitation red flags: UID 0 accounts, empty or unshadowed
- * passwords, weak hash schemes and duplicate UIDs. Pure — no DOM.
+ * passwords, weak hash schemes and duplicate UIDs. Pure - no DOM.
  *
  * Paste either file, or both at once; each line is classified by its shape.
  */
@@ -87,7 +87,7 @@ function classifyShadow(hash: string): { scheme: string; state: ShadowState; wea
   if (hash === "") return { scheme: "empty (no password)", state: "empty", weak: false };
   if (/^[!*]+$/.test(hash)) return { scheme: "locked", state: "locked", weak: false };
 
-  // "!$6$..." — locked, but a crackable hash is still present.
+  // "!$6$..." - locked, but a crackable hash is still present.
   const bare = hash.replace(/^!/, "");
   const locked = bare !== hash;
 
@@ -177,14 +177,14 @@ export function parseAccounts(input: string): AccountsResult {
       findings.push({
         severity: "high",
         account: e.name,
-        message: `UID 0 — root-equivalent account "${e.name}".`,
+        message: `UID 0 - root-equivalent account "${e.name}".`,
       });
     }
     if (e.password === "") {
       findings.push({
         severity: "high",
         account: e.name,
-        message: `Empty password field in /etc/passwd for "${e.name}" — login with no password.`,
+        message: `Empty password field in /etc/passwd for "${e.name}" - login with no password.`,
       });
     } else if (looksLikeHash(e.password)) {
       findings.push({
@@ -216,14 +216,14 @@ export function parseAccounts(input: string): AccountsResult {
       findings.push({
         severity: "high",
         account: s.name,
-        message: `"${s.name}" has an empty password in /etc/shadow — passwordless login.`,
+        message: `"${s.name}" has an empty password in /etc/shadow - passwordless login.`,
       });
     } else if (s.state === "active") {
       if (s.weak) {
         findings.push({
           severity: "medium",
           account: s.name,
-          message: `"${s.name}" uses a weak hash scheme (${s.scheme}) — fast to crack.`,
+          message: `"${s.name}" uses a weak hash scheme (${s.scheme}) - fast to crack.`,
         });
       } else {
         findings.push({

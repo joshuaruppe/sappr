@@ -61,7 +61,7 @@ export default function TimestampForensicsTool() {
         </div>
       ) : input.trim() && !error ? (
         <p className="text-sm text-muted-foreground">
-          No believable date in any known epoch format (all results fall outside 1950–2200).
+          No believable date in any known epoch format (all results fall outside 1950-2200).
         </p>
       ) : null}
     </>

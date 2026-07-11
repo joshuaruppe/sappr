@@ -1,7 +1,7 @@
 /**
  * Decode a "mystery" numeric timestamp across the epoch formats DFIR analysts
- * hit — Unix (s/ms/µs/ns), Windows FILETIME, Chrome/WebKit, Mac Absolute/Cocoa,
- * APFS, HFS+, NTP, OLE Automation date and packed DOS date/time — and show every
+ * hit - Unix (s/ms/µs/ns), Windows FILETIME, Chrome/WebKit, Mac Absolute/Cocoa,
+ * APFS, HFS+, NTP, OLE Automation date and packed DOS date/time - and show every
  * plausible interpretation, flagging the ones that land in a realistic range.
  * Complements the Unix-focused Timestamp tool and the Windows FILETIME tool.
  * Pure math, no DOM.
@@ -16,7 +16,7 @@ const OLE_EPOCH_DAYS = 25569; // 1970-01-01 as an OLE (1899-12-30) day number
 export interface TsInterpretation {
   format: string;
   utc: string;
-  /** True when the result lands in a realistic modern range (2000–2040). */
+  /** True when the result lands in a realistic modern range (2000-2040). */
   likely: boolean;
 }
 

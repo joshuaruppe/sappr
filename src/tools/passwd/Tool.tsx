@@ -88,7 +88,7 @@ export default function PasswdTool() {
                             e.loginShell ? "text-foreground" : "text-muted-foreground/70",
                           )}
                         >
-                          {e.shell || "—"}
+                          {e.shell || "-"}
                         </td>
                         <td className="px-2.5 py-1.5 text-muted-foreground">{e.home}</td>
                       </tr>

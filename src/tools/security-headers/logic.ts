@@ -1,6 +1,6 @@
 /**
  * Analyze a pasted HTTP response-header block for security gaps: missing/weak
- * CSP, HSTS, framing, cookie flags, and info-leak headers. Pure — no DOM, no
+ * CSP, HSTS, framing, cookie flags, and info-leak headers. Pure - no DOM, no
  * network (paste headers from Burp/curl; live fetching is a 2.0-backend job).
  */
 
@@ -60,7 +60,7 @@ function analyzeCsp(csp: string, findings: Finding[]): void {
     if (script.includes("'unsafe-inline'")) {
       findings.push({
         severity: "high",
-        message: "CSP allows 'unsafe-inline' scripts — defeats most of CSP's XSS protection.",
+        message: "CSP allows 'unsafe-inline' scripts - defeats most of CSP's XSS protection.",
       });
     }
     if (script.includes("'unsafe-eval'")) {
@@ -69,18 +69,18 @@ function analyzeCsp(csp: string, findings: Finding[]): void {
     if (script.some((s) => s === "*" || s === "http:" || s === "https:" || s === "data:")) {
       findings.push({
         severity: "high",
-        message: "CSP script source allows a wildcard/scheme (*, https:, data:) — scripts can load from anywhere.",
+        message: "CSP script source allows a wildcard/scheme (*, https:, data:) - scripts can load from anywhere.",
       });
     }
   }
   if (!dirs["object-src"] && !dirs["default-src"]) {
-    findings.push({ severity: "medium", message: "CSP has no object-src — plugin/embed injection vector." });
+    findings.push({ severity: "medium", message: "CSP has no object-src - plugin/embed injection vector." });
   }
   if (!dirs["base-uri"]) {
-    findings.push({ severity: "medium", message: "CSP has no base-uri — <base> tag injection can hijack relative URLs." });
+    findings.push({ severity: "medium", message: "CSP has no base-uri - <base> tag injection can hijack relative URLs." });
   }
   if (!dirs["frame-ancestors"]) {
-    findings.push({ severity: "info", message: "CSP has no frame-ancestors — rely on X-Frame-Options for clickjacking defense." });
+    findings.push({ severity: "info", message: "CSP has no frame-ancestors - rely on X-Frame-Options for clickjacking defense." });
   }
 }
 
@@ -90,19 +90,19 @@ function analyzeCookie(value: string, findings: Finding[]): void {
   if (!/;\s*httponly/.test(attrs)) {
     findings.push({
       severity: "medium",
-      message: `Cookie "${name}" is missing HttpOnly — readable by JavaScript (XSS can steal it).`,
+      message: `Cookie "${name}" is missing HttpOnly - readable by JavaScript (XSS can steal it).`,
     });
   }
   if (!/;\s*secure/.test(attrs)) {
     findings.push({
       severity: "medium",
-      message: `Cookie "${name}" is missing Secure — may be sent over plain HTTP.`,
+      message: `Cookie "${name}" is missing Secure - may be sent over plain HTTP.`,
     });
   }
   if (!/;\s*samesite/.test(attrs)) {
     findings.push({
       severity: "info",
-      message: `Cookie "${name}" has no SameSite attribute — CSRF exposure.`,
+      message: `Cookie "${name}" has no SameSite attribute - CSRF exposure.`,
     });
   }
 }
@@ -130,7 +130,7 @@ export function analyzeHeaders(input: string): HeadersResult {
   if (!csp) {
     findings.push({
       severity: "high",
-      message: "No Content-Security-Policy — no built-in defense against XSS / content injection.",
+      message: "No Content-Security-Policy - no built-in defense against XSS / content injection.",
     });
   } else {
     analyzeCsp(csp, findings);
@@ -140,7 +140,7 @@ export function analyzeHeaders(input: string): HeadersResult {
   if (!hsts) {
     findings.push({
       severity: "medium",
-      message: "No Strict-Transport-Security (HSTS) — connections can be downgraded to HTTP.",
+      message: "No Strict-Transport-Security (HSTS) - connections can be downgraded to HTTP.",
     });
   } else {
     const m = hsts.match(/max-age\s*=\s*(\d+)/i);
@@ -154,7 +154,7 @@ export function analyzeHeaders(input: string): HeadersResult {
   if (!xfo && !frameAncestors) {
     findings.push({
       severity: "medium",
-      message: "No X-Frame-Options or CSP frame-ancestors — the page can be framed (clickjacking).",
+      message: "No X-Frame-Options or CSP frame-ancestors - the page can be framed (clickjacking).",
     });
   }
 
@@ -163,10 +163,10 @@ export function analyzeHeaders(input: string): HeadersResult {
     findings.push({ severity: "info", message: "X-Content-Type-Options should be 'nosniff'." });
   }
   if (!get("referrer-policy")) {
-    findings.push({ severity: "info", message: "No Referrer-Policy — the full URL may leak in the Referer header." });
+    findings.push({ severity: "info", message: "No Referrer-Policy - the full URL may leak in the Referer header." });
   }
   if (!get("permissions-policy")) {
-    findings.push({ severity: "info", message: "No Permissions-Policy — browser features aren't restricted." });
+    findings.push({ severity: "info", message: "No Permissions-Policy - browser features aren't restricted." });
   }
 
   for (const cookie of all("set-cookie")) analyzeCookie(cookie, findings);

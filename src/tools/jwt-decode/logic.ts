@@ -5,7 +5,7 @@
  * base64url-encoded JSON objects. This module splits the token, base64url-decodes
  * the first two segments into JSON, and surfaces the standard registered claims.
  *
- * Pure functions — no DOM/React; safe to call from a Web Worker or a test.
+ * Pure functions - no DOM/React; safe to call from a Web Worker or a test.
  * The signature is never checked: this is decode-only.
  */
 
@@ -164,12 +164,12 @@ export function jwtFindings(decoded: DecodedJwt): Finding[] {
     out.push({
       severity: "high",
       message:
-        "alg: none — the token is unsigned. A verifier that accepts it can be forged trivially (authentication bypass).",
+        "alg: none - the token is unsigned. A verifier that accepts it can be forged trivially (authentication bypass).",
     });
   } else if (alg.startsWith("hs")) {
     out.push({
       severity: "info",
-      message: `${decoded.alg} is symmetric (HMAC) — anyone holding the shared secret can forge tokens; brute-forceable if the secret is weak.`,
+      message: `${decoded.alg} is symmetric (HMAC) - anyone holding the shared secret can forge tokens; brute-forceable if the secret is weak.`,
     });
   }
 
@@ -180,7 +180,7 @@ export function jwtFindings(decoded: DecodedJwt): Finding[] {
   }
 
   if (typeof decoded.payload.exp !== "number") {
-    out.push({ severity: "info", message: "No exp claim — this token does not expire." });
+    out.push({ severity: "info", message: "No exp claim - this token does not expire." });
   }
 
   out.sort((a, b) => SEV_RANK[a.severity] - SEV_RANK[b.severity]);

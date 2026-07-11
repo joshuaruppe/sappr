@@ -33,26 +33,26 @@ export interface CapResult {
 }
 
 const CAP_INFO: Record<string, { meaning: string; severity: Severity }> = {
-  cap_setuid: { meaning: "set arbitrary UIDs — become root", severity: "high" },
+  cap_setuid: { meaning: "set arbitrary UIDs - become root", severity: "high" },
   cap_setgid: { meaning: "set arbitrary GIDs", severity: "high" },
   cap_dac_override: {
     meaning: "bypass all file read/write/execute permission checks",
     severity: "high",
   },
   cap_dac_read_search: {
-    meaning: "bypass file-read and directory-search checks — read any file (e.g. /etc/shadow)",
+    meaning: "bypass file-read and directory-search checks - read any file (e.g. /etc/shadow)",
     severity: "high",
   },
   cap_sys_admin: {
-    meaning: "broad admin operations (mount, etc.) — frequently root-equivalent",
+    meaning: "broad admin operations (mount, etc.) - frequently root-equivalent",
     severity: "high",
   },
   cap_sys_ptrace: {
-    meaning: "ptrace any process — inject into privileged processes",
+    meaning: "ptrace any process - inject into privileged processes",
     severity: "high",
   },
   cap_sys_module: {
-    meaning: "load/unload kernel modules — full kernel control",
+    meaning: "load/unload kernel modules - full kernel control",
     severity: "high",
   },
   cap_setfcap: { meaning: "set file capabilities on any binary", severity: "high" },
@@ -68,10 +68,10 @@ const CAP_INFO: Record<string, { meaning: string; severity: Severity }> = {
     meaning: "configure networking (interfaces, firewall, routing)",
     severity: "high",
   },
-  cap_net_raw: { meaning: "raw/packet sockets — sniff and spoof traffic", severity: "medium" },
+  cap_net_raw: { meaning: "raw/packet sockets - sniff and spoof traffic", severity: "medium" },
   cap_kill: { meaning: "send signals to any process", severity: "medium" },
   cap_sys_chroot: { meaning: "chroot into arbitrary directories", severity: "medium" },
-  cap_mknod: { meaning: "create device nodes — reach raw devices", severity: "medium" },
+  cap_mknod: { meaning: "create device nodes - reach raw devices", severity: "medium" },
   cap_sys_time: { meaning: "set the system clock", severity: "medium" },
   cap_sys_boot: { meaning: "reboot / kexec the system", severity: "medium" },
   cap_syslog: {
@@ -140,10 +140,10 @@ export function parseCapabilities(input: string): CapResult {
     const where = e.path ? `"${e.path}"` : "this binary";
     for (const c of e.caps) {
       if (c.severity === "high" || c.severity === "medium") {
-        const inh = e.effective ? "" : " (inheritable only — not directly effective)";
+        const inh = e.effective ? "" : " (inheritable only - not directly effective)";
         findings.push({
           severity: c.severity,
-          message: `${c.name} on ${where} — ${c.meaning}${inh}.`,
+          message: `${c.name} on ${where} - ${c.meaning}${inh}.`,
         });
       }
     }

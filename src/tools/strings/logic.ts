@@ -1,6 +1,6 @@
 /**
  * Extract printable strings from binary data, like the unix `strings` command.
- * Pure functions — no DOM/React, safe to call from a Web Worker or a test.
+ * Pure functions - no DOM/React, safe to call from a Web Worker or a test.
  */
 
 export type StringsEncoding = "ascii" | "utf-16le";

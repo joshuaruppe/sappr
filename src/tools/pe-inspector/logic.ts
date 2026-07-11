@@ -1,5 +1,5 @@
 /**
- * Inspect a Windows PE (EXE/DLL/SYS) in the browser — the headers a malware
+ * Inspect a Windows PE (EXE/DLL/SYS) in the browser - the headers a malware
  * analyst or RE first reaches for. Parses the DOS/PE/COFF and optional headers,
  * decodes the DllCharacteristics mitigations (ASLR/DEP/CFG/SEH), lists the data
  * directories (signed? .NET?), the section table (with Shannon entropy to spot
@@ -279,17 +279,17 @@ function sectionPtr(bytes: Uint8Array, secBase: number, idx: number): number {
 
 function analyzePe(r: PeResult): Finding[] {
   const f: Finding[] = [];
-  if (!r.mitigations.aslr) f.push({ severity: "medium", message: "No ASLR (DYNAMIC_BASE not set) — the image loads at a fixed base, aiding exploitation." });
-  if (!r.mitigations.dep) f.push({ severity: "medium", message: "No DEP (NX_COMPAT not set) — data pages are executable." });
-  if (!r.mitigations.cfg) f.push({ severity: "info", message: "No Control Flow Guard (GUARD_CF) — indirect-call integrity isn't enforced." });
+  if (!r.mitigations.aslr) f.push({ severity: "medium", message: "No ASLR (DYNAMIC_BASE not set) - the image loads at a fixed base, aiding exploitation." });
+  if (!r.mitigations.dep) f.push({ severity: "medium", message: "No DEP (NX_COMPAT not set) - data pages are executable." });
+  if (!r.mitigations.cfg) f.push({ severity: "info", message: "No Control Flow Guard (GUARD_CF) - indirect-call integrity isn't enforced." });
   if (r.kind === "Executable" && !r.signed) f.push({ severity: "info", message: "Not Authenticode-signed." });
-  if (r.dotnet) f.push({ severity: "info", message: ".NET / CLR assembly — decompile with dnSpy / ILSpy rather than a disassembler." });
+  if (r.dotnet) f.push({ severity: "info", message: ".NET / CLR assembly - decompile with dnSpy / ILSpy rather than a disassembler." });
   for (const s of r.sections) {
     if (s.perms.includes("w") && s.perms.includes("x")) {
-      f.push({ severity: "medium", message: `Section ${s.name} is writable AND executable (${s.perms}) — self-modifying / injected code.` });
+      f.push({ severity: "medium", message: `Section ${s.name} is writable AND executable (${s.perms}) - self-modifying / injected code.` });
     }
     if (s.entropy >= 7.2 && s.rawSize > 512) {
-      f.push({ severity: "info", message: `Section ${s.name} has high entropy (${s.entropy}) — likely packed, compressed or encrypted.` });
+      f.push({ severity: "info", message: `Section ${s.name} has high entropy (${s.entropy}) - likely packed, compressed or encrypted.` });
     }
   }
   return f;
