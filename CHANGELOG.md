@@ -5,6 +5,32 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-07-10
+
+### Added
+
+- **Network** — the category is now populated with two tools pentesters actually
+  reach for (the network-engineer filler like subnet math is deliberately left out):
+  - **Scope Cleanup** — paste a messy engagement scope (any mix of CIDRs, hyphen
+    ranges, nmap-style short ranges, single IPs, URLs, `host:port`, IPv6 and
+    hostnames, with dupes and junk) and get it back clean and deduped in the form
+    you need: every IPv4 host one-per-line for `nmap -iL`, the minimal set of
+    aggregated CIDRs, or a single nmap-ready target string. IPv4 is modeled as
+    merged integer intervals, so a `/8` doesn't blow up and CIDR collapsing is
+    exact. Nothing is dropped silently — unrecognized tokens are surfaced.
+  - **MAC Vendor Lookup** — extract every MAC from pasted text (colon, hyphen,
+    Cisco dotted or bare-hex — so `arp -a` / `ip neigh` dumps work as-is) and
+    resolve each to its IEEE-registered vendor from the bundled OUI registry
+    (~53k MA-L/MA-M/MA-S prefixes, most-specific block wins). Decodes the
+    unicast/multicast and universal/local bits, flagging randomized or private
+    MACs (modern iOS/Android privacy, VMs, virtual interfaces) that have no real
+    hardware vendor.
+
+### Changed
+
+- Added a `npm run update:oui` script that rebuilds the MAC vendor dataset from
+  the public IEEE registries (MA-L/MA-M/MA-S).
+
 ## [1.6.0] - 2026-07-10
 
 ### Added

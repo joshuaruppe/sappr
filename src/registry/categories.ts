@@ -111,7 +111,8 @@ export const CATEGORIES: Record<CategoryId, CategoryInfo> = {
     id: "network",
     label: "Network",
     short: "Network",
-    description: "IP/CIDR math, MAC and user-agent parsing, DNS lookups.",
+    description:
+      "Turn a messy engagement scope into a clean, deduped target list (expand, collapse to CIDRs, or an nmap-ready string), and resolve MAC addresses to their IEEE-registered vendor.",
     icon: Network,
     order: 70,
     group: "security",

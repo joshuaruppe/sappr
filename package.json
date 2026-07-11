@@ -1,6 +1,6 @@
 {
   "name": "sappr",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "type": "module",
   "description": "sappr — a modern, self-hostable web toolkit for pentesters. Encoding, hashing, QR, regex, beautify, strings and more, running entirely in your browser.",
@@ -14,7 +14,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "shot": "node scripts/shot.mjs",
-    "update:hash-defs": "node scripts/update-hash-definitions.mjs"
+    "update:hash-defs": "node scripts/update-hash-definitions.mjs",
+    "update:oui": "node scripts/update-oui.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.1.1",

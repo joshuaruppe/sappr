@@ -29,7 +29,23 @@ export async function copyToClipboard(text: string): Promise<boolean> {
   }
 }
 
-/** Trigger a client-side download of the given content. */
+/**
+ * Insert a filename-safe local timestamp before the extension, so downloading
+ * several files in a row doesn't collide or make you rename each one:
+ * `cidrs.txt` -> `cidrs_20260711-143005.txt`. Extensionless names get it appended.
+ */
+export function timestampedName(filename: string): string {
+  const d = new Date();
+  const p = (n: number) => String(n).padStart(2, "0");
+  const stamp = `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+  const dot = filename.lastIndexOf(".");
+  return dot > 0
+    ? `${filename.slice(0, dot)}_${stamp}${filename.slice(dot)}`
+    : `${filename}_${stamp}`;
+}
+
+/** Trigger a client-side download of the given content. The saved filename is
+ * timestamped (see {@link timestampedName}) so repeated downloads don't clash. */
 export function downloadBlob(
   content: BlobPart,
   filename: string,
@@ -39,7 +55,7 @@ export function downloadBlob(
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename;
+  a.download = timestampedName(filename);
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

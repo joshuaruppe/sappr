@@ -93,7 +93,10 @@ export function OutputArea({
       el.style.height = "";
       return;
     }
-    el.style.height = "auto";
+    // Collapse to 0 before measuring: a textarea with `height:auto` snaps back to
+    // its `rows` attribute (a floor), which pads short outputs with blank lines.
+    // Measuring from 0 gives the true content height so the box fits exactly.
+    el.style.height = "0px";
     el.style.height = `${el.scrollHeight}px`;
   }, [value, autoGrow]);
   return (
