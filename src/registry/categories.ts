@@ -11,6 +11,7 @@ import {
   Terminal,
   Globe,
   Cpu,
+  Swords,
   Blocks,
   ShieldHalf,
   type LucideIcon,
@@ -162,6 +163,15 @@ export const CATEGORIES: Record<CategoryId, CategoryInfo> = {
       "Reverse-engineering & binary analysis in the browser: ELF/PE/Mach-O parsers, a multi-arch disassembler, entropy visualization and ASN.1/DER decoding.",
     icon: Cpu,
     order: 120,
+  },
+  "red-team": {
+    id: "red-team",
+    label: "Red Team",
+    short: "Red Team",
+    description:
+      "Offensive infrastructure utilities: generate C2 redirector configs for nginx and Apache from a malleable profile.",
+    icon: Swords,
+    order: 130,
   },
 };
 

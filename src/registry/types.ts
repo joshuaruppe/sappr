@@ -25,7 +25,8 @@ export type CategoryId =
   | "windows"
   | "linux"
   | "web"
-  | "reversing";
+  | "reversing"
+  | "red-team";
 
 /**
  * Metadata for a single tool. Lives in each tool's `meta.ts` and is loaded
