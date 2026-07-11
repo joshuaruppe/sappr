@@ -5,6 +5,31 @@ All notable changes to sappr are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-07-11
+
+### Added
+
+- **Red Team** - a new top-level category for offensive infrastructure and analysis
+  utilities, all client-side:
+  - **Redirector Generator** - turn a Cobalt Strike malleable C2 profile (or manual
+    URIs + User-Agent) into ready-to-paste nginx and Apache mod_rewrite redirector
+    configs: forward matching beacon traffic to the team server, 302 everything else
+    to a decoy, with an optional scanner/sandbox User-Agent blocklist.
+  - **C2 Profile Linter** - static analysis of a malleable profile (the c2lint job):
+    pulls out sleep/jitter, User-Agent, staging, pipe name and GET/POST URIs and flags
+    OPSEC red flags (noisy sleep/jitter, staging left on, a default UA / pipe / cert).
+  - **Vulnerable Driver Lookup** - check a Windows driver by hash or filename against
+    the bundled LOLDrivers catalog (660 drivers): category, whether it loads despite
+    HVCI, and the matching sample hashes.
+- **Email Header Analyzer** (Forensics) - trace an email's Received hop chain with
+  per-hop delays, read the SPF/DKIM/DMARC results, and flag phishing tells (auth
+  failures, From vs Return-Path / Reply-To domain mismatches).
+
+### Changed
+
+- Added `npm run update:loldrivers` to rebuild the vulnerable-driver dataset from the
+  public LOLDrivers catalog.
+
 ## [1.8.0] - 2026-07-11
 
 ### Added

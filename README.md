@@ -13,7 +13,7 @@ Everything runs in your browser. No backend, nothing uploaded.
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-![Tests](https://img.shields.io/badge/tests-629_passing-3fb950?logo=vitest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-659_passing-3fb950?logo=vitest&logoColor=white)
 ![Runs](https://img.shields.io/badge/runs-in_your_browser-6d4aff)
 ![License](https://img.shields.io/badge/license-AGPL_v3-3fb950)
 ![Use](https://img.shields.io/badge/use-authorized_testing_only-d73a49)
@@ -33,11 +33,12 @@ Everything runs in your browser. No backend, nothing uploaded.
 - **Convert**: Unix timestamps · number-base converter · text diff · Unicode inspector
 - **Generate**: UUID / ULID · secure passwords · random tokens · QR codes
 - **Network**: **scope cleanup** - normalize a messy engagement scope (mixed CIDRs, ranges, single IPs, URLs, host:port, IPv6, hostnames, dupes) into a deduped host list for `nmap -iL`, the minimal set of collapsed CIDRs, or a single nmap-ready target string · **MAC vendor lookup** against the IEEE OUI registry (~53k MA-L/M/S prefixes) with unicast/multicast + universal/local bit decoding and randomized/private-MAC detection
-- **Forensics / DFIR**: **IOC defang/refang** + IOC extraction · Windows **`.lnk`** shortcut parser (target/args, MAC timestamps, origin machine + MAC address) · multi-format **forensic timestamp** decoder (FILETIME, Chrome/WebKit, Cocoa, APFS, OLE, DOS…) · **EXIF / metadata** viewer (GPS→map, camera, privacy findings) · `strings`-style extraction · QR decode
+- **Forensics / DFIR**: **IOC defang/refang** + IOC extraction · Windows **`.lnk`** shortcut parser (target/args, MAC timestamps, origin machine + MAC address) · multi-format **forensic timestamp** decoder (FILETIME, Chrome/WebKit, Cocoa, APFS, OLE, DOS…) · **EXIF / metadata** viewer (GPS→map, camera, privacy findings) · `strings`-style extraction · QR decode · **email header analyzer** (Received hop chain + delays, SPF/DKIM/DMARC, phishing tells)
 - **Windows / AD**: security-descriptor (SDDL, ACLs, AD GUID names), Kerberos `.kirbi`, **SID** and PowerShell **`-EncodedCommand`** decoders · GPP `cpassword` decrypt · `userAccountControl` and **FILETIME / Integer8** converters · **NTSTATUS / HRESULT / Win32 error-code** decoder (~9,000 codes)
 - **Linux**: `passwd`/`shadow`, `/etc/group`, `sudoers` (GTFOBins-aware, reads `sudo -l`), SSH `authorized_keys`, capabilities and systemd-unit analysis · `ls -l` permission triage · crontab explainer - each flagging privilege-escalation red flags
 - **Web**: **SAML** decoder/encoder · HTTP **security-header + CSP** analyzer · signed **session-cookie** decoder (Flask/itsdangerous, JWT, Django) · **serialized-blob** identifier (Java/ViewState/PHP/Ruby/pickle)
 - **Reversing / Binary**: **ELF checksec** (RELRO/NX/PIE/canary/Fortify) · **PE inspector** (headers, ASLR/DEP/CFG, sections + entropy, imports) · **Mach-O** parser (fat binaries, dylibs, signing) · multi-arch **disassembler** (WASM Capstone - x86/x64/ARM/ARM64/Thumb/MIPS) · **entropy visualizer** · **ASN.1 / DER** decoder (X.509/PKCS, named OIDs)
+- **Red Team**: **C2 redirector** config generator (nginx / Apache mod_rewrite from a Cobalt Strike malleable profile) · **malleable C2 profile linter** (OPSEC red flags: sleep/jitter, staging, default UA / pipe / cert) · **vulnerable-driver lookup** against the LOLDrivers catalog (BYOVD candidates, HVCI-loading flag). All infrastructure and analysis, entirely client-side.
 
 Every tool is a self-contained folder under [`src/tools/`](src/tools/); dropping
 a new one in registers it automatically across the nav, palette and launcher.
@@ -153,9 +154,10 @@ tooling and analysis, not a substitute for audited production key handling.
 - [x] Windows / AD: security-descriptor (with dangerous-ACL findings), Kerberos, SID and PowerShell EncodedCommand decoders, GPP cpassword, userAccountControl and FILETIME/Integer8
 - [x] Linux: passwd/shadow, /etc/group, sudoers, `ls -l` permissions, authorized_keys, capabilities, systemd-unit and crontab triage with privesc red flags
 - [x] Web: SAML decode/encode, security-header + CSP analysis, signed session-cookie and serialized-blob decoders
-- [x] Forensics / DFIR: IOC defang/refang, `.lnk` shortcut parser, multi-format timestamp decoder, EXIF/metadata viewer; plus a NTSTATUS/HRESULT/Win32 error-code decoder
+- [x] Forensics / DFIR: IOC defang/refang, `.lnk` shortcut parser, multi-format timestamp decoder, EXIF/metadata viewer, email header analyzer (Received chain, SPF/DKIM/DMARC); plus a NTSTATUS/HRESULT/Win32 error-code decoder
 - [x] Reversing: ELF checksec, PE and Mach-O parsers, a WASM-Capstone multi-arch disassembler, entropy visualizer, ASN.1/DER decoder
 - [x] Network: scope cleanup (expand / collapse to CIDRs / nmap-ready targets) and an IEEE MAC-vendor lookup with randomized-MAC detection
+- [x] Red Team: C2 redirector config generator (nginx / Apache), malleable C2 profile linter, and a LOLDrivers vulnerable-driver lookup
 
 **More tools**
 

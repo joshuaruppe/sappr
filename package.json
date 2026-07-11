@@ -1,6 +1,6 @@
 {
   "name": "sappr",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
   "type": "module",
   "description": "sappr - a modern, self-hostable web toolkit for pentesters. Encoding, hashing, QR, regex, beautify, strings and more, running entirely in your browser.",
