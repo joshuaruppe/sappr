@@ -42,7 +42,7 @@
     "react-dom": "^18.3.1",
     "regexp-tree": "^0.1.27",
     "rfc4648": "^1.5.4",
-    "smol-toml": "^1.6.1",
+    "smol-toml": "^1.7.1",
     "sql-formatter": "^15.8.1",
     "tailwind-merge": "^2.6.0",
     "ulid": "^3.0.2",
